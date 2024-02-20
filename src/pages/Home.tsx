@@ -1,8 +1,25 @@
 import React from "react";
 import HomeIcon from "@mui/icons-material/Home";
+import SearchBar from "../components/searchBar/SearchBar";
+import ItemCard from "../components/product/ProductCard";
+import ProductsFetchData from "../components/product/Products";
+import { Provider } from "react-redux";
+import store from "../redux/store";
+import CategoryFetchData from "../components/category/Categories";
 
 export default function Home() {
-  return <div>Home
-    <HomeIcon/>
-  </div>;
+  return (
+    <div>
+      <HomeIcon />
+      <SearchBar />
+      <h1>Catogaries</h1>
+      <Provider store={store} children={<CategoryFetchData />}></Provider>
+      <h1>Products</h1>
+      <Provider store={store} children={<ProductsFetchData />}></Provider>
+
+      {/* <div className="block_container">
+        <ItemCard />
+      </div> */}
+    </div>
+  );
 }

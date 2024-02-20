@@ -8,10 +8,12 @@ import Footer from "./components/footer/Footer";
 function App() {
   return (
     <div className="App">
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />}></Route>
-        {/* <Route
+      <h1>Fake Ecommerce</h1>
+      <Home />
+      {/* <Navbar /> */}
+      {/* <Routes>
+        <Route path="/" element={<Home />}></Route> */}
+      {/* <Route
             path="/allbreweries"
             element={<Breweries urlSuffix="" />}
           ></Route>
@@ -19,7 +21,7 @@ function App() {
           <Route path="/search" element={<Search />}></Route>
           <Route path="/breweries" element={<SearchResult />}></Route>
           <Route path="/contact" element={<ContactForm />}></Route>*/}
-      </Routes>
+      {/* </Routes> */}
       <Footer />
     </div>
   );

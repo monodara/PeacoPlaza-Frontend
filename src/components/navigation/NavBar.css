@@ -1,0 +1,24 @@
+.nav {
+  display: flex;
+  justify-content: center; /* Align items horizontally in the center */
+}
+
+.nav-links {
+  display: flex;
+  justify-content: center; /* Align items horizontally in the center */
+  color: black;
+}
+
+.nav a {
+  text-decoration: none;
+  margin: 30px 0px; /* Add spacing between links */
+  padding: 10px 50px;
+  font-size: large;
+  color: gray;
+}
+.nav a:hover {
+  background-color: lightgrey;
+}
+.visited {
+  background-color: black; /* Change background color of visited link */
+}

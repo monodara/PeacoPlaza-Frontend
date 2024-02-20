@@ -5,13 +5,18 @@ import productReducer from "./slices/productSlice";
 import { useDispatch } from "react-redux";
 import userReducer from "./slices/userSlice";
 import productQueries from "./productQuery";
+import categoryReducer from "./slices/categorySlice";
 
 // store all states
 const store = configureStore({
   reducer: {
     // counterReducer
     counter: counterReducer,
+    //products reducer
     products: productReducer,
+    //category reducer
+    categories: categoryReducer,
+    //user reducer
     users: userReducer,
     // query
     [productQueries.reducerPath]: productQueries.reducer,
