@@ -7,12 +7,11 @@ import { useSelector } from "react-redux";
 import { ProductType } from "../../misc/type";
 import ProductCard from "./ProductCard";
 
-export default function ProductsFetchData() {
+export default function ProductsFetchData({ url }: { url: string }) {
   const dispatch = useAppDispatch();
-
   // use fetchAllProductsAsync
   useEffect(() => {
-    dispatch(fetchAllProductsAsync());
+    dispatch(fetchAllProductsAsync(url));
   }, [dispatch]);
 
   // data
@@ -23,7 +22,10 @@ export default function ProductsFetchData() {
     (state: AppState) => state.products.userInput
   );
   const filteredProducts = productList.filter((p) => {
-    return p.title.toLowerCase().includes(searchKeyword.toLowerCase());
+    return (
+      p.images.length === 3 && //filter test data
+      p.title.toLowerCase().includes(searchKeyword.toLowerCase())
+    );
   });
 
   return (

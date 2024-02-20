@@ -23,7 +23,9 @@ export default function CategoryFetchData() {
     <div>
       <Box sx={{ displayPrint: "inline" }}>
         {categoryList.map((category) => {
-          return <CategoryCard key={category.id} category={category} />;
+          //filter the category that has a valid image
+          if (category.image.includes("imgur"))
+            return <CategoryCard key={category.id} category={category} />;
         })}
       </Box>
     </div>

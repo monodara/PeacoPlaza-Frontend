@@ -6,20 +6,13 @@ import ProductsFetchData from "../components/product/Products";
 import { Provider } from "react-redux";
 import store from "../redux/store";
 import ProductCollect from "./ProductCollect";
+import CategoryFetchData from "../components/category/Categories";
 
 export default function Home() {
   return (
     <div>
-      {/* <HomeIcon />
-      <SearchBar /> */}
-      {/* <h1>Catogaries</h1>
+      <h1>Catogaries</h1>
       <Provider store={store} children={<CategoryFetchData />}></Provider>
-      <h1>Products</h1> */}
-      <Provider store={store} children={<ProductCollect />}></Provider>
-
-      {/* <div className="block_container">
-        <ItemCard />
-      </div> */}
     </div>
   );
 }

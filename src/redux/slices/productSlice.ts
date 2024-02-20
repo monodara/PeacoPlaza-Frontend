@@ -19,12 +19,12 @@ const initialState: InitialState = {
   productsInCart: [],
 };
 
-const url = "https://api.escuelajs.co/api/v1/products";
+// const url = "https://api.escuelajs.co/api/v1/products";
 
 // useEffect
 export const fetchAllProductsAsync = createAsyncThunk(
   "fetchAllProductsAsync",
-  async () => {
+  async (url: string) => {
     try {
       const jsonData = await fetch(url);
       const data: ProductType[] = await jsonData.json();
