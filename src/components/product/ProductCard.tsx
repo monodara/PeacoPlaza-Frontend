@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import { ProductType } from "../../misc/type";
 
-export default function ItemCard({ product }: { product: ProductType }) {
+export default function ProductCard({ product }: { product: ProductType }) {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea>

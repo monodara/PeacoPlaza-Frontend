@@ -4,30 +4,27 @@ import { ProductType } from "../../misc/type";
 
 type InitialState = {
   products: ProductType[];
-  favList: ProductType[];
+  wishList: ProductType[];
   userInput: string;
   loading: boolean;
   error?: string;
-  // filteredProducts: Product[];
+  productsInCart: ProductType[];
 };
 
 const initialState: InitialState = {
   products: [],
   loading: false,
-  favList: [],
+  wishList: [],
   userInput: "",
-  // filteredProducts: [],
+  productsInCart: [],
 };
 
-// fetch data
 const url = "https://api.escuelajs.co/api/v1/products";
 
-// fetchAllProductsAsync() => async
 // useEffect
 export const fetchAllProductsAsync = createAsyncThunk(
   "fetchAllProductsAsync",
   async () => {
-    // fetch data: axios/ fetch
     try {
       const jsonData = await fetch(url);
       const data: ProductType[] = await jsonData.json();
@@ -44,11 +41,11 @@ const productSlice = createSlice({
   initialState,
   reducers: {
     // add to fav list
-    addToFav: (state, action: PayloadAction<ProductType>) => {
+    addToWishList: (state, action: PayloadAction<ProductType>) => {
       // state: {products, favList}
       // logic
       // write logic to not allow user to add same product tp fav list
-      state.favList.push(action.payload);
+      state.wishList.push(action.payload);
     },
 
     getUserInput: (state, action) => {
@@ -57,27 +54,6 @@ const productSlice = createSlice({
     // add new action for remove product from productList
     // add new action for remove product from favList
 
-    // searching logic here
-    searchProductByName: (state, action: PayloadAction<string>) => {
-      // logic
-      // products: state.products
-      // userInput: action.payload
-      console.log(action.payload, "payload");
-      const result = state.products.filter((product) =>
-        product.title.toLowerCase().includes(action.payload.toLowerCase())
-      );
-      // state.products = result;
-      // state.filteredProducts = result;
-      // current: state.products: [{test}]
-      // state.product=[{test}]
-      // [{test}]
-      // userInput: product
-
-      // way2
-      // state.products.filter(
-      //   (product) => product.name.toLowerCase() === action.payload.toLowerCase()
-      // );
-    },
     changeTheme: () => {
       // logic
     },
@@ -90,7 +66,6 @@ const productSlice = createSlice({
       if (!(action.payload instanceof Error)) {
         return {
           ...state,
-          // [] => [{},{}]
           products: action.payload,
           loading: false,
         };
@@ -106,7 +81,6 @@ const productSlice = createSlice({
     // error
     builder.addCase(fetchAllProductsAsync.rejected, (state, action) => {
       if (action.payload instanceof Error) {
-        //logic
         return {
           ...state,
           loading: false,
@@ -119,7 +93,6 @@ const productSlice = createSlice({
 
 const productReducer = productSlice.reducer;
 
-export const { addToFav, searchProductByName, getUserInput } =
-  productSlice.actions;
+export const { addToWishList, getUserInput } = productSlice.actions;
 // actions: use in component:
 export default productReducer;

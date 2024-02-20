@@ -12,7 +12,6 @@ export default function ProductsFetchData() {
 
   // use fetchAllProductsAsync
   useEffect(() => {
-    // logic
     dispatch(fetchAllProductsAsync());
   }, [dispatch]);
 
@@ -20,10 +19,16 @@ export default function ProductsFetchData() {
   const productList: ProductType[] = useSelector(
     (state: AppState) => state.products.products
   );
+  const searchKeyword: string = useSelector(
+    (state: AppState) => state.products.userInput
+  );
+  const filteredProducts = productList.filter((p) => {
+    return p.title.toLowerCase().includes(searchKeyword.toLowerCase());
+  });
 
   return (
     <div>
-      {productList.map((product) => {
+      {filteredProducts.map((product) => {
         return <ProductCard key={product.id} product={product} />;
       })}
     </div>

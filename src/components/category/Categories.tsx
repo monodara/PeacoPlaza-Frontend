@@ -18,7 +18,6 @@ export default function CategoryFetchData() {
   const categoryList: CategoryType[] = useSelector(
     (state: AppState) => state.categories.categories
   );
-  console.log(categoryList, "list");
 
   return (
     <div>
