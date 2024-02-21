@@ -1,7 +1,11 @@
 import React from "react";
 import { CartProductType } from "../../misc/type";
 import { useDispatch } from "react-redux";
-import { incrementProductAmount } from "../../redux/slices/productSlice";
+import {
+  decrementProductAmount,
+  incrementProductAmount,
+  removeFromCart,
+} from "../../redux/slices/productSlice";
 
 export default function ProductCardInCart({
   product,
@@ -10,8 +14,9 @@ export default function ProductCardInCart({
 }) {
   const dispatch = useDispatch();
   function amountHandler() {}
-  function decrementAmount() {
-    console.log("hi");
+  function decrementAmount(product: CartProductType) {
+    if (product.amount > 1) dispatch(decrementProductAmount(product));
+    else dispatch(removeFromCart(product));
   }
   function incrementAmount(product: CartProductType) {
     dispatch(incrementProductAmount(product));
@@ -29,7 +34,10 @@ export default function ProductCardInCart({
 
         <div className="flex justify-center items-center">
           <div className="pr-8 flex ">
-            <span className="font-semibold" onClick={decrementAmount}>
+            <span
+              className="font-semibold"
+              onClick={() => decrementAmount(product)}
+            >
               -
             </span>
             <input

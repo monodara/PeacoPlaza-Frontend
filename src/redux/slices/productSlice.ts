@@ -48,7 +48,6 @@ const productSlice = createSlice({
         (item) => item.id === itemToAdd.id
       );
       if (existingItemIndex !== -1) {
-        // Item is already in the cart, update its quantity
         // Get current amount
         const currentAmount = state.productsInCart[existingItemIndex].amount;
         // Update amount
@@ -67,16 +66,37 @@ const productSlice = createSlice({
       const existingItemIndex = state.productsInCart.findIndex(
         (item) => item.id === itemToAdd.id
       );
-      if (existingItemIndex !== -1) {
-        // Item is already in the cart, update its quantity
-        // Get current amount
-        const currentAmount = state.productsInCart[existingItemIndex].amount;
-        // Update amount
-        state.productsInCart[existingItemIndex] = {
-          ...itemToAdd,
-          amount: currentAmount + 1,
-        };
-      }
+      // Item is already in the cart, update its quantity
+      // Get current amount
+      const currentAmount = state.productsInCart[existingItemIndex].amount;
+      // Update amount
+      state.productsInCart[existingItemIndex] = {
+        ...itemToAdd,
+        amount: currentAmount + 1,
+      };
+    },
+    decrementProductAmount: (state, action: PayloadAction<CartProductType>) => {
+      const itemToReduce = action.payload;
+      // Check if the item is already in the cart
+      const existingItemIndex = state.productsInCart.findIndex(
+        (item) => item.id === itemToReduce.id
+      );
+      // There are more than one item in the cart
+      // Get current amount
+      const currentAmount = state.productsInCart[existingItemIndex].amount;
+      // Update amount
+      state.productsInCart[existingItemIndex] = {
+        ...itemToReduce,
+        amount: currentAmount - 1,
+      };
+    },
+    removeFromCart: (state, action: PayloadAction<ProductType>) => {
+      const itemToRemove = action.payload;
+      // Find the index
+      const existingItemIndex = state.productsInCart.findIndex(
+        (item) => item.id === itemToRemove.id
+      );
+      state.productsInCart.splice(existingItemIndex, 1);
     },
     // add to fav list
     addToWishList: (state, action: PayloadAction<ProductType>) => {
@@ -136,6 +156,8 @@ export const {
   getUserInput,
   addToCart,
   incrementProductAmount,
+  decrementProductAmount,
+  removeFromCart,
 } = productSlice.actions;
 // actions: use in component:
 export default productReducer;
