@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { CartProductType } from "../../misc/type";
 import { useDispatch } from "react-redux";
 import {
@@ -6,20 +6,38 @@ import {
   incrementProductAmount,
   removeFromCart,
 } from "../../redux/slices/productSlice";
+import DeletePopover from "./DeletePopover";
 
 export default function ProductCardInCart({
   product,
 }: {
   product: CartProductType;
 }) {
+  //control Modal component
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+  const [confirmDeletion, setConfirmDeletion] = useState(false);
   const dispatch = useDispatch();
   function amountHandler() {}
   function decrementAmount(product: CartProductType) {
     if (product.amount > 1) dispatch(decrementProductAmount(product));
-    else dispatch(removeFromCart(product));
+    else {
+      handleOpenModal();
+    }
   }
   function incrementAmount(product: CartProductType) {
     dispatch(incrementProductAmount(product));
+  }
+  function deleteClickHandle() {
+    // Dispatch action to delete the product from the cart
+    dispatch(removeFromCart(product));
+    handleCloseModal(); // Close the modal after deletion
   }
   return (
     <div>
@@ -57,11 +75,14 @@ export default function ProductCardInCart({
           <div className="pr-8 ">
             <span className="text-xs font-medium">{`${
               product.price * product.amount
-            }.00`}</span>
+            }.00€`}</span>
           </div>
-          <div>
-            <i className="fa fa-close text-xs font-medium"></i>
-          </div>
+          <button onClick={handleOpenModal}>❌</button>
+          <DeletePopover
+            open={openModal}
+            onClose={handleCloseModal}
+            onConfirmDelete={deleteClickHandle}
+          />
         </div>
       </div>
     </div>
