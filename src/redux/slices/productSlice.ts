@@ -110,6 +110,14 @@ const productSlice = createSlice({
         state.wishList.push(itemToAdd);
       }
     },
+    removeFromWishList: (state, action: PayloadAction<ProductType>) => {
+      const itemToRemove = action.payload;
+      // Find the index
+      const existingItemIndex = state.wishList.findIndex(
+        (item) => item.id === itemToRemove.id
+      );
+      state.wishList.splice(existingItemIndex, 1);
+    },
 
     getUserInput: (state, action) => {
       state.userInput = action.payload;
@@ -162,6 +170,7 @@ export const {
   incrementProductAmount,
   decrementProductAmount,
   removeFromCart,
+  removeFromWishList,
 } = productSlice.actions;
 // actions: use in component:
 export default productReducer;
