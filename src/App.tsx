@@ -8,6 +8,7 @@ import SearchBar from "./components/search/SearchBar";
 import ProductCollect from "./pages/ProductCollect";
 import SingleProduct from "./components/product/SingleProduct";
 import Cart from "./pages/Cart";
+import WishList from "./pages/WishList";
 
 function App() {
   return (
@@ -30,6 +31,9 @@ function App() {
       </Routes>
       <Routes>
         <Route path="/cart" element={<Cart />} />
+      </Routes>
+      <Routes>
+        <Route path="/wishlist" element={<WishList />} />
       </Routes>
       <Footer />
     </div>

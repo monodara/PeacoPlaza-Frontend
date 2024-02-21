@@ -29,7 +29,7 @@ export default function ProductsFetchData({ url }: { url: string }) {
   });
 
   return (
-    <div>
+    <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6 mx-auto">
       {filteredProducts.map((product) => {
         return <ProductCard key={product.id} product={product} />;
       })}

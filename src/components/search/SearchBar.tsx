@@ -22,6 +22,7 @@ import { Provider, useDispatch, useSelector } from "react-redux";
 import store, { AppState } from "../../redux/store";
 import { openRightDrawer } from "../../redux/slices/cartSlice";
 import { CartDrawer } from "../cart/CartDrawer";
+import { Link } from "react-router-dom";
 
 export default function SearchBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -149,15 +150,6 @@ export default function SearchBar() {
           >
             <MenuIcon />
           </IconButton>
-          {/* <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search> */}
           <Provider store={store} children={<SearchInput />}></Provider>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
@@ -177,7 +169,9 @@ export default function SearchBar() {
               color="inherit"
             >
               <Badge badgeContent={0} color="default">
-                <FavoriteIcon />
+                <Link to={"./wishlist"}>
+                  <FavoriteIcon />
+                </Link>
               </Badge>
             </IconButton>
             <IconButton

@@ -98,18 +98,22 @@ const productSlice = createSlice({
       );
       state.productsInCart.splice(existingItemIndex, 1);
     },
-    // add to fav list
+    // add to wish list
     addToWishList: (state, action: PayloadAction<ProductType>) => {
-      // state: {products, favList}
-      // logic
-      // write logic to not allow user to add same product tp fav list
-      state.wishList.push(action.payload);
+      const itemToAdd = action.payload;
+      // Check if the item is already in the list
+      const existingItemIndex = state.wishList.findIndex(
+        (item) => item.id === itemToAdd.id
+      );
+      // If it's not in the list, add it to the list
+      if (existingItemIndex === -1) {
+        state.wishList.push(itemToAdd);
+      }
     },
 
     getUserInput: (state, action) => {
       state.userInput = action.payload;
     },
-    // add new action for remove product from productList
     // add new action for remove product from favList
 
     changeTheme: () => {
