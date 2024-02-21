@@ -21,7 +21,6 @@ const usersSlice = createSlice({
   initialState,
   reducers: {
     saveUserInformation: (state, action: PayloadAction<UserType>) => {
-      // logic
       state.user = action.payload;
     },
   },

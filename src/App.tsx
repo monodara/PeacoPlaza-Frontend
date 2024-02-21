@@ -17,22 +17,14 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-      </Routes>
-      <Routes>
         <Route
           path="/products"
           element={
             <ProductCollect url={"https://api.escuelajs.co/api/v1/products"} />
           }
         />
-      </Routes>
-      <Routes>
         <Route path="/products/:id" element={<SingleProduct />} />
-      </Routes>
-      <Routes>
         <Route path="/cart" element={<Cart />} />
-      </Routes>
-      <Routes>
         <Route path="/wishlist" element={<WishList />} />
       </Routes>
       <Footer />

@@ -1,20 +1,16 @@
 import * as React from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import { CardActionArea } from "@mui/material";
-import { ProductType } from "../../misc/type";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+
 import {
   addToCart,
   addToWishList,
   removeFromWishList,
 } from "../../redux/slices/productSlice";
-import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { ProductType } from "../../misc/type";
 
 export default function ProductCardInWishList({
   product,
