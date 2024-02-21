@@ -1,19 +1,18 @@
 import { useEffect, useState } from "react";
 import axios, { AxiosError, AxiosResponse } from "axios";
-
 import { ProductType } from "../misc/type";
 
-export function useFetch(url: string) {
+export function useFetchSingleProduct(url: string) {
   //state
-  const [breweries, setBreweries] = useState<ProductType[]>([]);
+  const [product, setBrewery] = useState<ProductType | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
     axios
       .get(url)
-      .then((response: AxiosResponse<ProductType[]>) => {
-        setBreweries(response.data);
+      .then((response: AxiosResponse<ProductType>) => {
+        setBrewery(response.data);
         setLoading(false);
       })
       .catch((error: AxiosError) => {
@@ -21,5 +20,5 @@ export function useFetch(url: string) {
         setLoading(false);
       });
   }, [url]);
-  return { breweries, loading, error };
+  return { product, loading, error };
 }

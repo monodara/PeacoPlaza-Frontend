@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import { ProductType } from "../../misc/type";
+import { CartProductType, ProductType } from "../../misc/type";
 
 type InitialState = {
   products: ProductType[];
@@ -8,7 +8,7 @@ type InitialState = {
   userInput: string;
   loading: boolean;
   error?: string;
-  productsInCart: ProductType[];
+  productsInCart: CartProductType[];
 };
 
 const initialState: InitialState = {
@@ -40,6 +40,44 @@ const productSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
+    //add a product to cart
+    addToCart: (state, action: PayloadAction<ProductType>) => {
+      const itemToAdd = action.payload;
+      // Check if the item is already in the cart
+      const existingItemIndex = state.productsInCart.findIndex(
+        (item) => item.id === itemToAdd.id
+      );
+      if (existingItemIndex !== -1) {
+        // Item is already in the cart, update its quantity
+        // Get current amount
+        const currentAmount = state.productsInCart[existingItemIndex].amount;
+        // Update amount
+        state.productsInCart[existingItemIndex] = {
+          ...itemToAdd,
+          amount: currentAmount + 1,
+        };
+      } else {
+        // Item is not in the cart, add it with quantity 1
+        state.productsInCart.push({ ...itemToAdd, amount: 1 });
+      }
+    },
+    incrementProductAmount: (state, action: PayloadAction<CartProductType>) => {
+      const itemToAdd = action.payload;
+      // Check if the item is already in the cart
+      const existingItemIndex = state.productsInCart.findIndex(
+        (item) => item.id === itemToAdd.id
+      );
+      if (existingItemIndex !== -1) {
+        // Item is already in the cart, update its quantity
+        // Get current amount
+        const currentAmount = state.productsInCart[existingItemIndex].amount;
+        // Update amount
+        state.productsInCart[existingItemIndex] = {
+          ...itemToAdd,
+          amount: currentAmount + 1,
+        };
+      }
+    },
     // add to fav list
     addToWishList: (state, action: PayloadAction<ProductType>) => {
       // state: {products, favList}
@@ -93,6 +131,11 @@ const productSlice = createSlice({
 
 const productReducer = productSlice.reducer;
 
-export const { addToWishList, getUserInput } = productSlice.actions;
+export const {
+  addToWishList,
+  getUserInput,
+  addToCart,
+  incrementProductAmount,
+} = productSlice.actions;
 // actions: use in component:
 export default productReducer;

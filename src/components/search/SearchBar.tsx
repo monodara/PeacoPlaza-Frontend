@@ -18,14 +18,21 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import HomeIcon from "@mui/icons-material/Home";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import SearchInput from "./SearchInput";
-import { Provider } from "react-redux";
-import store from "../../redux/store";
+import { Provider, useDispatch, useSelector } from "react-redux";
+import store, { AppState } from "../../redux/store";
+import { openRightDrawer } from "../../redux/slices/cartSlice";
+import { CartDrawer } from "../cart/CartDrawer";
 
 export default function SearchBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
-
+  //control the drawer
+  const dispatch = useDispatch();
+  const drawerOpen = useSelector((state: AppState) => state.cart.drawerOpen);
+  function openDrawer() {
+    dispatch(openRightDrawer());
+  }
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -122,6 +129,7 @@ export default function SearchBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
+      <CartDrawer />
       <AppBar position="static">
         <Toolbar>
           <Typography
@@ -157,6 +165,7 @@ export default function SearchBar() {
               size="large"
               aria-label="show 4 new mails"
               color="inherit"
+              onClick={openDrawer}
             >
               <Badge badgeContent={0} color="info">
                 <ShoppingCartIcon />

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Products from "../components/product/Products";
 import { Provider, useSelector } from "react-redux";
 import store, { AppState } from "../redux/store";
@@ -15,18 +15,20 @@ export default function ProductCollect({ url }: { url: string }) {
   if (id !== "") {
     const encodedId = encodeURIComponent(id);
     url += `?categoryId=${encodedId}`;
-    //get category by id
-    axios
-      .get(`https://api.escuelajs.co/api/v1/categories/${id}`)
-      .then((response: AxiosResponse<CategoryType>) => {
-        setCategory(response.data);
-        // setLoading(false);
-      })
-      .catch((error: AxiosError) => {
-        // setError(error.message);
-        // setLoading(false);
-      });
   }
+  useEffect(() => {
+    if (id !== "") {
+      //get category by id
+      axios
+        .get(`https://api.escuelajs.co/api/v1/categories/${id}`)
+        .then((response: AxiosResponse<CategoryType>) => {
+          setCategory(response.data);
+        })
+        .catch((error: AxiosError) => {
+          // Handle error if needed
+        });
+    }
+  }, [id]);
   // original products
   const result = useSelector((state: AppState) => state.products.products);
   // redux
@@ -48,7 +50,6 @@ export default function ProductCollect({ url }: { url: string }) {
   return (
     <div>
       {category && <p>{category.name}</p>}
-      {/* ProductPage; */}
       <Products url={url} />
       <button onClick={sortHandler}>sort</button>
     </div>

@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import userReducer from "./slices/userSlice";
 import productQueries from "./productQuery";
 import categoryReducer from "./slices/categorySlice";
+import cartReducer from "./slices/cartSlice";
 
 // store all states
 const store = configureStore({
@@ -18,6 +19,8 @@ const store = configureStore({
     categories: categoryReducer,
     //user reducer
     users: userReducer,
+    //cart reducer
+    cart: cartReducer,
     // query
     [productQueries.reducerPath]: productQueries.reducer,
   },

@@ -6,6 +6,9 @@ export type ProductType = {
   category: CategoryType;
   images: string[];
 };
+export type CartProductType = ProductType & {
+  amount: number;
+};
 export type CategoryType = {
   id: number;
   name: string;
