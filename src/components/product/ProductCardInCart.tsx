@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { CartProductType } from "../../misc/type";
 import { useDispatch } from "react-redux";
+import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
 import {
   decrementProductAmount,
   incrementProductAmount,
   removeFromCart,
+  updateProductAmount,
 } from "../../redux/slices/cartSlice";
 import DeletePopover from "./DeletePopover";
 
@@ -22,9 +24,19 @@ export default function ProductCardInCart({
   const handleCloseModal = () => {
     setOpenModal(false);
   };
-  const [confirmDeletion, setConfirmDeletion] = useState(false);
   const dispatch = useDispatch();
-  function amountHandler() {}
+  function amountHandler(
+    event: React.ChangeEvent<HTMLInputElement>,
+    product: CartProductType
+  ) {
+    if (Number(event.target.value) <= 0) {
+      handleOpenModal();
+    } else {
+      const newAmount = parseInt(event.target.value);
+      console.log(newAmount);
+      dispatch(updateProductAmount({ product, newAmount }));
+    }
+  }
   function decrementAmount(product: CartProductType) {
     if (product.amount > 1) dispatch(decrementProductAmount(product));
     else {
@@ -62,7 +74,7 @@ export default function ProductCardInCart({
               type="text"
               className="focus:outline-none bg-gray-100 border h-6 w-8 rounded text-sm px-2 mx-2"
               value={product.amount}
-              onChange={amountHandler}
+              onChange={(e) => amountHandler(e, product)}
             />
             <span
               className="font-semibold"
@@ -77,7 +89,9 @@ export default function ProductCardInCart({
               product.price * product.amount
             }.00€`}</span>
           </div>
-          <button onClick={handleOpenModal}>❌</button>
+          <button onClick={handleOpenModal}>
+            <DeleteForeverRoundedIcon />
+          </button>
           <DeletePopover
             open={openModal}
             onClose={handleCloseModal}

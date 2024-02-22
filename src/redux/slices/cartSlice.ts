@@ -55,6 +55,7 @@ const cartSlice = createSlice({
       const existingItemIndex = state.productsInCart.findIndex(
         (item) => item.id === itemToAdd.id
       );
+      console.log(existingItemIndex);
       // Item is already in the cart, update its quantity
       // Get current amount
       const currentAmount = state.productsInCart[existingItemIndex].amount;
@@ -79,6 +80,22 @@ const cartSlice = createSlice({
         amount: currentAmount - 1,
       };
     },
+    updateProductAmount: (
+      state,
+      action: PayloadAction<{ product: CartProductType; newAmount: number }>
+    ) => {
+      console.log(action.payload);
+      const { product, newAmount } = action.payload;
+      // Check if the item is already in the cart
+      const existingItemIndex = state.productsInCart.findIndex(
+        (item) => item.id === product.id
+      );
+      // Update amount
+      state.productsInCart[existingItemIndex] = {
+        ...product,
+        amount: newAmount,
+      };
+    },
     removeFromCart: (state, action: PayloadAction<ProductType>) => {
       const itemToRemove = action.payload;
       // Find the index
@@ -99,5 +116,6 @@ export const {
   incrementProductAmount,
   decrementProductAmount,
   removeFromCart,
+  updateProductAmount,
 } = cartSlice.actions;
 export default cartReducer;
