@@ -54,64 +54,6 @@ const productSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-    //add a product to cart
-    addToCart: (state, action: PayloadAction<ProductType>) => {
-      const itemToAdd = action.payload;
-      // Check if the item is already in the cart
-      const existingItemIndex = state.productsInCart.findIndex(
-        (item) => item.id === itemToAdd.id
-      );
-      if (existingItemIndex !== -1) {
-        // Get current amount
-        const currentAmount = state.productsInCart[existingItemIndex].amount;
-        // Update amount
-        state.productsInCart[existingItemIndex] = {
-          ...itemToAdd,
-          amount: currentAmount + 1,
-        };
-      } else {
-        // Item is not in the cart, add it with quantity 1
-        state.productsInCart.push({ ...itemToAdd, amount: 1 });
-      }
-    },
-    incrementProductAmount: (state, action: PayloadAction<CartProductType>) => {
-      const itemToAdd = action.payload;
-      // Check if the item is already in the cart
-      const existingItemIndex = state.productsInCart.findIndex(
-        (item) => item.id === itemToAdd.id
-      );
-      // Item is already in the cart, update its quantity
-      // Get current amount
-      const currentAmount = state.productsInCart[existingItemIndex].amount;
-      // Update amount
-      state.productsInCart[existingItemIndex] = {
-        ...itemToAdd,
-        amount: currentAmount + 1,
-      };
-    },
-    decrementProductAmount: (state, action: PayloadAction<CartProductType>) => {
-      const itemToReduce = action.payload;
-      // Check if the item is already in the cart
-      const existingItemIndex = state.productsInCart.findIndex(
-        (item) => item.id === itemToReduce.id
-      );
-      // There are more than one item in the cart
-      // Get current amount
-      const currentAmount = state.productsInCart[existingItemIndex].amount;
-      // Update amount
-      state.productsInCart[existingItemIndex] = {
-        ...itemToReduce,
-        amount: currentAmount - 1,
-      };
-    },
-    removeFromCart: (state, action: PayloadAction<ProductType>) => {
-      const itemToRemove = action.payload;
-      // Find the index
-      const existingItemIndex = state.productsInCart.findIndex(
-        (item) => item.id === itemToRemove.id
-      );
-      state.productsInCart.splice(existingItemIndex, 1);
-    },
     // add to wish list
     addToWishList: (state, action: PayloadAction<ProductType>) => {
       const itemToAdd = action.payload;
@@ -180,11 +122,7 @@ const productReducer = productSlice.reducer;
 export const {
   addToWishList,
   getUserInput,
-  addToCart,
-  incrementProductAmount,
-  decrementProductAmount,
-  removeFromCart,
+
   removeFromWishList,
 } = productSlice.actions;
-// actions: use in component:
 export default productReducer;

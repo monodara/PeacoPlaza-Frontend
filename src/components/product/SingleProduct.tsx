@@ -6,7 +6,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 import { useFetchSingleProduct } from "../../hooks/useFetchSingleProducts";
 import { useDispatch } from "react-redux";
 import { ProductType } from "../../misc/type";
-import { addToCart } from "../../redux/slices/productSlice";
+import { addToCart } from "../../redux/slices/cartSlice";
 
 export default function SingleProduct() {
   const { id } = useParams();
