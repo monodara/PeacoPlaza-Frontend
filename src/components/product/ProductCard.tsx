@@ -7,7 +7,8 @@ import { CardActionArea } from "@mui/material";
 import { ProductType } from "../../misc/type";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addToCart, addToWishList } from "../../redux/slices/productSlice";
+import { addToWishList } from "../../redux/slices/productSlice";
+import { addToCart } from "../../redux/slices/cartSlice";
 
 export default function ProductCard({ product }: { product: ProductType }) {
   const dispatch = useDispatch();

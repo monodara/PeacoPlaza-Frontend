@@ -5,7 +5,7 @@ import {
   decrementProductAmount,
   incrementProductAmount,
   removeFromCart,
-} from "../../redux/slices/productSlice";
+} from "../../redux/slices/cartSlice";
 import DeletePopover from "./DeletePopover";
 
 export default function ProductCardInCart({

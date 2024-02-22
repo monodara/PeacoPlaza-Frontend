@@ -37,7 +37,7 @@ export const useAppDispatch = () => useDispatch<typeof store.dispatch>();
 store.subscribe(() => {
   const currentState = store.getState();
   const userInformation = currentState.users.user;
-  const productsInCart = currentState.products.productsInCart;
+  const productsInCart = currentState.cart.productsInCart;
   const wishlist = currentState.products.wishList;
   // store user
   localStorage.setItem("userInformation", JSON.stringify(userInformation));

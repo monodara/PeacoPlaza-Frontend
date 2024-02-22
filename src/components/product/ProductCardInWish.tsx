@@ -6,11 +6,11 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 import {
-  addToCart,
   addToWishList,
   removeFromWishList,
 } from "../../redux/slices/productSlice";
 import { ProductType } from "../../misc/type";
+import { addToCart } from "../../redux/slices/cartSlice";
 
 export default function ProductCardInWishList({
   product,
