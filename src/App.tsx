@@ -9,6 +9,8 @@ import ProductCollect from "./pages/ProductCollect";
 import SingleProduct from "./components/product/SingleProduct";
 import Cart from "./pages/Cart";
 import WishList from "./pages/WishList";
+import UserRegisterForm from "./components/user/UserRegister";
+import UserProfile from "./components/user/UseProfile";
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
         <Route path="/products/:id" element={<SingleProduct />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/wishlist" element={<WishList />} />
+        <Route path="/register" element={<UserRegisterForm />} />
+        <Route path="/profile" element={<UserProfile />} />
       </Routes>
       <Footer />
     </div>

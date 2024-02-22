@@ -15,14 +15,14 @@ export type CategoryType = {
   image: string;
 };
 
-export type UserRegister = {
+export type UserRegisterType = {
   name: string;
   email: string;
   password: string;
   avatar: string;
 };
 
-export type UserType = UserRegister & {
+export type UserType = UserRegisterType & {
   role: "customer" | "admin";
   id: number;
 };
