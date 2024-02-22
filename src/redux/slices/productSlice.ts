@@ -10,13 +10,27 @@ type InitialState = {
   error?: string;
   productsInCart: CartProductType[];
 };
+let productsInCartState: CartProductType[];
+let wishlistState: ProductType[];
+const cartdata = localStorage.getItem("productsInCart");
+const wishlistdata = localStorage.getItem("wishlist");
 
+if (cartdata) {
+  productsInCartState = JSON.parse(cartdata);
+} else {
+  productsInCartState = [];
+}
+if (wishlistdata) {
+  wishlistState = JSON.parse(wishlistdata);
+} else {
+  wishlistState = [];
+}
 const initialState: InitialState = {
   products: [],
   loading: false,
-  wishList: [],
+  wishList: wishlistState,
   userInput: "",
-  productsInCart: [],
+  productsInCart: productsInCartState,
 };
 
 // const url = "https://api.escuelajs.co/api/v1/products";
