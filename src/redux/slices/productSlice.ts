@@ -116,5 +116,4 @@ export const {
 
   removeFromWishList,
 } = productSlice.actions;
-// actions: use in component:
 export default productReducer;

@@ -1,5 +1,3 @@
-// slice: action + reducer
-
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { CartProductType, ProductType } from "../../misc/type";
 
@@ -20,19 +18,14 @@ const initialState: InitialState = {
   drawerOpen: false,
 };
 
-// reducer: how change the value of state
 const cartSlice = createSlice({
-  name: "drawer",
+  name: "cart",
   initialState,
   reducers: {
     openRightDrawer: (state) => {
-      // logic
-      // redux tool kit -  make copy
       state.drawerOpen = true;
     },
     closeRightDrawer: (state) => {
-      // logic
-      // redux tool kit -  make copy
       state.drawerOpen = false;
     },
     //add a product to cart
