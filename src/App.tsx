@@ -11,6 +11,7 @@ import Cart from "./pages/Cart";
 import WishList from "./pages/WishList";
 import UserRegisterForm from "./components/user/UserRegister";
 import UserProfile from "./components/user/UseProfile";
+import UserLogin from "./components/user/UserLogin";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path="/wishlist" element={<WishList />} />
         <Route path="/register" element={<UserRegisterForm />} />
         <Route path="/profile" element={<UserProfile />} />
+        <Route path="/login" element={<UserLogin />} />
       </Routes>
       <Footer />
     </div>

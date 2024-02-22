@@ -9,10 +9,6 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 export default function UserProfile() {
   const [userForm, setUserForm] = useState();
 
-  // form enter email + password
-  // send post,https://api.escuelajs.co/api/v1/auth/login
-  // body:
-
   // get user information
   const user = useSelector((state: AppState) => state.users.user);
 
@@ -20,29 +16,9 @@ export default function UserProfile() {
     return <div> no user</div>;
   }
 
-  //token from  local storage
-  const token = localStorage.getItem("token");
-
-  // send token with fetch
-  fetch("https://api.escuelajs.co/api/v1/auth/profile", {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-  });
-
-  // send token with axios
-  axios.get("https://api.escuelajs.co/api/v1/auth/profile", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
   return (
     <div>
       <h1>UserProfile</h1>
-      <p> name: {user.name}</p>
       <div className="max-w-sm mx-auto bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-lg">
         <div className="border-b px-4 pb-6">
           <div className="text-center my-4">
@@ -62,7 +38,7 @@ export default function UserProfile() {
           </div>
           <div className="flex gap-2 px-2">
             <button className="flex-1 rounded-full bg-blue-600 dark:bg-blue-800 text-white dark:text-white antialiased font-bold hover:bg-blue-800 dark:hover:bg-blue-900 px-4 py-2">
-              Change Password
+              Change Username
             </button>
           </div>
         </div>
@@ -70,13 +46,13 @@ export default function UserProfile() {
           <div className="flex gap-2 items-center text-gray-800 dark:text-gray-300 mb-4">
             <ShoppingCartIcon />
             <span>
-              <Link to={"./cart"}>My Cart</Link>
+              <Link to={"/cart"}>My Cart</Link>
             </span>
           </div>
           <div className="flex gap-2 items-center text-gray-800 dark:text-gray-300 mb-2">
             <FavoriteIcon />
             <span>
-              <Link to={"./wishlist"}>My Wishlist</Link>
+              <Link to={"/wishlist"}>My Wishlist</Link>
             </span>
           </div>
         </div>

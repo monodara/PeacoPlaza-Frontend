@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import { UserRegisterType } from "../../misc/type";
 import axios from "axios";
-import { error } from "console";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Box, TextField, Button } from "@mui/material";
@@ -51,8 +50,8 @@ export default function UserRegisterForm() {
         }
       })
       .catch((error) => {
-        dispatch(saveUserInformation({ ...values, role: "customer", id: 100 }));
-        navigate("/profile");
+        // dispatch(saveUserInformation({ ...values, role: "customer", id: 100 }));
+        // navigate("/profile");
         console.log(error);
       });
   }
@@ -74,6 +73,14 @@ export default function UserRegisterForm() {
                 margin: "0 auto", // Horizontally center the form fields and button
               }}
             >
+              <Button
+                variant="text"
+                type="button"
+                sx={{ display: "block", margin: "20px auto" }}
+                onClick={() => navigate("/login")}
+              >
+                Already have an account?
+              </Button>
               <Field
                 as={TextField}
                 fullWidth
@@ -82,7 +89,6 @@ export default function UserRegisterForm() {
                 name="name"
                 error={errors.name && touched.name}
                 helperText={<ErrorMessage name="name" />}
-                // onChange={onChangeHandler}
               />
               <Field
                 as={TextField}
@@ -92,7 +98,6 @@ export default function UserRegisterForm() {
                 name="email"
                 error={errors.email && touched.email}
                 helperText={<ErrorMessage name="email" />}
-                // onChange={onChangeHandler}
               />
               <Field
                 as={TextField}
@@ -102,7 +107,6 @@ export default function UserRegisterForm() {
                 name="password"
                 error={errors.password && touched.password}
                 helperText={<ErrorMessage name="password" />}
-                // onChange={onChangeHandler}
               />
               <Field
                 as={TextField}
@@ -112,7 +116,6 @@ export default function UserRegisterForm() {
                 name="avatar"
                 error={errors.avatar && touched.avatar}
                 helperText={<ErrorMessage name="avatar" />}
-                // onChange={onChangeHandler}
               />
               <Button
                 variant="contained"
