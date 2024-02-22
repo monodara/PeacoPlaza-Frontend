@@ -93,6 +93,20 @@ const cartSlice = createSlice({
       );
       state.productsInCart.splice(existingItemIndex, 1);
     },
+    updateProductAmount: (
+      state,
+      action: PayloadAction<{ product: CartProductType; newAmount: number }>
+    ) => {
+      const { product, newAmount } = action.payload;
+      // Find the index
+      const existingItemIndex = state.productsInCart.findIndex(
+        (item) => item.id === product.id
+      );
+      state.productsInCart[existingItemIndex] = {
+        ...product,
+        amount: newAmount,
+      };
+    },
   },
 });
 
@@ -105,6 +119,6 @@ export const {
   incrementProductAmount,
   decrementProductAmount,
   removeFromCart,
+  updateProductAmount,
 } = cartSlice.actions;
-// actions: use in component:
 export default cartReducer;

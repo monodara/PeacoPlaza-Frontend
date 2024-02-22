@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { CartProductType } from "../../misc/type";
 import { useDispatch } from "react-redux";
 import {
   decrementProductAmount,
   incrementProductAmount,
   removeFromCart,
+  updateProductAmount,
 } from "../../redux/slices/cartSlice";
 import DeletePopover from "./DeletePopover";
 
@@ -24,7 +25,17 @@ export default function ProductCardInCart({
   };
   const [confirmDeletion, setConfirmDeletion] = useState(false);
   const dispatch = useDispatch();
-  function amountHandler() {}
+  function amountHandler(
+    e: ChangeEvent<HTMLInputElement>,
+    product: CartProductType
+  ) {
+    const newAmount = parseInt(e.target.value);
+    if (newAmount <= 0) {
+      handleOpenModal();
+    } else {
+      dispatch(updateProductAmount({ product, newAmount }));
+    }
+  }
   function decrementAmount(product: CartProductType) {
     if (product.amount > 1) dispatch(decrementProductAmount(product));
     else {
@@ -62,7 +73,7 @@ export default function ProductCardInCart({
               type="text"
               className="focus:outline-none bg-gray-100 border h-6 w-8 rounded text-sm px-2 mx-2"
               value={product.amount}
-              onChange={amountHandler}
+              onChange={(e) => amountHandler(e, product)}
             />
             <span
               className="font-semibold"
