@@ -12,12 +12,14 @@ import WishList from "./pages/WishList";
 import UserRegisterForm from "./components/user/UserRegister";
 import UserProfile from "./components/user/UseProfile";
 import UserLogin from "./components/user/UserLogin";
+import SearchForm from "./components/search/SearchForm";
 
 function App() {
   return (
     <div className="App">
-      <SearchBar />
       <Navbar />
+      <SearchForm />
+      <SearchBar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
