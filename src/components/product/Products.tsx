@@ -23,7 +23,7 @@ export default function ProductsFetchData({ url }: { url: string }) {
   );
   const filteredProducts = productList.filter((p) => {
     return (
-      p.images.length === 3 && //filter test data
+      // p.images.length === 3 && //filter test data
       p.title.toLowerCase().includes(searchKeyword.toLowerCase())
     );
   });

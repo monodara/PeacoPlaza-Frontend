@@ -50,7 +50,7 @@ function Navbar() {
           All Products
         </a>
         <a
-          href="#"
+          href="/categories"
           className="block md:inline-block text-green-900 hover:text-green-500 px-3 py-3 border-b-2 border-green-900 md:border-none"
         >
           By Category
@@ -74,7 +74,9 @@ function Navbar() {
           >
             <ShoppingCartIcon className="h-6 w-6 text-green-900 hover:text-green-500 cursor-pointer mx-4" />
           </Badge>
-          <FavoriteIcon className="h-6 w-6 text-green-900 hover:text-green-500 cursor-pointer mx-4" />
+          <Link to={"./wishlist"}>
+            <FavoriteIcon className="h-6 w-6 text-green-900 hover:text-green-500 cursor-pointer mx-4" />
+          </Link>
         </div>
       </div>
     </nav>

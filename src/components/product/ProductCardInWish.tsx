@@ -2,8 +2,8 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 import {
   addToWishList,
@@ -44,39 +44,49 @@ export default function ProductCardInWishList({
       >
         <DeleteForeverOutlinedIcon />
       </button>
-
-      <Link to={`${product.id}`}>
+      <Link to={`/products/${product.id}`}>
         <div
-          className="flex items-end justify-end h-96 w-full bg-cover"
+          className="flex items-end justify-end h-60 w-full bg-cover"
           style={{ backgroundImage: `url(${product.images[0]})` }}
         >
-          {/* Existing buttons */}
+          {/* Heart button */}
           <button
-            className="p-2 rounded-full bg-green-600 text-white mx-2 -mb-4 hover:bg-green-500 focus:outline-none focus:bg-green-500"
+            className="p-2 rounded-full bg-green-600 text-white ml-2 -mb-4 hover:bg-green-500 focus:outline-none focus:bg-green-500"
             onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
+              e.preventDefault(); // Prevent default action (navigation)
+              e.stopPropagation(); // Stop event propagation
               handleHeartClick(product);
             }}
           >
-            <FavoriteBorderIcon />
+            <FavoriteIcon />
           </button>
+
+          {/* Cart button */}
           <button
-            className="p-2 rounded-full bg-blue-600 text-white mx-2 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500"
+            className="p-2 rounded-full bg-green-500 text-white mx-5 -mb-4 hover:bg-green-400 focus:outline-none focus:bg-blue-500"
             onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
+              e.preventDefault(); // Prevent default action (navigation)
+              e.stopPropagation(); // Stop event propagation
               cartButtonHandler(product);
             }}
           >
-            <ShoppingCartOutlinedIcon />
+            <ShoppingCartIcon />
           </button>
         </div>
       </Link>
-      <div className="px-5 py-3 ">
-        <h3 className="text-gray-700 uppercase">{product.title}</h3>
-        <p className="text-sm text-gray-500">{product.description}</p>
-        <span className="text-gray-500 mt-6 font-semibold text-right">
+
+      {/* Product details */}
+      <div className="px-5 py-3">
+        {/* Product title */}
+        <h3 className="text-gray-700 font-semibold text-sm uppercase mb-2 mt-4">
+          {product.title}
+        </h3>
+        {/* Product description */}
+        <p className="text-sm text-gray-500 line-clamp-2 mb-4">
+          {product.description}
+        </p>
+        {/* Product price */}
+        <span className="text-gray-700 font-semibold text-right">
           {`${product.price}.00€`}
         </span>
       </div>

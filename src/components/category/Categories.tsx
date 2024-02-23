@@ -20,14 +20,18 @@ export default function CategoryFetchData() {
   );
 
   return (
-    <div>
-      <Box sx={{ displayPrint: "inline" }}>
+    <div className="container mx-auto px-4">
+      <h3 className="text-2xl font-bold mb-4 mt-6">Show by Category</h3>
+      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
         {categoryList.map((category) => {
-          //filter the category that has a valid image
-          if (category.image.includes("imgur"))
-            return <CategoryCard key={category.id} category={category} />;
+          // Filter the category that has a valid image
+          // if (category.image.includes("imgur")) {
+          return <CategoryCard key={category.id} category={category} />;
+          // } else {
+          //   return null; // Skip categories without valid images
+          // }
         })}
-      </Box>
+      </div>
     </div>
   );
 }

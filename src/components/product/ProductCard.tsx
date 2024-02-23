@@ -44,7 +44,7 @@ export default function ProductCard({ product }: { product: ProductType }) {
 
           {/* Cart button */}
           <button
-            className="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500"
+            className="p-2 rounded-full bg-green-500 text-white mx-5 -mb-4 hover:bg-green-400 focus:outline-none focus:bg-blue-500"
             onClick={(e) => {
               e.preventDefault(); // Prevent default action (navigation)
               e.stopPropagation(); // Stop event propagation
@@ -59,7 +59,7 @@ export default function ProductCard({ product }: { product: ProductType }) {
       {/* Product details */}
       <div className="px-5 py-3">
         {/* Product title */}
-        <h3 className="text-gray-700 font-semibold text-sm uppercase mb-2">
+        <h3 className="text-gray-700 font-semibold text-sm uppercase mb-2 mt-4">
           {product.title}
         </h3>
         {/* Product description */}

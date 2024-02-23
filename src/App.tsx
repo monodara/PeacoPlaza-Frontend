@@ -13,6 +13,7 @@ import UserRegisterForm from "./components/user/UserRegister";
 import UserProfile from "./components/user/UseProfile";
 import UserLogin from "./components/user/UserLogin";
 import SearchForm from "./components/search/SearchForm";
+import Categories from "./components/category/Categories";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path="/register" element={<UserRegisterForm />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/login" element={<UserLogin />} />
+        <Route path="/categories" element={<Categories />} />
       </Routes>
       <Footer />
     </div>
