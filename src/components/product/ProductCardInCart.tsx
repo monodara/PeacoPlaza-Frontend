@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { CartProductType } from "../../misc/type";
 import { useDispatch } from "react-redux";
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
@@ -26,14 +26,13 @@ export default function ProductCardInCart({
   };
   const dispatch = useDispatch();
   function amountHandler(
-    event: React.ChangeEvent<HTMLInputElement>,
+    e: ChangeEvent<HTMLInputElement>,
     product: CartProductType
   ) {
-    if (Number(event.target.value) <= 0) {
+    const newAmount = parseInt(e.target.value);
+    if (newAmount <= 0) {
       handleOpenModal();
     } else {
-      const newAmount = parseInt(event.target.value);
-      console.log(newAmount);
       dispatch(updateProductAmount({ product, newAmount }));
     }
   }

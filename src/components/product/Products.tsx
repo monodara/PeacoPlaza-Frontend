@@ -23,16 +23,18 @@ export default function ProductsFetchData({ url }: { url: string }) {
   );
   const filteredProducts = productList.filter((p) => {
     return (
-      p.images.length === 3 && //filter test data
+      // p.images.length === 3 && //filter test data
       p.title.toLowerCase().includes(searchKeyword.toLowerCase())
     );
   });
 
   return (
-    <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6 mx-auto">
-      {filteredProducts.map((product) => {
-        return <ProductCard key={product.id} product={product} />;
-      })}
+    <div className="container mx-auto px-4">
+      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
+        {filteredProducts.map((product) => {
+          return <ProductCard key={product.id} product={product} />;
+        })}
+      </div>
     </div>
   );
 }

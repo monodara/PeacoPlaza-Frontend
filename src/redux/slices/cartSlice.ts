@@ -13,7 +13,6 @@ if (cartdata) {
 } else {
   productsInCartState = [];
 }
-
 const initialState: InitialState = {
   productsInCart: productsInCartState,
   drawerOpen: false,
@@ -80,22 +79,7 @@ const cartSlice = createSlice({
         amount: currentAmount - 1,
       };
     },
-    updateProductAmount: (
-      state,
-      action: PayloadAction<{ product: CartProductType; newAmount: number }>
-    ) => {
-      console.log(action.payload);
-      const { product, newAmount } = action.payload;
-      // Check if the item is already in the cart
-      const existingItemIndex = state.productsInCart.findIndex(
-        (item) => item.id === product.id
-      );
-      // Update amount
-      state.productsInCart[existingItemIndex] = {
-        ...product,
-        amount: newAmount,
-      };
-    },
+
     removeFromCart: (state, action: PayloadAction<ProductType>) => {
       const itemToRemove = action.payload;
       // Find the index
@@ -103,6 +87,20 @@ const cartSlice = createSlice({
         (item) => item.id === itemToRemove.id
       );
       state.productsInCart.splice(existingItemIndex, 1);
+    },
+    updateProductAmount: (
+      state,
+      action: PayloadAction<{ product: CartProductType; newAmount: number }>
+    ) => {
+      const { product, newAmount } = action.payload;
+      // Find the index
+      const existingItemIndex = state.productsInCart.findIndex(
+        (item) => item.id === product.id
+      );
+      state.productsInCart[existingItemIndex] = {
+        ...product,
+        amount: newAmount,
+      };
     },
   },
 });

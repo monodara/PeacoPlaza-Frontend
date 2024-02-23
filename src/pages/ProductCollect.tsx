@@ -29,29 +29,11 @@ export default function ProductCollect({ url }: { url: string }) {
         });
     }
   }, [id]);
-  // original products
-  const result = useSelector((state: AppState) => state.products.products);
-  // redux
-
-  // filter logic
-  // const filtered = result.filter((product) =>
-  //   product.title.toLowerCase().includes(userInput.toLowerCase())
-  // );
-
-  // filter: doesnt modify directly to array
-  // sort:
-  const [sortedArray, setSortedArray] = useState<ProductType[]>([]);
-  function sortHandler() {
-    const sortedArray = [...result].sort((a, b) => b.price - a.price);
-    console.log(sortedArray, "a");
-    setSortedArray(sortedArray);
-  }
 
   return (
     <div>
       {category && <p>{category.name}</p>}
       <Products url={url} />
-      <button onClick={sortHandler}>sort</button>
     </div>
   );
 }

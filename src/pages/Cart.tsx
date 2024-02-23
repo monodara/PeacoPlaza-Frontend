@@ -9,7 +9,7 @@ function Cart() {
   const navigate = useNavigate();
 
   const itemsInCart = useSelector(
-    (state: AppState) => state.products.productsInCart
+    (state: AppState) => state.cart.productsInCart
   );
   const [totalAmount, setTotalAmount] = useState(0);
 

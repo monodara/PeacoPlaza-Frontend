@@ -6,7 +6,7 @@ import { CartProductType } from "../../misc/type";
 
 export default function ProductsInCart() {
   const itemsInCart = useSelector(
-    (state: AppState) => state.products.productsInCart
+    (state: AppState) => state.cart.productsInCart
   );
 
   return (
