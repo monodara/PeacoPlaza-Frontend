@@ -53,7 +53,7 @@ function Navbar() {
           href="#"
           className="block md:inline-block text-green-900 hover:text-green-500 px-3 py-3 border-b-2 border-green-900 md:border-none"
         >
-          Categories
+          By Category
         </a>
       </div>
       <div
