@@ -6,11 +6,12 @@ import { Badge } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 
 import logo from "../../images/logo.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "../../redux/store";
 import { CartProductType } from "../../misc/type";
 import ListIcon from "@mui/icons-material/List";
 import DangerousOutlinedIcon from "@mui/icons-material/DangerousOutlined";
+import { openRightDrawer } from "../../redux/slices/cartSlice";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,6 +23,10 @@ function Navbar() {
     (state: AppState) => state.cart.productsInCart
   );
   const user = useSelector((state: AppState) => state.users.user);
+  const dispatch = useDispatch();
+  function openDrawer() {
+    dispatch(openRightDrawer());
+  }
   return (
     <nav className="flex flex-wrap items-center justify-between p-3 bg-slate-50">
       <Link to={"/"}>
@@ -74,7 +79,10 @@ function Navbar() {
             }}
           >
             <Link to={"./cart"}>
-              <ShoppingCartIcon className="h-6 w-6 text-green-900 hover:text-green-500 cursor-pointer mx-4" />
+              <ShoppingCartIcon
+                className="h-6 w-6 text-green-900 hover:text-green-500 cursor-pointer mx-4"
+                onClick={openDrawer}
+              />
             </Link>
           </Badge>
           <Badge
