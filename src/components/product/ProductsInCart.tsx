@@ -10,7 +10,7 @@ export default function ProductsInCart() {
   );
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 mb-10">
+    <div className="divide-y lg:col-span-2">
       {itemsInCart.map((p) => {
         return <ProductCardInCart key={p.id} product={p} />;
       })}

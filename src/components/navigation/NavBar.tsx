@@ -2,18 +2,26 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { Badge } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 
 import logo from "../../images/logo.png";
-import { Badge } from "@mui/material";
+import { useSelector } from "react-redux";
+import { AppState } from "../../redux/store";
+import { CartProductType } from "../../misc/type";
+import ListIcon from "@mui/icons-material/List";
+import DangerousOutlinedIcon from "@mui/icons-material/DangerousOutlined";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-
+  const wishlist = useSelector((state: AppState) => state.products.wishList);
+  const productsInCart = useSelector(
+    (state: AppState) => state.cart.productsInCart
+  );
+  const user = useSelector((state: AppState) => state.users.user);
   return (
     <nav className="flex flex-wrap items-center justify-between p-3 bg-slate-50">
       <Link to={"/"}>
@@ -21,21 +29,7 @@ function Navbar() {
       </Link>
       <div className="md:hidden">
         <button id="hamburger" onClick={toggleMenu}>
-          {isMenuOpen ? (
-            <img
-              className="toggle block"
-              src="https://img.icons8.com/fluent-systems-regular/2x/close-window.png"
-              width="40"
-              height="40"
-            />
-          ) : (
-            <img
-              className="toggle block"
-              src="https://img.icons8.com/fluent-systems-regular/2x/menu-squared-2.png"
-              width="40"
-              height="40"
-            />
-          )}
+          {isMenuOpen ? <DangerousOutlinedIcon /> : <ListIcon />}
         </button>
       </div>
       <div
@@ -62,9 +56,16 @@ function Navbar() {
         } md:flex items-center justify-end w-full md:w-auto`}
       >
         <div className="flex flex-row-reverse mt-6">
-          <AccountCircle className="h-6 w-6 text-green-900 hover:text-green-500 cursor-pointer mx-4" />
+          <Link to={"./cart"}>
+            <AccountCircle className="h-6 w-6 text-green-900 hover:text-green-500 cursor-pointer mx-4" />
+          </Link>
           <Badge
-            badgeContent={4}
+            badgeContent={productsInCart.reduce(
+              (sum, item: CartProductType) => {
+                return sum + item.amount;
+              },
+              0
+            )}
             color="error"
             overlap="circular"
             anchorOrigin={{
@@ -72,11 +73,23 @@ function Navbar() {
               horizontal: "right",
             }}
           >
-            <ShoppingCartIcon className="h-6 w-6 text-green-900 hover:text-green-500 cursor-pointer mx-4" />
+            <Link to={"./cart"}>
+              <ShoppingCartIcon className="h-6 w-6 text-green-900 hover:text-green-500 cursor-pointer mx-4" />
+            </Link>
           </Badge>
-          <Link to={"./wishlist"}>
-            <FavoriteIcon className="h-6 w-6 text-green-900 hover:text-green-500 cursor-pointer mx-4" />
-          </Link>
+          <Badge
+            badgeContent={wishlist.length}
+            color="error"
+            overlap="circular"
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+          >
+            <Link to={"./wishlist"}>
+              <FavoriteIcon className="h-6 w-6 text-green-900 hover:text-green-500 cursor-pointer mx-4" />
+            </Link>
+          </Badge>
         </div>
       </div>
     </nav>

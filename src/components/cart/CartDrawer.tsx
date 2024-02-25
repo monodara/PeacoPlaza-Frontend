@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import { AppState } from "../../redux/store";
 import { useDispatch } from "react-redux";
 import { closeRightDrawer } from "../../redux/slices/cartSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ProductsInCart from "../product/ProductsInCart";
 
 export function CartDrawer() {
@@ -18,18 +18,27 @@ export function CartDrawer() {
   const closeDrawer = () => {
     dispatch(closeRightDrawer());
   };
+  const navigate = useNavigate();
+  const visitCartPage = () => {
+    dispatch(closeRightDrawer());
+    navigate("/cart");
+  };
 
   return (
     <React.Fragment>
       <Drawer
         open={drawerOpen}
         onClose={closeDrawer}
-        className="p-4"
         placeholder={undefined}
         placement="right"
       >
         <div className="mb-6 flex items-center justify-between">
-          <Typography variant="h5" color="blue-gray" placeholder={undefined}>
+          <Typography
+            className="pt-6 pl-6"
+            variant="h5"
+            color="blue-gray"
+            placeholder={undefined}
+          >
             Subtotal in Cart
           </Typography>
           <IconButton
@@ -54,11 +63,17 @@ export function CartDrawer() {
             </svg>
           </IconButton>
         </div>
-        <Link to={"./cart"}>
-          <Button size="sm" variant="outlined" placeholder={undefined}>
+        <div className="ml-6 text-left">
+          <Button
+            size="sm"
+            variant="outlined"
+            placeholder={undefined}
+            className="color-green-500"
+            onClick={visitCartPage}
+          >
             Go to Cart
           </Button>
-        </Link>
+        </div>
         <ProductsInCart />
       </Drawer>
     </React.Fragment>
