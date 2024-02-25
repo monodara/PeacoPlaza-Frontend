@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import { useSelector } from "react-redux";
-import { AppState } from "../../redux/store";
+import { AppState, useAppDispatch } from "../../redux/store";
 import { CategoryType } from "../../misc/type";
 import { useDispatch } from "react-redux";
 import { getSearchKeyword } from "../../redux/slices/productSlice";
 import { Link, useNavigate } from "react-router-dom";
+import { fetchAllCategoriesAsync } from "../../redux/slices/categorySlice";
 
 function SearchForm() {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchAllCategoriesAsync());
+  }, [dispatch]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<null | CategoryType>(
     null
@@ -17,10 +22,9 @@ function SearchForm() {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const categories = useSelector(
-    (state: AppState) => state.categories.categories
+  const categoryList = useSelector(
+    (state: AppState) => state.categories.categoryList
   );
-  console.log(categories);
   function dropdownClickHandler(
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     category: CategoryType | null
@@ -28,7 +32,6 @@ function SearchForm() {
     setSelectedCategory(category);
     setIsDropdownOpen(false);
   }
-  const dispatch = useDispatch();
 
   return (
     <form className="max-w-lg mx-auto flex flex-col sm:flex-row items-start sm:items-center">
@@ -77,7 +80,7 @@ function SearchForm() {
                 All
               </button>
             </li>
-            {categories.map((c) => {
+            {categoryList.map((c) => {
               return (
                 <li key={c.id}>
                   <button

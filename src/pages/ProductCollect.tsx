@@ -9,31 +9,31 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 
 export default function ProductCollect({ url }: { url: string }) {
   // get the input from search field
-  // const [searchParams] = useSearchParams();
-  // // const [category, setCategory] = useState<CategoryType | null>(null);
-  // const id = searchParams.get("categoryId") || "";
-  // if (id !== "") {
-  //   const encodedId = encodeURIComponent(id);
-  //   url += `?categoryId=${encodedId}`;
-  // }
-  // useEffect(() => {
-  //   if (id !== "") {
-  //     //get category by id
-  //     axios
-  //       .get(`https://api.escuelajs.co/api/v1/categories/${id}`)
-  //       .then((response: AxiosResponse<CategoryType>) => {
-  //         // setCategory(response.data);
-  //       })
-  //       .catch((error: AxiosError) => {
-  //         // Handle error if needed
-  //       });
-  //   }
-  // }, [id]);
+  const [searchParams] = useSearchParams();
+  const [category, setCategory] = useState<CategoryType | null>(null);
+  const id = searchParams.get("categoryId") || "";
+  if (id !== "") {
+    const encodedId = encodeURIComponent(id);
+    url += `?categoryId=${encodedId}`;
+  }
+  useEffect(() => {
+    if (id !== "") {
+      //get category by id
+      axios
+        .get(`https://api.escuelajs.co/api/v1/categories/${id}`)
+        .then((response: AxiosResponse<CategoryType>) => {
+          setCategory(response.data);
+        })
+        .catch((error: AxiosError) => {
+          // Handle error if needed
+        });
+    }
+  }, [id]);
 
   return (
     <div>
-      {/* {category && <div className="mt-10">{category.name}</div>} */}
-      <Products url={url} />
+      {category && <div className="mt-10">{category.name}</div>}
+      {/* <Products url={url} /> */}
     </div>
   );
 }

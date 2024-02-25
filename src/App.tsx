@@ -14,6 +14,7 @@ import UserProfile from "./components/user/UseProfile";
 import UserLogin from "./components/user/UserLogin";
 import SearchForm from "./components/search/SearchForm";
 import Categories from "./components/category/Categories";
+import ProductsFetchData from "./components/product/Products";
 
 function App() {
   return (
@@ -26,7 +27,8 @@ function App() {
         <Route
           path="/products"
           element={
-            <ProductCollect url={"https://api.escuelajs.co/api/v1/products"} />
+            // <ProductCollect url={"https://api.escuelajs.co/api/v1/products"} />
+            <ProductsFetchData />
           }
         />
         <Route path="/products/:id" element={<SingleProduct />} />

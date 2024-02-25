@@ -3,13 +3,13 @@ import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { CategoryType } from "../../misc/type";
 
 type InitialState = {
-  categories: CategoryType[];
+  categoryList: CategoryType[];
   loading: boolean;
   error?: string;
 };
 
 const initialState: InitialState = {
-  categories: [],
+  categoryList: [],
   loading: false,
 };
 
@@ -45,7 +45,7 @@ const categorySlice = createSlice({
       if (!(action.payload instanceof Error)) {
         return {
           ...state,
-          categories: action.payload,
+          categoryList: action.payload,
           loading: false,
         };
       }
