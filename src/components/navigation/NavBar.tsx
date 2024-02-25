@@ -62,7 +62,7 @@ function Navbar() {
         } md:flex items-center justify-end w-full md:w-auto`}
       >
         <div className="flex flex-row-reverse mt-6">
-          <Link to={"./cart"}>
+          <Link to={user ? "./profile" : "./login"}>
             <AccountCircle className="h-6 w-6 text-green-900 hover:text-green-500 cursor-pointer mx-4" />
           </Link>
           <Badge

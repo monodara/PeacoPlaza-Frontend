@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
 
 import productReducer from "./slices/productSlice";
-import { useDispatch } from "react-redux";
 import userReducer from "./slices/userSlice";
 import productQueries from "./productQuery";
 import categoryReducer from "./slices/categorySlice";

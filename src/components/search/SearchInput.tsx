@@ -4,7 +4,7 @@ import { AppState, useAppDispatch } from "../../redux/store";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import { getUserInput } from "../../redux/slices/productSlice";
+import { getSearchKeyword } from "../../redux/slices/productSlice";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -50,13 +50,13 @@ export default function SearchInput() {
   const dispatch = useDispatch();
   function onChangeHandler(event: React.ChangeEvent<HTMLInputElement>) {
     setUserInput(event.target.value);
-    dispatch(getUserInput(userInput));
+    dispatch(getSearchKeyword(userInput));
   }
   function handleSearch(
     e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {
     if (e.key === "Enter") {
-      dispatch(getUserInput(userInput));
+      dispatch(getSearchKeyword(userInput));
     }
   }
   return (

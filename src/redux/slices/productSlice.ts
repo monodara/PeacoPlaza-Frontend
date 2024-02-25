@@ -5,7 +5,7 @@ import { CartProductType, ProductType } from "../../misc/type";
 type InitialState = {
   products: ProductType[];
   wishList: ProductType[];
-  userInput: string;
+  searchKeyword: string;
   loading: boolean;
   error?: string;
 };
@@ -21,7 +21,7 @@ const initialState: InitialState = {
   products: [],
   loading: false,
   wishList: wishlistState,
-  userInput: "",
+  searchKeyword: "",
 };
 
 // const url = "https://api.escuelajs.co/api/v1/products";
@@ -66,8 +66,8 @@ const productSlice = createSlice({
       state.wishList.splice(existingItemIndex, 1);
     },
 
-    getUserInput: (state, action) => {
-      state.userInput = action.payload;
+    getSearchKeyword: (state, action) => {
+      state.searchKeyword = action.payload;
     },
     // add new action for remove product from favList
 
@@ -112,7 +112,7 @@ const productReducer = productSlice.reducer;
 
 export const {
   addToWishList,
-  getUserInput,
+  getSearchKeyword,
 
   removeFromWishList,
 } = productSlice.actions;

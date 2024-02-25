@@ -19,7 +19,7 @@ export default function ProductsFetchData({ url }: { url: string }) {
     (state: AppState) => state.products.products
   );
   const searchKeyword: string = useSelector(
-    (state: AppState) => state.products.userInput
+    (state: AppState) => state.products.searchKeyword
   );
   const filteredProducts = productList.filter((p) => {
     return (
