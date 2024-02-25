@@ -12,6 +12,7 @@ import { CartProductType } from "../../misc/type";
 import ListIcon from "@mui/icons-material/List";
 import DangerousOutlinedIcon from "@mui/icons-material/DangerousOutlined";
 import { openRightDrawer } from "../../redux/slices/cartSlice";
+import { CartDrawer } from "../cart/CartDrawer";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -78,12 +79,11 @@ function Navbar() {
               horizontal: "right",
             }}
           >
-            <Link to={"./cart"}>
-              <ShoppingCartIcon
-                className="h-6 w-6 text-green-900 hover:text-green-500 cursor-pointer mx-4"
-                onClick={openDrawer}
-              />
-            </Link>
+            <ShoppingCartIcon
+              className="h-6 w-6 text-green-900 hover:text-green-500 cursor-pointer mx-4"
+              onClick={openDrawer}
+            />
+            <CartDrawer />
           </Badge>
           <Badge
             badgeContent={wishlist.length}
