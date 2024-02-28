@@ -44,7 +44,7 @@ export default function ProductCard({ product }: { product: ProductType }) {
 
           {/* Cart button */}
           <button
-            className="p-2 rounded-full bg-green-500 text-white mx-5 -mb-4 hover:bg-green-400 focus:outline-none focus:bg-blue-500"
+            className="p-2 rounded-full bg-green-500 text-white mx-5 -mb-4 hover:bg-green-400 focus:outline-none focus:bg-green-400"
             onClick={(e) => {
               e.preventDefault(); // Prevent default action (navigation)
               e.stopPropagation(); // Stop event propagation
