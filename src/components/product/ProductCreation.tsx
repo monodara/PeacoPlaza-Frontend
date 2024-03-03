@@ -1,16 +1,13 @@
 import React, { useState } from "react";
-
-import { UserRegisterType } from "../../misc/type";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Box, TextField, Button } from "@mui/material";
 import { object, string } from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { saveUserInformation } from "../../redux/slices/userSlice";
+import { UserRegisterType } from "../../misc/type";
 
-export default function UserRegisterForm() {
-  const navigate = useNavigate();
+export default function ProductCreation() {
   const dispatch = useDispatch();
 
   const [userInformation, setUserInformation] = useState<UserRegisterType>({
@@ -44,9 +41,9 @@ export default function UserRegisterForm() {
         if (response.status === 201) {
           // return user data
           // save information to redux
-          dispatch(saveUserInformation(response.data));
+          //   dispatch(saveUserInformation(response.data));
           // navigate user to log in
-          navigate("/profile");
+          //   navigate("/profile");
         }
       })
       .catch((error) => {
@@ -72,14 +69,6 @@ export default function UserRegisterForm() {
                 margin: "0 auto", // Horizontally center the form fields and button
               }}
             >
-              <Button
-                variant="text"
-                type="button"
-                sx={{ display: "block", margin: "20px auto" }}
-                onClick={() => navigate("/login")}
-              >
-                Already have an account?
-              </Button>
               <Field
                 as={TextField}
                 fullWidth

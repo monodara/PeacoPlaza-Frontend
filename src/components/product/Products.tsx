@@ -22,7 +22,6 @@ export default function ProductsFetchData() {
   if (maxPrice) url += `&price_max=${maxPrice}`;
 
   useEffect(() => {
-    console.log(url);
     dispatch(fetchAllProductsAsync(url));
   }, [url]);
 
