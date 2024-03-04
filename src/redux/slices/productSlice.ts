@@ -71,11 +71,12 @@ export const updateProductsAsync = createAsyncThunk(
   "updateProductsAsync",
   async (product: ProductType, { rejectWithValue }) => {
     const { title, price } = product;
+    const updatedProd = { title, price };
     try {
-      const result = await axios.put<ProductType>(url + product.id, {
-        title,
-        price,
-      });
+      const result = await axios.put<ProductType>(
+        url + product.id,
+        updatedProd
+      );
       return result.data;
     } catch (e) {
       const error = e as AxiosError;
@@ -173,9 +174,8 @@ const productSlice = createSlice({
     });
 
     // async delete a product
-    //success
+    // 1. success
     builder.addCase(deleteProductsAsync.fulfilled, (state, action) => {
-      console.log(action.meta.arg.id);
       // update data in redux
       if (!(action.payload instanceof Error) && action.payload) {
         const index = state.products.findIndex(
@@ -187,15 +187,50 @@ const productSlice = createSlice({
         }
       }
     });
-    // loading
+    // 2. loading
     builder.addCase(deleteProductsAsync.pending, (state, action) => {
       return {
         ...state,
         loading: true,
       };
     });
-    // error
+    // 3. error
     builder.addCase(deleteProductsAsync.rejected, (state, action) => {
+      if (action.payload instanceof Error) {
+        return {
+          ...state,
+          loading: false,
+          error: action.payload.message,
+        };
+      }
+    });
+    // async update a product
+    // 1. success
+    builder.addCase(updateProductsAsync.fulfilled, (state, action) => {
+      // save data in redux
+      if (!(action.payload instanceof Error)) {
+        const index = state.products.findIndex(
+          (product) => product.id === action.meta.arg.id
+        );
+        // If index found, remove the product from the state
+        if (index !== -1) {
+          state.products[index] = action.meta.arg;
+        }
+        return {
+          ...state,
+          loading: false,
+        };
+      }
+    });
+    // 2. loading
+    builder.addCase(updateProductsAsync.pending, (state, action) => {
+      return {
+        ...state,
+        loading: true,
+      };
+    });
+    // 3. error
+    builder.addCase(updateProductsAsync.rejected, (state, action) => {
       if (action.payload instanceof Error) {
         return {
           ...state,
