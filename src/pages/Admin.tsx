@@ -21,27 +21,10 @@ export default function Admin() {
           />
         </div>
         <nav
-          className={`flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto `}
+          className={`flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto`}
         >
-          <a
-            href="#"
-            className="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-          >
-            Profile
-          </a>
-          <a
-            href="#"
-            className="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-          >
-            My Orders
-          </a>
-          <a
-            href="#"
-            className="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-          >
-            My Address
-          </a>
-          <div className="relative">
+          {/* Category Management */}
+          <div>
             <button
               onClick={() => setOpenCateManage(!openCateManage)}
               className="flex flex-row items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
@@ -55,32 +38,22 @@ export default function Admin() {
               />
             </button>
             {openCateManage && (
-              <div className={`absolute right-0 w-full mt-2 origin-top-right`}>
-                <div className="px-2 py-2 bg-white rounded-md shadow">
-                  <a
-                    href="#"
-                    className="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-                  >
-                    Create a Category
-                  </a>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-                  >
-                    Update a Category
-                  </a>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-                  >
-                    Delete a Category
-                  </a>
-                </div>
+              <div className="px-2 py-2 bg-white rounded-md shadow">
+                <button className="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+                  Create a Category
+                </button>
+                <button className="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+                  Update a Category
+                </button>
+                <button className="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+                  Delete a Category
+                </button>
               </div>
             )}
           </div>
 
-          <div className="relative">
+          {/* Product Management */}
+          <div>
             <button
               onClick={() => setOpenProdManage(!openProdManage)}
               className="flex flex-row items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
@@ -94,31 +67,27 @@ export default function Admin() {
               />
             </button>
             {openProdManage && (
-              <div className={`absolute right-0 w-full mt-2 origin-top-right`}>
-                <div className="px-2 py-2 bg-white rounded-md shadow">
-                  <button
-                    className="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-                    onClick={() => setOpenProdCreate(true)}
-                  >
-                    Create a Product
-                  </button>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-                  >
-                    Update a Product
-                  </a>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-                  >
-                    Delete a Product
-                  </a>
-                </div>
+              <div className="px-2 py-2 bg-white rounded-md shadow">
+                <button
+                  className="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                  onClick={() => setOpenProdCreate(true)}
+                >
+                  Create a Product
+                </button>
+                <button className="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+                  Update a Product
+                </button>
+                <button className="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+                  Delete a Product
+                </button>
               </div>
             )}
           </div>
         </nav>
+      </div>
+      {/* Product Creation */}
+      <div className="flex justify-center items-center flex-grow mt-10">
+        <ProductCreation />
       </div>
     </div>
   );

@@ -1,6 +1,12 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import { CartProductType, ProductType } from "../../misc/type";
+import {
+  CartProductType,
+  ProductCreatedType,
+  ProductType,
+} from "../../misc/type";
+import axios, { AxiosError } from "axios";
+import { act } from "react-dom/test-utils";
 
 type InitialState = {
   products: ProductType[];
@@ -41,6 +47,20 @@ export const fetchAllProductsAsync = createAsyncThunk(
   }
 );
 
+const url = "https://api.escuelajs.co/api/v1/products/";
+export const createProductsAsync = createAsyncThunk(
+  "createProductsAsync",
+  async (newProduct: ProductCreatedType, { rejectWithValue }) => {
+    try {
+      const result = await axios.post<ProductType>(url, newProduct);
+      return result.data;
+    } catch (e) {
+      const error = e as AxiosError;
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const productSlice = createSlice({
   name: "products",
   initialState,
@@ -69,15 +89,15 @@ const productSlice = createSlice({
     getSearchKeyword: (state, action) => {
       state.searchKeyword = action.payload;
     },
-    // add new action for remove product from favList
 
     changeTheme: () => {
       // logic
     },
   },
   extraReducers(builder) {
-    // async
+    // async fetch all products
     // 3 states:
+    //success
     builder.addCase(fetchAllProductsAsync.fulfilled, (state, action) => {
       // save data in redux
       if (!(action.payload instanceof Error)) {
@@ -97,6 +117,29 @@ const productSlice = createSlice({
     });
     // error
     builder.addCase(fetchAllProductsAsync.rejected, (state, action) => {
+      if (action.payload instanceof Error) {
+        return {
+          ...state,
+          loading: false,
+          error: action.payload.message,
+        };
+      }
+    });
+    // create a new product
+    // 1. success
+    builder.addCase(createProductsAsync.fulfilled, (state, action) => {
+      state.products.push(action.payload);
+      state.loading = false;
+    });
+    // 2. loading
+    builder.addCase(createProductsAsync.pending, (state, action) => {
+      return {
+        ...state,
+        loading: true,
+      };
+    });
+    // 3. error
+    builder.addCase(createProductsAsync.rejected, (state, action) => {
       if (action.payload instanceof Error) {
         return {
           ...state,

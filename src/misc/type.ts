@@ -1,3 +1,5 @@
+import { number } from "yup";
+
 export type ProductType = {
   id: number;
   title: string;
@@ -5,6 +7,9 @@ export type ProductType = {
   description: string;
   category: CategoryType;
   images: string[];
+};
+export type ProductCreatedType = Omit<ProductType, "id" | "category"> & {
+  categoryId: number;
 };
 export type CartProductType = ProductType & {
   amount: number;

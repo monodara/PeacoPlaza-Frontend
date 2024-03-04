@@ -1,125 +1,176 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { Box, TextField, Button } from "@mui/material";
-import { object, string } from "yup";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  Box,
+  TextField,
+  Button,
+  FormControlLabel,
+  Checkbox,
+  FormControl,
+  RadioGroup,
+  Radio,
+  FormLabel,
+} from "@mui/material";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { UserRegisterType } from "../../misc/type";
+import { AppState, useAppDispatch } from "../../redux/store";
+import { object, string, number } from "yup";
+import { ProductCreatedType } from "../../misc/type";
+import { createProductsAsync } from "../../redux/slices/productSlice";
 
 export default function ProductCreation() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const categoryList = useSelector(
+    (state: AppState) => state.categories.categoryList
+  );
 
-  const [userInformation, setUserInformation] = useState<UserRegisterType>({
-    name: "",
-    email: "",
-    password: "",
-    avatar: "",
+  const [productInfo, setProductInfo] = useState<ProductCreatedType>({
+    title: "",
+    price: 0,
+    description: "",
+    categoryId: 0,
+    images: [],
   });
-  // Form validation
-  const userInfoSchema = object().shape({
-    name: string()
+
+  const [createResult, setCreateResult] = useState<string | undefined>();
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const categoryId = Number(event.target.value);
+    setProductInfo((prevState) => ({
+      ...prevState,
+      categoryId,
+    }));
+  };
+
+  // Form validation schema
+  const productInfoSchema = object().shape({
+    title: string()
       .min(2, "Too Short!")
       .max(20, "Too Long!")
       .required("Required"),
-    email: string().email("Invalid email").required("Required"),
-    password: string()
-      .min(8, "Too short!")
-      .max(16, "Too long!")
-      .required("Required"),
-    avatar: string().required("Required"),
+    price: number().min(0.1, "Not a Valid Price").required("Required"),
+    description: string().min(8, "Too short!").required("Required"),
+    image: string().required("Required"),
   });
 
-  function onSubmit(values: UserRegisterType) {
-    //send user information to backend
-    setUserInformation(values);
-    console.log(values);
-    axios
-      .post("https://api.escuelajs.co/api/v1/users/", values)
+  function onSubmit(values: ProductCreatedType & { image?: string }) {
+    const { title, price, description, image } = values;
+    const newProduct: ProductCreatedType = {
+      title,
+      price: Number(price),
+      description,
+      categoryId: productInfo.categoryId,
+      images: image ? [image] : [],
+    };
+    dispatch(createProductsAsync(newProduct))
       .then((response) => {
-        console.log(response, "res");
-        if (response.status === 201) {
-          // return user data
-          // save information to redux
-          //   dispatch(saveUserInformation(response.data));
-          // navigate user to log in
-          //   navigate("/profile");
-        }
+        console.log("Product created:", response.payload);
+        setCreateResult(
+          `Successfully created: ${JSON.stringify(response.payload)}`
+        );
       })
       .catch((error) => {
-        // dispatch(saveUserInformation({ ...values, role: "customer", id: 100 }));
-        // navigate("/profile");
-        console.log(error);
+        setCreateResult(error.message as string);
       });
   }
+
   return (
     <div>
-      <Formik
-        style={{ width: "100%" }}
-        initialValues={userInformation}
-        validationSchema={userInfoSchema}
-        onSubmit={onSubmit}
-      >
-        {({ errors, touched }) => (
-          <Form style={{ width: "100%" }}>
-            <Box
-              sx={{
-                width: 500,
-                maxWidth: "100%",
-                margin: "0 auto", // Horizontally center the form fields and button
-              }}
-            >
-              <Field
-                as={TextField}
-                fullWidth
-                label="Name"
-                id="name"
-                name="name"
-                error={errors.name && touched.name}
-                helperText={<ErrorMessage name="name" />}
-              />
-              <Field
-                as={TextField}
-                fullWidth
-                label="Email"
-                id="email"
-                name="email"
-                error={errors.email && touched.email}
-                helperText={<ErrorMessage name="email" />}
-              />
-              <Field
-                as={TextField}
-                fullWidth
-                label="Password"
-                id="password"
-                name="password"
-                error={errors.password && touched.password}
-                helperText={<ErrorMessage name="password" />}
-              />
-              <Field
-                as={TextField}
-                fullWidth
-                label="Avatar"
-                id="avatar"
-                name="avatar"
-                error={errors.avatar && touched.avatar}
-                helperText={<ErrorMessage name="avatar" />}
-              />
-              <Button
-                variant="contained"
-                type="submit"
+      {createResult === undefined && (
+        <Formik
+          initialValues={productInfo}
+          validationSchema={productInfoSchema}
+          onSubmit={onSubmit}
+        >
+          {({ errors, touched }) => (
+            <Form>
+              <Box
                 sx={{
-                  display: "block",
-                  margin: "20px auto",
-                  backgroundColor: "#72BD41",
+                  width: 500,
+                  maxWidth: "100%",
+                  margin: "0 auto",
                 }}
               >
-                Register
-              </Button>
-            </Box>
-          </Form>
-        )}
-      </Formik>
+                <Field
+                  as={TextField}
+                  fullWidth
+                  label="Title"
+                  id="title"
+                  name="title"
+                  error={errors.title && touched.title}
+                  helperText={<ErrorMessage name="title" />}
+                  sx={{ mb: 2 }}
+                />
+                <Field
+                  as={TextField}
+                  fullWidth
+                  label="Price"
+                  id="price"
+                  name="price"
+                  error={errors.price && touched.price}
+                  helperText={<ErrorMessage name="price" />}
+                  sx={{ mb: 2 }}
+                />
+                <Field
+                  as={TextField}
+                  fullWidth
+                  label="Description"
+                  id="description"
+                  name="description"
+                  error={errors.description && touched.description}
+                  helperText={<ErrorMessage name="description" />}
+                  sx={{ mb: 2 }}
+                />
+                <Field
+                  as={TextField}
+                  fullWidth
+                  label="Image"
+                  id="images"
+                  name="image"
+                  error={errors.images && touched.images}
+                  helperText={<ErrorMessage name="image" />}
+                  sx={{ mb: 2 }}
+                />
+                <FormControl
+                  component="fieldset"
+                  sx={{ display: "flex", flexDirection: "row" }}
+                >
+                  <FormLabel component="legend">Choose a Category</FormLabel>
+                  <RadioGroup
+                    aria-label="category"
+                    name="category"
+                    value={productInfo.categoryId}
+                    onChange={handleChange}
+                    sx={{ flexDirection: "row" }} // 控制RadioGroup内部Flex方向
+                  >
+                    {categoryList.map((category) => (
+                      <FormControlLabel
+                        key={category.id}
+                        value={category.id.toString()}
+                        control={<Radio />}
+                        label={category.name}
+                        sx={{ mr: 2 }} // 控制FormControlLabel之间的间距
+                      />
+                    ))}
+                  </RadioGroup>
+                </FormControl>
+                <Button
+                  variant="contained"
+                  type="submit"
+                  sx={{
+                    display: "block",
+                    margin: "20px auto",
+                    backgroundColor: "#72BD41",
+                  }}
+                >
+                  Create
+                </Button>
+              </Box>
+            </Form>
+          )}
+        </Formik>
+      )}
+      {createResult !== undefined && <p>{createResult}</p>}
     </div>
   );
 }
