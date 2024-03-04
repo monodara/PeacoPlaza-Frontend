@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import { AppState } from "../redux/store";
 import { CartProductType } from "../misc/type";
@@ -8,6 +9,13 @@ function Cart() {
   const itemsInCart = useSelector(
     (state: AppState) => state.cart.productsInCart
   );
+  const navigate = useNavigate();
+  const user = useSelector((state: AppState) => state.users.user);
+  function checkoutHandler() {
+    if (user) navigate("/checkout");
+    else navigate("/login");
+  }
+
   return (
     <div className="font-[sans-serif] bg-white px-6">
       <div className="lg:max-w-7xl max-w-xl mx-auto">
@@ -20,7 +28,7 @@ function Cart() {
             <h3 className="text-2xl font-bold text-[#333]">Order summary</h3>
             <ul className="text-[#333] mt-6 divide-y">
               <li className="flex flex-wrap gap-4 text-md py-3">
-                Subtotal{" "}
+                Subtotal
                 <span className="ml-auto font-bold">
                   €
                   {itemsInCart.reduce((sum, item: CartProductType) => {
@@ -54,6 +62,7 @@ function Cart() {
               type="button"
               className="mt-6 text-md px-6 py-2.5 w-full bg-green-500 hover:bg-green-600 text-white rounded"
               style={{ backgroundColor: "#72BD41" }}
+              onClick={checkoutHandler}
             >
               Check out
             </button>

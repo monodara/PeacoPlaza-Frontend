@@ -30,14 +30,13 @@ const initialState: InitialState = {
 // useEffect
 export const fetchAllProductsAsync = createAsyncThunk(
   "fetchAllProductsAsync",
-  async (url: string) => {
+  async (url: string, { rejectWithValue }) => {
     try {
       const jsonData = await fetch(url);
       const data: ProductType[] = await jsonData.json();
       return data;
     } catch (e) {
-      const error = e as Error;
-      return error;
+      return rejectWithValue(e);
     }
   }
 );
@@ -51,7 +50,7 @@ export const createProductsAsync = createAsyncThunk(
       return result.data;
     } catch (e) {
       const error = e as AxiosError;
-      return rejectWithValue(error.message);
+      return rejectWithValue(e);
     }
   }
 );
@@ -124,13 +123,11 @@ const productSlice = createSlice({
     //success
     builder.addCase(fetchAllProductsAsync.fulfilled, (state, action) => {
       // save data in redux
-      if (!(action.payload instanceof Error)) {
-        return {
-          ...state,
-          products: action.payload,
-          loading: false,
-        };
-      }
+      return {
+        ...state,
+        products: action.payload,
+        loading: false,
+      };
     });
     // loading
     builder.addCase(fetchAllProductsAsync.pending, (state, action) => {
@@ -141,13 +138,11 @@ const productSlice = createSlice({
     });
     // error
     builder.addCase(fetchAllProductsAsync.rejected, (state, action) => {
-      if (action.payload instanceof Error) {
-        return {
-          ...state,
-          loading: false,
-          error: action.payload.message,
-        };
-      }
+      return {
+        ...state,
+        loading: false,
+        error: action.error.message ?? "error",
+      };
     });
     // create a new product
     // 1. success

@@ -20,15 +20,14 @@ const url = "https://api.escuelajs.co/api/v1/categories";
 // useEffect
 export const fetchAllCategoriesAsync = createAsyncThunk(
   "fetchAllCategoriesAsync",
-  async () => {
+  async (_, { rejectWithValue }) => {
     // fetch data: axios/ fetch
     try {
       const jsonData = await fetch(url);
       const data: CategoryType[] = await jsonData.json();
       return data;
     } catch (e) {
-      const error = e as Error;
-      return error;
+      return rejectWithValue(e);
     }
   }
 );
@@ -42,13 +41,11 @@ const categorySlice = createSlice({
     // 3 states:
     builder.addCase(fetchAllCategoriesAsync.fulfilled, (state, action) => {
       // save data in redux
-      if (!(action.payload instanceof Error)) {
-        return {
-          ...state,
-          categoryList: action.payload,
-          loading: false,
-        };
-      }
+      return {
+        ...state,
+        categoryList: action.payload,
+        loading: false,
+      };
     });
     // loading
     builder.addCase(fetchAllCategoriesAsync.pending, (state, action) => {
@@ -59,14 +56,12 @@ const categorySlice = createSlice({
     });
     // error
     builder.addCase(fetchAllCategoriesAsync.rejected, (state, action) => {
-      if (action.payload instanceof Error) {
-        //logic
-        return {
-          ...state,
-          loading: false,
-          error: action.payload.message,
-        };
-      }
+      //logic
+      return {
+        ...state,
+        loading: false,
+        error: action.error.message ?? "error",
+      };
     });
   },
 });

@@ -16,6 +16,7 @@ import ProductsFetchData from "./components/product/Products";
 import Me from "./pages/Me";
 import Admin from "./pages/Admin";
 import ProductUpdateOrDelete from "./components/product/ProductUpdateOrDelete";
+import Checkout from "./pages/Checkout";
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
           path="/admin/update_delete"
           element={<ProductUpdateOrDelete />}
         />
+        <Route path="/checkout" element={<Checkout />} />
       </Routes>
       <Footer />
     </div>
