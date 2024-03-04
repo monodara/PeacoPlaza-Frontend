@@ -4,16 +4,21 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
-import { ProductType } from "../../misc/type";
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { addToWishList } from "../../redux/slices/productSlice";
-import { addToCart } from "../../redux/slices/cartSlice";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
+
+import { ProductType } from "../../misc/type";
+import { addToWishList } from "../../redux/slices/productSlice";
+import { addToCart } from "../../redux/slices/cartSlice";
+import { AppState } from "../../redux/store";
 
 export default function ProductCard({ product }: { product: ProductType }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector((state: AppState) => state.users.user);
 
   function cartButtonHandler(item: ProductType) {
     dispatch(addToCart(item));
@@ -22,10 +27,26 @@ export default function ProductCard({ product }: { product: ProductType }) {
   function handleHeartClick(item: ProductType) {
     dispatch(addToWishList(item));
   }
+  function handleUpdDelClick(item: ProductType) {
+    navigate("/admin/update_delete", { state: { item } });
+  }
 
   return (
-    <div className="max-w-xs mx-auto rounded-md overflow-hidden border border-gray-300">
-      <Link to={`${product.id}`}>
+    <div className="relative w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
+      {user && user.role === "customer" && (
+        <button
+          className="absolute top-0 left-0 p-3 rounded-full text-green-500 -mt-2 ml-0 focus:outline-none"
+          style={{ backgroundColor: "transparent", zIndex: "10" }}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            handleUpdDelClick(product);
+          }}
+        >
+          Update/Delete
+        </button>
+      )}
+      <Link to={`/products/${product.id}`}>
         <div
           className="flex items-end justify-end h-60 w-full bg-cover"
           style={{ backgroundImage: `url(${product.images[0]})` }}

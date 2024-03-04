@@ -18,6 +18,7 @@ import Categories from "./components/category/Categories";
 import ProductsFetchData from "./components/product/Products";
 import Me from "./pages/Me";
 import Admin from "./pages/Admin";
+import ProductUpdateOrDelete from "./components/product/ProductUpdateOrDelete";
 
 function App() {
   return (
@@ -42,6 +43,10 @@ function App() {
         <Route path="/login" element={<UserLogin />} />
         <Route path="/categories" element={<Categories />} />
         <Route path="/admin" element={<Admin />} />
+        <Route
+          path="/admin/update_delete"
+          element={<ProductUpdateOrDelete />}
+        />
       </Routes>
       <Footer />
     </div>

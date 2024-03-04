@@ -8,7 +8,9 @@ export default function Admin() {
   const user = useSelector((state: AppState) => state.users.user);
   const [openCateManage, setOpenCateManage] = useState(false);
   const [openProdManage, setOpenProdManage] = useState(false);
-  const [openProdCreate, setOpenProdCreate] = useState(false);
+  const [openProdCreate, setOpenProdCreate] = useState(true);
+  const [openProdUpdate, setOpenProdUpdate] = useState(false);
+  const [openProdDelete, setOpenProdDelete] = useState(false);
 
   return (
     <div className="md:flex flex-col md:flex-row md:min-h-screen w-full">
@@ -70,14 +72,29 @@ export default function Admin() {
               <div className="px-2 py-2 bg-white rounded-md shadow">
                 <button
                   className="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-                  onClick={() => setOpenProdCreate(true)}
+                  onClick={() => {
+                    setOpenProdCreate(true);
+                    setOpenProdDelete(false);
+                  }}
                 >
                   Create a Product
                 </button>
-                <button className="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+                <button
+                  className="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                  onClick={() => {
+                    setOpenProdCreate(false);
+                    setOpenProdDelete(true);
+                  }}
+                >
                   Update a Product
                 </button>
-                <button className="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+                <button
+                  className="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                  onClick={() => {
+                    setOpenProdCreate(false);
+                    setOpenProdDelete(true);
+                  }}
+                >
                   Delete a Product
                 </button>
               </div>
@@ -86,9 +103,16 @@ export default function Admin() {
         </nav>
       </div>
       {/* Product Creation */}
-      <div className="flex justify-center items-center flex-grow mt-10">
-        <ProductCreation />
-      </div>
+      {openProdCreate && (
+        <div className="flex justify-center items-center flex-grow mt-10">
+          <ProductCreation />
+        </div>
+      )}
+      {openProdDelete && (
+        <div className="flex justify-center items-center flex-grow mt-10">
+          Search a Product to delete...
+        </div>
+      )}
     </div>
   );
 }

@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { AppState } from "../redux/store";
+
 import UserProfile from "../components/user/UseProfile";
 import UserOrders from "../components/user/UserOrders";
 import UserAddress from "../components/user/UserAddress";
 
 export default function Me() {
-  const user = useSelector((state: AppState) => state.users.user);
   const [openProfile, setOpenProfile] = useState(true);
   const [openOrder, setOpenOrder] = useState(false);
   const [openAddress, setOpenAddress] = useState(false);

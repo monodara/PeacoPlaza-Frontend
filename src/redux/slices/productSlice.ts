@@ -1,12 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import {
-  CartProductType,
-  ProductCreatedType,
-  ProductType,
-} from "../../misc/type";
+import { ProductCreatedType, ProductType } from "../../misc/type";
 import axios, { AxiosError } from "axios";
-import { act } from "react-dom/test-utils";
 
 type InitialState = {
   products: ProductType[];
@@ -53,6 +48,34 @@ export const createProductsAsync = createAsyncThunk(
   async (newProduct: ProductCreatedType, { rejectWithValue }) => {
     try {
       const result = await axios.post<ProductType>(url, newProduct);
+      return result.data;
+    } catch (e) {
+      const error = e as AxiosError;
+      return rejectWithValue(error.message);
+    }
+  }
+);
+export const deleteProductsAsync = createAsyncThunk(
+  "deleteProductsAsync",
+  async (product: ProductType, { rejectWithValue }) => {
+    try {
+      const result = await axios.delete<ProductType>(url + product.id);
+      return result.data;
+    } catch (e) {
+      const error = e as AxiosError;
+      return rejectWithValue(error.message);
+    }
+  }
+);
+export const updateProductsAsync = createAsyncThunk(
+  "updateProductsAsync",
+  async (product: ProductType, { rejectWithValue }) => {
+    const { title, price } = product;
+    try {
+      const result = await axios.put<ProductType>(url + product.id, {
+        title,
+        price,
+      });
       return result.data;
     } catch (e) {
       const error = e as AxiosError;
@@ -140,6 +163,39 @@ const productSlice = createSlice({
     });
     // 3. error
     builder.addCase(createProductsAsync.rejected, (state, action) => {
+      if (action.payload instanceof Error) {
+        return {
+          ...state,
+          loading: false,
+          error: action.payload.message,
+        };
+      }
+    });
+
+    // async delete a product
+    //success
+    builder.addCase(deleteProductsAsync.fulfilled, (state, action) => {
+      console.log(action.meta.arg.id);
+      // update data in redux
+      if (!(action.payload instanceof Error) && action.payload) {
+        const index = state.products.findIndex(
+          (product) => product.id === action.meta.arg.id
+        );
+        // If index found, remove the product from the state
+        if (index !== -1) {
+          state.products.splice(index, 1);
+        }
+      }
+    });
+    // loading
+    builder.addCase(deleteProductsAsync.pending, (state, action) => {
+      return {
+        ...state,
+        loading: true,
+      };
+    });
+    // error
+    builder.addCase(deleteProductsAsync.rejected, (state, action) => {
       if (action.payload instanceof Error) {
         return {
           ...state,

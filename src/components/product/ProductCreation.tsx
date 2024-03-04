@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   Box,
   TextField,
   Button,
   FormControlLabel,
-  Checkbox,
   FormControl,
   RadioGroup,
   Radio,
@@ -15,6 +13,7 @@ import {
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { AppState, useAppDispatch } from "../../redux/store";
 import { object, string, number } from "yup";
+
 import { ProductCreatedType } from "../../misc/type";
 import { createProductsAsync } from "../../redux/slices/productSlice";
 
@@ -65,9 +64,12 @@ export default function ProductCreation() {
     dispatch(createProductsAsync(newProduct))
       .then((response) => {
         console.log("Product created:", response.payload);
-        setCreateResult(
-          `Successfully created: ${JSON.stringify(response.payload)}`
-        );
+        if (typeof response.payload === "string")
+          setCreateResult(`Creation Failed: ${response.payload}`);
+        else
+          setCreateResult(
+            `Successfully created: ${JSON.stringify(response.payload)}`
+          );
       })
       .catch((error) => {
         setCreateResult(error.message as string);
@@ -77,98 +79,101 @@ export default function ProductCreation() {
   return (
     <div>
       {createResult === undefined && (
-        <Formik
-          initialValues={productInfo}
-          validationSchema={productInfoSchema}
-          onSubmit={onSubmit}
-        >
-          {({ errors, touched }) => (
-            <Form>
-              <Box
-                sx={{
-                  width: 500,
-                  maxWidth: "100%",
-                  margin: "0 auto",
-                }}
-              >
-                <Field
-                  as={TextField}
-                  fullWidth
-                  label="Title"
-                  id="title"
-                  name="title"
-                  error={errors.title && touched.title}
-                  helperText={<ErrorMessage name="title" />}
-                  sx={{ mb: 2 }}
-                />
-                <Field
-                  as={TextField}
-                  fullWidth
-                  label="Price"
-                  id="price"
-                  name="price"
-                  error={errors.price && touched.price}
-                  helperText={<ErrorMessage name="price" />}
-                  sx={{ mb: 2 }}
-                />
-                <Field
-                  as={TextField}
-                  fullWidth
-                  label="Description"
-                  id="description"
-                  name="description"
-                  error={errors.description && touched.description}
-                  helperText={<ErrorMessage name="description" />}
-                  sx={{ mb: 2 }}
-                />
-                <Field
-                  as={TextField}
-                  fullWidth
-                  label="Image"
-                  id="images"
-                  name="image"
-                  error={errors.images && touched.images}
-                  helperText={<ErrorMessage name="image" />}
-                  sx={{ mb: 2 }}
-                />
-                <FormControl
-                  component="fieldset"
-                  sx={{ display: "flex", flexDirection: "row" }}
-                >
-                  <FormLabel component="legend">Choose a Category</FormLabel>
-                  <RadioGroup
-                    aria-label="category"
-                    name="category"
-                    value={productInfo.categoryId}
-                    onChange={handleChange}
-                    sx={{ flexDirection: "row" }} // 控制RadioGroup内部Flex方向
-                  >
-                    {categoryList.map((category) => (
-                      <FormControlLabel
-                        key={category.id}
-                        value={category.id.toString()}
-                        control={<Radio />}
-                        label={category.name}
-                        sx={{ mr: 2 }} // 控制FormControlLabel之间的间距
-                      />
-                    ))}
-                  </RadioGroup>
-                </FormControl>
-                <Button
-                  variant="contained"
-                  type="submit"
+        <div>
+          <h6>Create a New Product</h6>
+          <Formik
+            initialValues={productInfo}
+            validationSchema={productInfoSchema}
+            onSubmit={onSubmit}
+          >
+            {({ errors, touched }) => (
+              <Form>
+                <Box
                   sx={{
-                    display: "block",
-                    margin: "20px auto",
-                    backgroundColor: "#72BD41",
+                    width: 500,
+                    maxWidth: "100%",
+                    margin: "0 auto",
                   }}
                 >
-                  Create
-                </Button>
-              </Box>
-            </Form>
-          )}
-        </Formik>
+                  <Field
+                    as={TextField}
+                    fullWidth
+                    label="Title"
+                    id="title"
+                    name="title"
+                    error={errors.title && touched.title}
+                    helperText={<ErrorMessage name="title" />}
+                    sx={{ mb: 2 }}
+                  />
+                  <Field
+                    as={TextField}
+                    fullWidth
+                    label="Price"
+                    id="price"
+                    name="price"
+                    error={errors.price && touched.price}
+                    helperText={<ErrorMessage name="price" />}
+                    sx={{ mb: 2 }}
+                  />
+                  <Field
+                    as={TextField}
+                    fullWidth
+                    label="Description"
+                    id="description"
+                    name="description"
+                    error={errors.description && touched.description}
+                    helperText={<ErrorMessage name="description" />}
+                    sx={{ mb: 2 }}
+                  />
+                  <Field
+                    as={TextField}
+                    fullWidth
+                    label="Image"
+                    id="images"
+                    name="image"
+                    error={errors.images && touched.images}
+                    helperText={<ErrorMessage name="image" />}
+                    sx={{ mb: 2 }}
+                  />
+                  <FormControl
+                    component="fieldset"
+                    sx={{ display: "flex", flexDirection: "row" }}
+                  >
+                    <FormLabel component="legend">Choose a Category</FormLabel>
+                    <RadioGroup
+                      aria-label="category"
+                      name="category"
+                      value={productInfo.categoryId}
+                      onChange={handleChange}
+                      sx={{ flexDirection: "row" }} // 控制RadioGroup内部Flex方向
+                    >
+                      {categoryList.map((category) => (
+                        <FormControlLabel
+                          key={category.id}
+                          value={category.id.toString()}
+                          control={<Radio />}
+                          label={category.name}
+                          sx={{ mr: 2 }} // 控制FormControlLabel之间的间距
+                        />
+                      ))}
+                    </RadioGroup>
+                  </FormControl>
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    sx={{
+                      display: "block",
+                      margin: "20px auto",
+                      backgroundColor: "#72BD41",
+                    }}
+                  >
+                    Create
+                  </Button>
+                </Box>
+              </Form>
+            )}
+          </Formik>
+        </div>
       )}
       {createResult !== undefined && <p>{createResult}</p>}
     </div>
