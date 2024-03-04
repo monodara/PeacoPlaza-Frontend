@@ -1,11 +1,6 @@
 import * as React from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import { CardActionArea } from "@mui/material";
+
 import { CategoryType } from "../../misc/type";
-import { Link } from "react-router-dom";
 
 export default function CategoryCard({ category }: { category: CategoryType }) {
   const encodedId = encodeURIComponent(category.id); //id needs to be protected???

@@ -8,8 +8,9 @@ import {
 import { useSelector } from "react-redux";
 import { AppState } from "../../redux/store";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 import { closeRightDrawer } from "../../redux/slices/cartSlice";
-import { Link, useNavigate } from "react-router-dom";
 import ProductsInCart from "../product/ProductsInCart";
 
 export function CartDrawer() {
