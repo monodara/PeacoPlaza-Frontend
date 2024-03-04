@@ -9,7 +9,7 @@ function Cart() {
     (state: AppState) => state.cart.productsInCart
   );
   return (
-    <div className="font-[sans-serif] bg-white">
+    <div className="font-[sans-serif] bg-white px-6">
       <div className="lg:max-w-7xl max-w-xl mx-auto">
         <h2 className="text-3xl font-extrabold text-[#333] mt-10">
           Shopping Cart
