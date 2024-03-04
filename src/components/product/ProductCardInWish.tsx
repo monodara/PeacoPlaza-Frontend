@@ -3,14 +3,10 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 
-import {
-  addToWishList,
-  removeFromWishList,
-} from "../../redux/slices/productSlice";
+import { removeFromWishList } from "../../redux/slices/productSlice";
 import { ProductType } from "../../misc/type";
-import { addToCart } from "../../redux/slices/cartSlice";
+import { useCartButtonHandler } from "../../hooks/useButtonHandler";
 
 export default function ProductCardInWishList({
   product,
@@ -18,14 +14,7 @@ export default function ProductCardInWishList({
   product: ProductType;
 }) {
   const dispatch = useDispatch();
-
-  function cartButtonHandler(item: ProductType) {
-    dispatch(addToCart(item));
-  }
-
-  function handleHeartClick(item: ProductType) {
-    dispatch(addToWishList(item));
-  }
+  const cartButtonHandler = useCartButtonHandler();
 
   function handleDeleteClick(item: ProductType) {
     dispatch(removeFromWishList(item));
@@ -49,18 +38,6 @@ export default function ProductCardInWishList({
           className="flex items-end justify-end h-60 w-full bg-cover"
           style={{ backgroundImage: `url(${product.images[0]})` }}
         >
-          {/* Heart button */}
-          <button
-            className="p-2 rounded-full bg-green-600 text-white ml-2 -mb-4 hover:bg-green-500 focus:outline-none focus:bg-green-500"
-            onClick={(e) => {
-              e.preventDefault(); // Prevent default action (navigation)
-              e.stopPropagation(); // Stop event propagation
-              handleHeartClick(product);
-            }}
-          >
-            <FavoriteIcon />
-          </button>
-
           {/* Cart button */}
           <button
             className="p-2 rounded-full bg-green-500 text-white mx-5 -mb-4 hover:bg-green-400 focus:outline-none focus:bg-green-400"

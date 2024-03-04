@@ -8,21 +8,19 @@ import UpdateIcon from "@mui/icons-material/Update";
 
 import { ProductType } from "../../misc/type";
 import { addToWishList } from "../../redux/slices/productSlice";
-import { addToCart } from "../../redux/slices/cartSlice";
 import { AppState } from "../../redux/store";
+import {
+  useCartButtonHandler,
+  useHeartButtonHandler,
+} from "../../hooks/useButtonHandler";
 
 export default function ProductCard({ product }: { product: ProductType }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state: AppState) => state.users.user);
+  const cartButtonHandler = useCartButtonHandler();
+  const heartButtonHandler = useHeartButtonHandler();
 
-  function cartButtonHandler(item: ProductType) {
-    dispatch(addToCart(item));
-  }
-
-  function handleHeartClick(item: ProductType) {
-    dispatch(addToWishList(item));
-  }
   function handleUpdDelClick(item: ProductType) {
     navigate("/admin/update_delete", { state: { item } });
   }
@@ -53,7 +51,7 @@ export default function ProductCard({ product }: { product: ProductType }) {
             onClick={(e) => {
               e.preventDefault(); // Prevent default action (navigation)
               e.stopPropagation(); // Stop event propagation
-              handleHeartClick(product);
+              heartButtonHandler(product);
             }}
           >
             <FavoriteIcon />

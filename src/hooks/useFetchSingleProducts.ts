@@ -5,7 +5,7 @@ import { ProductType } from "../misc/type";
 
 export function useFetchSingleProduct(url: string) {
   //state
-  const [product, setBrewery] = useState<ProductType | null>(null);
+  const [product, setProduct] = useState<ProductType | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -13,7 +13,7 @@ export function useFetchSingleProduct(url: string) {
     axios
       .get(url)
       .then((response: AxiosResponse<ProductType>) => {
-        setBrewery(response.data);
+        setProduct(response.data);
         setLoading(false);
       })
       .catch((error: AxiosError) => {

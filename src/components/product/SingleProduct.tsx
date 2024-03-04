@@ -9,19 +9,18 @@ import { useDispatch } from "react-redux";
 import { ProductType } from "../../misc/type";
 import { addToCart } from "../../redux/slices/cartSlice";
 import { addToWishList } from "../../redux/slices/productSlice";
+import {
+  useCartButtonHandler,
+  useHeartButtonHandler,
+} from "../../hooks/useButtonHandler";
 
 export default function SingleProduct() {
   const { id } = useParams();
   const url = `https://api.escuelajs.co/api/v1/products/${id}`;
   const { product, loading, error } = useFetchSingleProduct(url);
   const dispatch = useDispatch();
-
-  function cartButtonHandler(item: ProductType) {
-    dispatch(addToCart(item));
-  }
-  function heartButtonHandler(item: ProductType) {
-    dispatch(addToWishList(item));
-  }
+  const cartButtonHandler = useCartButtonHandler();
+  const heartButtonHandler = useHeartButtonHandler();
 
   const [thumbImg, setThumbImg] = useState(product?.images[0]);
 
