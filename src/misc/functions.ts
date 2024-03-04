@@ -1,7 +1,6 @@
 import { addToCart } from "../redux/slices/cartSlice";
 import { ProductType } from "./type";
 import { addToWishList } from "../redux/slices/productSlice";
-
 import { useCustomDispatch } from "../hooks/useCustomDispatch";
 
 const dispatch = useCustomDispatch();

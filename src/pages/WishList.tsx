@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
+
 import { AppState } from "../redux/store";
-import ProductCard from "../components/product/ProductCard";
 import ProductCardInWishList from "../components/product/ProductCardInWish";
 
 export default function WishList() {

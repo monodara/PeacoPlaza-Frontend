@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import ProductCardInCart from "./ProductCardInCart";
 import { useSelector } from "react-redux";
 import { AppState } from "../../redux/store";
-import { CartProductType } from "../../misc/type";
+
+import ProductCardInCart from "./ProductCardInCart";
 
 export default function ProductsInCart() {
   const itemsInCart = useSelector(

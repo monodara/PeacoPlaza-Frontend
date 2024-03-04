@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import SearchIcon from "@mui/icons-material/Search";
 import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import SearchIcon from "@mui/icons-material/Search";
+
 import { AppState, useAppDispatch } from "../../redux/store";
 import { CategoryType } from "../../misc/type";
-import { useDispatch } from "react-redux";
 import { getSearchKeyword } from "../../redux/slices/productSlice";
-import { Link, useNavigate } from "react-router-dom";
 import { fetchAllCategoriesAsync } from "../../redux/slices/categorySlice";
 
 function SearchForm() {

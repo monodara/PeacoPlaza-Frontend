@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-
-import { UserRegisterType } from "../../misc/type";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Box, TextField, Button } from "@mui/material";
 import { object, string } from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+
+import { UserRegisterType } from "../../misc/type";
 import { saveUserInformation } from "../../redux/slices/userSlice";
 
 export default function UserRegisterForm() {

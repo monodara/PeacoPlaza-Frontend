@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from "react";
-import ProductsInCart from "../components/product/ProductsInCart";
 import { useSelector } from "react-redux";
+
 import { AppState } from "../redux/store";
 import { CartProductType } from "../misc/type";
-import { useNavigate } from "react-router-dom";
+import ProductsInCart from "../components/product/ProductsInCart";
 
 function Cart() {
-  const navigate = useNavigate();
-
   const itemsInCart = useSelector(
     (state: AppState) => state.cart.productsInCart
   );

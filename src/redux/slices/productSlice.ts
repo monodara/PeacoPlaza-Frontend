@@ -1,7 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios, { AxiosError } from "axios";
 
 import { ProductCreatedType, ProductType } from "../../misc/type";
-import axios, { AxiosError } from "axios";
 
 type InitialState = {
   products: ProductType[];

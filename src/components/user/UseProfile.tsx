@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { AppState } from "../../redux/store";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+
+import { AppState } from "../../redux/store";
 
 export default function UserProfile() {
   const [userForm, setUserForm] = useState();

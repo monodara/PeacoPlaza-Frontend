@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios, { AxiosError, AxiosResponse } from "axios";
+
 import { ProductType } from "../misc/type";
 
 export function useFetchSingleProduct(url: string) {

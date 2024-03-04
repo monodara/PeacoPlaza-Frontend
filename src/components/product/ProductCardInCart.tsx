@@ -1,7 +1,8 @@
 import React, { ChangeEvent, useState } from "react";
-import { CartProductType } from "../../misc/type";
 import { useDispatch } from "react-redux";
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
+
+import { CartProductType } from "../../misc/type";
 import {
   closeRightDrawer,
   decrementProductAmount,
