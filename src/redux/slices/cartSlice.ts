@@ -55,7 +55,6 @@ const cartSlice = createSlice({
       const existingItemIndex = state.productsInCart.findIndex(
         (item) => item.id === itemToAdd.id
       );
-      console.log(existingItemIndex);
       // Item is already in the cart, update its quantity
       // Get current amount
       const currentAmount = state.productsInCart[existingItemIndex].amount;
