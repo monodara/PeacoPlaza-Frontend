@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
@@ -18,12 +18,15 @@ export default function SingleProduct() {
   const { id } = useParams();
   const url = `https://api.escuelajs.co/api/v1/products/${id}`;
   const { product, loading, error } = useFetchSingleProduct(url);
-  const dispatch = useDispatch();
   const cartButtonHandler = useCartButtonHandler();
   const heartButtonHandler = useHeartButtonHandler();
 
-  const [thumbImg, setThumbImg] = useState(product?.images[0]);
-
+  const [thumbImg, setThumbImg] = useState("");
+  useEffect(() => {
+    if (product && product.images && product.images.length > 0) {
+      setThumbImg(product.images[0].replace(/[\[\]"]/g, ""));
+    }
+  }, [product]);
   function thumbImgHandler(src: string) {
     setThumbImg(src);
   }
@@ -48,13 +51,15 @@ export default function SingleProduct() {
             {/* Left section for images */}
             <div className="w-full lg:sticky top-0 sm:flex gap-2">
               <div className="sm:space-y-3 w-16 max-sm:flex max-sm:mb-4 max-sm:gap-4">
-                {product?.images.map((image, index) => (
+                {product?.images.map((imageUrl, index) => (
                   <img
                     key={index}
-                    src={image}
+                    src={imageUrl.replace(/[\[\]"]/g, "")}
                     alt={`image${index}`}
                     className="w-full cursor-pointer"
-                    onClick={() => thumbImgHandler(image)}
+                    onClick={() =>
+                      thumbImgHandler(imageUrl.replace(/[\[\]"]/g, ""))
+                    }
                   />
                 ))}
               </div>

@@ -3,13 +3,16 @@ import productReducer, {
   createProductsAsync,
   fetchAllProductsAsync,
 } from "../../redux/slices/productSlice";
-import store from "../../redux/store";
+import { createNewStore } from "../../redux/store";
 import { mockProducts, productServer } from "../shared/productServer";
 
+let store = createNewStore();
 beforeAll(() => {
   productServer.listen();
 });
-
+beforeEach(() => {
+  store = createNewStore();
+});
 afterAll(() => {
   productServer.close();
 });

@@ -17,7 +17,7 @@ describe("userReducer", () => {
       role: "customer",
       id: 100,
     };
-    const action: PayloadAction<UserType> = saveUserInformation(user);
+    const action: PayloadAction<UserType | null> = saveUserInformation(user);
 
     const newState = userReducer(initialState, action);
 

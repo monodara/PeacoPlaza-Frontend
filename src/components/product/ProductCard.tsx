@@ -43,7 +43,12 @@ export default function ProductCard({ product }: { product: ProductType }) {
       <Link to={`/products/${product.id}`}>
         <div
           className="flex items-end justify-end h-60 w-full bg-cover"
-          style={{ backgroundImage: `url(${product.images[0]})` }}
+          style={{
+            backgroundImage: `url(${product.images[0].replace(
+              /[\[\]"]/g,
+              ""
+            )})`,
+          }}
         >
           {/* Heart button */}
           <button

@@ -42,4 +42,7 @@ store.subscribe(() => {
   localStorage.setItem("wishlist", JSON.stringify(wishlist));
 });
 
+export const createNewStore = () => {
+  return store;
+};
 export default store;

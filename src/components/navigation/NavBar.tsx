@@ -14,6 +14,7 @@ import { CartProductType } from "../../misc/type";
 import ListIcon from "@mui/icons-material/List";
 import { openRightDrawer } from "../../redux/slices/cartSlice";
 import { CartDrawer } from "../cart/CartDrawer";
+import { saveUserInformation } from "../../redux/slices/userSlice";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -31,6 +32,7 @@ function Navbar() {
   }
   const navigate = useNavigate();
   function logout() {
+    dispatch(saveUserInformation(null));
     localStorage.clear();
     navigate("/");
   }

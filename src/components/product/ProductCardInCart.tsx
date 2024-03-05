@@ -57,7 +57,7 @@ export default function ProductCardInCart({
     <div className="flex gap-6 items-center justify-between gap-4 py-8">
       <div className="h-64 bg-gray-100 p-6 rounded">
         <img
-          src={product.images[0]}
+          src={product.images[0].replace(/[\[\]"]/g, "")}
           className="w-full h-full object-contain shrink-0"
         />
       </div>
