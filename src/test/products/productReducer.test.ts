@@ -3,19 +3,20 @@ import productReducer, {
   createProductsAsync,
   fetchAllProductsAsync,
 } from "../../redux/slices/productSlice";
-import { createNewStore } from "../../redux/store";
+import store, { createNewStore } from "../../redux/store";
 import { mockProducts, productServer } from "../shared/productServer";
 
-let store = createNewStore();
+// let store = createNewStore();
 beforeAll(() => {
   productServer.listen();
 });
-beforeEach(() => {
-  store = createNewStore();
-});
+// beforeEach(() => {
+//   store = createNewStore();
+// });
 afterAll(() => {
   productServer.close();
 });
+afterEach(() => productServer.resetHandlers());
 const initialState = {
   products: [],
   loading: false,
@@ -75,8 +76,10 @@ describe("product reducer", () => {
 
   // test fetching async thunk with store dispatch
   test("should fetch all products from api", async () => {
-    await store.dispatch(fetchAllProductsAsync(""));
-    expect(store.getState().products.products.length).toBe(2);
+    await store.dispatch(
+      fetchAllProductsAsync("https://api.escuelajs.co/api/v1/products")
+    );
+    expect(store.getState().products.products).toEqual(mockProducts);
     expect(store.getState().products.error).toBeUndefined();
   });
   // create new product

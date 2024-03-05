@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
+import { Link } from "react-router-dom";
 
 import { CartProductType } from "../../misc/type";
 import {
@@ -10,7 +11,7 @@ import {
   removeFromCart,
   updateProductAmount,
 } from "../../redux/slices/cartSlice";
-import DeletePopover from "./DeletePopover";
+import DeletePopover from "../product/DeletePopover";
 
 export default function ProductCardInCart({
   product,
@@ -62,9 +63,11 @@ export default function ProductCardInCart({
         />
       </div>
       <div className="flex flex-col justify-start">
-        <p className="text-md font-bold text-[#333] text-left">
-          {product.title}
-        </p>
+        <Link to={`/products/${product.id}`}>
+          <p className="text-md font-bold text-[#333] text-left">
+            {product.title}
+          </p>
+        </Link>
         <h4 className="text-xl font-bold text-[#333] mt-4 text-left">
           {`€${product.price * product.amount}.00`}
         </h4>

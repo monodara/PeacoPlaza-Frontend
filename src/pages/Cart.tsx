@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { AppState } from "../redux/store";
 import { CartProductType } from "../misc/type";
-import ProductsInCart from "../components/product/ProductsInCart";
+import ProductsInCart from "../components/cart/ProductsInCart";
 
 function Cart() {
   const itemsInCart = useSelector(

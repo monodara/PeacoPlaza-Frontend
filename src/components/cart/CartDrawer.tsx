@@ -6,12 +6,12 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import { useSelector } from "react-redux";
-import { AppState } from "../../redux/store";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+import { AppState } from "../../redux/store";
 import { closeRightDrawer } from "../../redux/slices/cartSlice";
-import ProductsInCart from "../product/ProductsInCart";
+import ProductsInCart from "./ProductsInCart";
 
 export function CartDrawer() {
   const drawerOpen = useSelector((state: AppState) => state.cart.drawerOpen);

@@ -32,9 +32,9 @@ export const fetchAllProductsAsync = createAsyncThunk(
   "fetchAllProductsAsync",
   async (url: string, { rejectWithValue }) => {
     try {
-      const jsonData = await fetch(url);
-      const data: ProductType[] = await jsonData.json();
-      return data;
+      const response = await axios.get<ProductType[]>(url);
+      console.log(response);
+      return response.data;
     } catch (e) {
       return rejectWithValue(e);
     }
@@ -122,6 +122,7 @@ const productSlice = createSlice({
     // 3 states:
     //success
     builder.addCase(fetchAllProductsAsync.fulfilled, (state, action) => {
+      console.log(action.payload);
       // save data in redux
       return {
         ...state,
