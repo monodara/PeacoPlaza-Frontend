@@ -12,16 +12,25 @@ if (data) {
 type InitialState = {
   user: UserType | null;
 };
+// type InitialState = {
+//   token: string;
+// };
 
 const initialState: InitialState = {
   user: userState,
 };
+// const initialState: InitialState = {
+//   token: "",
+// };
 
 const usersSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
-    saveUserInformation: (state, action: PayloadAction<UserType | null>) => {
+    saveUserInformation: (
+      state,
+      action: PayloadAction<Omit<UserType, "password" | "id"> | null>
+    ) => {
       state.user = action.payload;
     },
   },

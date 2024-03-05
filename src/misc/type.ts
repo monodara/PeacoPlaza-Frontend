@@ -23,11 +23,11 @@ export type CategoryType = {
 export type UserRegisterType = {
   name: string;
   email: string;
-  password: string;
+  password?: string;
   avatar: string;
 };
 
 export type UserType = UserRegisterType & {
   role: "customer" | "admin";
-  id: number;
+  id?: number;
 };

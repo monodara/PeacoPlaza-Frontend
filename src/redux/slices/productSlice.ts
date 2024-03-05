@@ -3,7 +3,7 @@ import axios, { AxiosError } from "axios";
 
 import { ProductCreatedType, ProductType } from "../../misc/type";
 
-type InitialState = {
+export type InitialState = {
   products: ProductType[];
   wishList: ProductType[];
   searchKeyword: string;
@@ -47,9 +47,9 @@ export const createProductsAsync = createAsyncThunk(
   async (newProduct: ProductCreatedType, { rejectWithValue }) => {
     try {
       const result = await axios.post<ProductType>(url, newProduct);
-      return result.data;
+      return result.data; // Return the created product
     } catch (e) {
-      const error = e as AxiosError;
+      // Handle error if needed
       return rejectWithValue(e);
     }
   }
@@ -122,7 +122,6 @@ const productSlice = createSlice({
     // 3 states:
     //success
     builder.addCase(fetchAllProductsAsync.fulfilled, (state, action) => {
-      console.log(action.payload);
       // save data in redux
       return {
         ...state,
@@ -203,20 +202,14 @@ const productSlice = createSlice({
     // async update a product
     // 1. success
     builder.addCase(updateProductsAsync.fulfilled, (state, action) => {
-      // save data in redux
-      if (!(action.payload instanceof Error)) {
-        const index = state.products.findIndex(
-          (product) => product.id === action.meta.arg.id
-        );
-        // If index found, remove the product from the state
-        if (index !== -1) {
-          state.products[index] = action.meta.arg;
-        }
-        return {
-          ...state,
-          loading: false,
-        };
+      const updatedProduct = action.payload;
+      const index = state.products.findIndex(
+        (product) => product.id === updatedProduct.id
+      );
+      if (index !== -1) {
+        state.products[index] = updatedProduct;
       }
+      state.loading = false;
     });
     // 2. loading
     builder.addCase(updateProductsAsync.pending, (state, action) => {

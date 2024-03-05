@@ -9,9 +9,7 @@ import logo from "../../images/logo.png";
 export default function Footer() {
   const [email, setEmail] = useState("");
 
-  const handleSubscribe = () => {
-    console.log("Subscribed with email:", email);
-  };
+  const handleSubscribe = () => {};
 
   return (
     <footer className="bg-gray-100 px-6 mt-10 border-t-2 border-gray-200">

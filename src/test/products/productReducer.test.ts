@@ -1,23 +1,27 @@
 import { ProductCreatedType, ProductType } from "../../misc/type";
 import productReducer, {
+  addToWishList,
   createProductsAsync,
+  deleteProductsAsync,
   fetchAllProductsAsync,
+  getSearchKeyword,
+  removeFromWishList,
+  updateProductsAsync,
 } from "../../redux/slices/productSlice";
-import store, { createNewStore } from "../../redux/store";
+import { createNewStore } from "../../redux/store";
 import { mockProducts, productServer } from "../shared/productServer";
 
-// let store = createNewStore();
+let store = createNewStore();
 beforeAll(() => {
   productServer.listen();
 });
-// beforeEach(() => {
-//   store = createNewStore();
-// });
+beforeEach(() => {
+  store = createNewStore();
+});
 afterAll(() => {
   productServer.close();
 });
-afterEach(() => productServer.resetHandlers());
-const initialState = {
+export const initialState = {
   products: [],
   loading: false,
   wishList: [],
@@ -26,6 +30,52 @@ const initialState = {
 
 // test suit
 describe("product reducer", () => {
+  test("addToWishList function adds a product to wishlist", () => {
+    const nextState = {
+      ...initialState,
+      wishList: [mockProducts[0]],
+    };
+
+    const action = addToWishList(mockProducts[0]);
+    const resultState = productReducer(initialState, action);
+
+    expect(resultState).toEqual(nextState);
+  });
+
+  test("removeFromWishList function removes a product from wishlist", () => {
+    const initialState = {
+      products: [],
+      wishList: mockProducts,
+      searchKeyword: "",
+      loading: false,
+      error: "",
+    };
+
+    const nextState = {
+      ...initialState,
+      wishList: [mockProducts[0]],
+    };
+
+    const action = removeFromWishList(mockProducts[1]);
+    const resultState = productReducer(initialState, action);
+
+    expect(resultState).toEqual(nextState);
+  });
+
+  test("getSearchKeyword function sets search keyword", () => {
+    const keyword = "test";
+
+    const nextState = {
+      ...initialState,
+      searchKeyword: keyword,
+    };
+
+    const action = getSearchKeyword(keyword);
+    const resultState = productReducer(initialState, action);
+
+    expect(resultState).toEqual(nextState);
+  });
+  //Fetch data test cases
   // test0: initial state
   test("should return initial state", () => {
     const state = productReducer(undefined, { type: "" });
@@ -37,7 +87,6 @@ describe("product reducer", () => {
       initialState,
       fetchAllProductsAsync.fulfilled(mockProducts, "", "fulfilled")
     );
-
     expect(state).toEqual({
       products: mockProducts,
       loading: false,
@@ -74,24 +123,92 @@ describe("product reducer", () => {
     });
   });
 
-  // test fetching async thunk with store dispatch
-  test("should fetch all products from api", async () => {
-    await store.dispatch(
-      fetchAllProductsAsync("https://api.escuelajs.co/api/v1/products")
-    );
-    expect(store.getState().products.products).toEqual(mockProducts);
-    expect(store.getState().products.error).toBeUndefined();
-  });
-  // create new product
-  test("should create new product", async () => {
+  // create new product cases
+  test("createProductsAsync action creates a new product", async () => {
+    const newProduct = {
+      id: 3,
+      title: "product3",
+      price: 1,
+      description: "product3",
+      images: ["img1", "img2"],
+      category: { id: 1, name: "clothes", image: "catImg" },
+    };
     const createdProduct: ProductCreatedType = {
-      title: "New test product 10",
-      price: 200,
-      description: "New test product 10",
-      images: ["product.png"],
+      title: "product3",
+      price: 1,
+      description: "product3",
+      images: ["img1", "img2"],
       categoryId: 1,
     };
-    await store.dispatch(createProductsAsync(createdProduct));
-    expect(store.getState().products.products.length).toBe(3);
+
+    const nextState = {
+      ...initialState,
+      products: [newProduct],
+      loading: false,
+    };
+
+    const action = createProductsAsync.fulfilled(
+      newProduct,
+      "fulfilled",
+      createdProduct
+    );
+    const resultState = productReducer(initialState, action);
+
+    expect(resultState).toEqual(nextState);
+  });
+
+  test("deleteProductsAsync action deletes a product", async () => {
+    const initialState = {
+      products: mockProducts,
+      wishList: [],
+      searchKeyword: "",
+      loading: false,
+      error: "",
+    };
+
+    const nextState = {
+      ...initialState,
+      products: [mockProducts[1]],
+      loading: false,
+    };
+
+    const action = deleteProductsAsync.fulfilled(
+      mockProducts[0],
+      "fulfilled",
+      mockProducts[0]
+    );
+    const resultState = productReducer(initialState, action);
+
+    expect(resultState).toEqual(nextState);
+  });
+
+  test("updateProductsAsync action updates a product", async () => {
+    const updatedProduct = {
+      ...mockProducts[0],
+      title: "Product Updated",
+      price: 999,
+    };
+
+    const initialState = {
+      products: mockProducts,
+      wishList: [],
+      searchKeyword: "",
+      loading: false,
+      error: "",
+    };
+
+    const nextState = {
+      ...initialState,
+      products: [updatedProduct, mockProducts[1]],
+      loading: false,
+    };
+
+    const action = updateProductsAsync.fulfilled(
+      updatedProduct,
+      "fulfilled",
+      mockProducts[0]
+    );
+    const resultState = productReducer(initialState, action);
+    expect(resultState).toEqual(nextState);
   });
 });

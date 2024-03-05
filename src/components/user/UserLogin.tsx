@@ -9,6 +9,7 @@ import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 
 import { saveUserInformation } from "../../redux/slices/userSlice";
 import loginBg from "../../images/loginBg.jpg";
+import { UserType } from "../../misc/type";
 
 type LoginInfo = {
   email: string;
@@ -70,7 +71,10 @@ export default function UserLogin() {
         `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenResponse.access_token}`
       );
       const userInfo = await res.json();
-      // handle data
+      const { name, email, picture } = userInfo;
+      const user: UserType = { name, email, avatar: picture, role: "admin" };
+      dispatch(saveUserInformation(user));
+      navigate("/profile");
     },
   });
   return (

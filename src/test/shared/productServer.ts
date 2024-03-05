@@ -24,7 +24,8 @@ export let mockProducts: ProductType[] = [
 
 export const handler = [
   http.get("https://api.escuelajs.co/api/v1/products", () => {
-    return HttpResponse.json({ name: "hi" });
+    console.log(HttpResponse.json(mockProducts, { status: 200 }));
+    return HttpResponse.json(mockProducts, { status: 200 });
   }),
   http.post("https://api.escuelajs.co/api/v1/products", async ({ request }) => {
     const product = (await request.json()) as ProductCreatedType;
@@ -36,18 +37,29 @@ export const handler = [
     return HttpResponse.json(createdProduct, { status: 201 });
   }),
   http.delete(
-    "https://api.escuelajs.co/api/v1/products/:productId",
-    async ({ request }) => {
-      const productId = new URL(request.url).searchParams.get("productId");
-      if (!productId) {
+    "https://api.escuelajs.co/api/v1/products/:id",
+    async ({ request, params }) => {
+      const { id } = params;
+      if (!id) {
         return new HttpResponse(null, { status: 404 });
       }
       mockProducts.splice(0, 1);
-      console.log(
-        "ater delete numbers of items in mock products:",
-        mockProducts.length
-      );
       return HttpResponse.json(true, { status: 204 });
+    }
+  ),
+  http.put(
+    "https://api.escuelajs.co/api/v1/products/:id",
+    async ({ params }) => {
+      const { id } = params;
+      const index = mockProducts.findIndex(
+        (product) => product.id === Number(id)
+      );
+      const updatedProd = {
+        ...mockProducts[index],
+        title: "new Title",
+        price: 999,
+      };
+      return HttpResponse.json(updatedProd, { status: 203 });
     }
   ),
 ];
