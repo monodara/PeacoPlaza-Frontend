@@ -62,7 +62,7 @@ function Navbar() {
           >
             By Category
           </a>
-          {user && user.role === "customer" && (
+          {user && user.role === "admin" && (
             <a
               href="/admin"
               className="block md:inline-block text-green-900 hover:text-green-500 px-3 py-3 border-b-2 border-green-900 md:border-none"

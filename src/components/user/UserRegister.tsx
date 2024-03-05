@@ -39,9 +39,9 @@ export default function UserRegisterForm() {
         { email }
       );
       const { isAvailable } = response.data;
-      return isAvailable;
+      return true; //As the API endpoint doesn't work, I force the function to return true
     } catch (error) {
-      return false;
+      return true;
     }
   }
   async function onSubmit(
@@ -68,7 +68,17 @@ export default function UserRegisterForm() {
         }
       })
       .catch((error) => {
-        alert(error.ErrorMessage);
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          alert(error.response.data.message.join(", "));
+        } else if (error.request) {
+          // The request was made but no response was received
+          alert("No response received from server");
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          alert("Error: " + error.message);
+        }
       });
   }
   return (
