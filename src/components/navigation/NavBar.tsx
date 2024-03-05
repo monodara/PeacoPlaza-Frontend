@@ -33,6 +33,8 @@ function Navbar() {
   const navigate = useNavigate();
   function logout() {
     dispatch(saveUserInformation(null));
+    localStorage.setItem("productsInCart", JSON.stringify([]));
+    localStorage.setItem("wishlist", JSON.stringify([]));
     localStorage.clear();
     navigate("/");
   }

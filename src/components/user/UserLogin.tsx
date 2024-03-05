@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { Box, TextField, Button } from "@mui/material";
+import { Box, TextField, Button, Alert } from "@mui/material";
 import { object, string } from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 
 import { saveUserInformation } from "../../redux/slices/userSlice";
 import loginBg from "../../images/loginBg.jpg";
-import logo from "../../images/logo.png";
 
 type LoginInfo = {
   email: string;
@@ -44,20 +44,35 @@ export default function UserLogin() {
             })
             .then((res) => {
               if (res.status === 200) {
-                console.log(res.data);
                 dispatch(saveUserInformation(res.data));
                 navigate("/profile");
               }
             })
             .catch((e) => {
-              console.log(e);
+              alert(e.ErrorMessage);
             });
         }
       })
       .catch((error) => {
-        console.log(error);
+        if (error.response) {
+          alert(error.response.data.message);
+        } else if (error.request) {
+          alert("No response received from server");
+        } else {
+          alert("Error: " + error.message);
+        }
       });
   }
+
+  const loginWithGoogle = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      const res = await fetch(
+        `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenResponse.access_token}`
+      );
+      const userInfo = await res.json();
+      // handle data
+    },
+  });
   return (
     <div className="py-16">
       <div className="flex bg-white rounded-lg shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-4xl">
@@ -72,9 +87,9 @@ export default function UserLogin() {
             Shop with GoBC
           </h2>
           <p className="text-xl text-gray-600 text-center">Welcome back!</p>
-          <a
-            href="#"
+          <div
             className="flex items-center justify-center mt-4 text-white rounded-lg shadow-md hover:bg-gray-100"
+            onClick={() => loginWithGoogle()}
           >
             <div className="px-4 py-3">
               <svg className="h-6 w-6" viewBox="0 0 40 40">
@@ -97,14 +112,14 @@ export default function UserLogin() {
               </svg>
             </div>
             <h1 className="px-4 py-3 w-5/6 text-center text-gray-600 font-bold">
-              Sign in with Google
+              Log in with Google
             </h1>
-          </a>
+          </div>
           <div className="mt-4 flex items-center justify-between">
             <span className="border-b w-1/5 lg:w-1/4"></span>
-            <a href="#" className="text-xs text-center text-gray-500 uppercase">
+            <div className="text-xs text-center text-gray-500 uppercase">
               or login with email
-            </a>
+            </div>
             <span className="border-b w-1/5 lg:w-1/4"></span>
           </div>
 

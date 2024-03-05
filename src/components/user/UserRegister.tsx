@@ -60,11 +60,8 @@ export default function UserRegisterForm() {
       .post("https://api.escuelajs.co/api/v1/users/", values)
       .then((response) => {
         if (response.status === 201) {
-          // return user data
-          // save information to redux
-          dispatch(saveUserInformation(response.data));
           // navigate user to log in
-          navigate("/profile");
+          navigate("/login");
         }
       })
       .catch((error) => {

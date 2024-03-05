@@ -32,7 +32,7 @@ export const fetchAllProductsAsync = createAsyncThunk(
   "fetchAllProductsAsync",
   async (url: string, { rejectWithValue }) => {
     try {
-      const response = await axios.get<ProductType[]>(url);
+      const response = await axios.get(url);
       console.log(response);
       return response.data;
     } catch (e) {

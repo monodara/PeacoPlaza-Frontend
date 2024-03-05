@@ -1,13 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import "./output.css";
-import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
-import store from "./redux/store";
 import { Provider } from "react-redux";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
+import App from "./App";
+import "./index.css";
+import "./output.css";
+import store from "./redux/store";
+
+// const apiKey = process.env.REACT_APP_GOOGLE_AUTH_API_KEY;
+const apiKey =
+  "694819720098-elb8eeg8le4499s7q42hv36dudd9tgau.apps.googleusercontent.com";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
@@ -16,7 +21,10 @@ root.render(
     <BrowserRouter>
       <Provider store={store}>
         {/* <ThemeProvider> */}
-        <App />
+        <GoogleOAuthProvider clientId={apiKey}>
+          <App />
+        </GoogleOAuthProvider>
+
         {/* </ThemeProvider> */}
       </Provider>
     </BrowserRouter>

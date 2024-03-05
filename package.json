@@ -8,6 +8,7 @@
     "@material-tailwind/react": "^2.1.9",
     "@mui/icons-material": "^5.15.10",
     "@mui/material": "^5.15.10",
+    "@react-oauth/google": "^0.12.1",
     "@reduxjs/toolkit": "^2.2.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -34,7 +35,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --transformIgnorePatterns 'node_modules/(?!@codemirror)/' --coverage",
     "eject": "react-scripts eject",
-    "test-coverage":"jest --coverage"
+    "test-coverage": "jest --coverage"
   },
   "eslintConfig": {
     "extends": [
@@ -42,7 +43,7 @@
       "react-app/jest"
     ]
   },
-   "jest": {
+  "jest": {
     "moduleNameMapper": {
       "axios": "axios/dist/node/axios.cjs"
     }
@@ -60,6 +61,7 @@
     ]
   },
   "devDependencies": {
+    "dotenv": "^16.4.5",
     "msw": "^2.2.2",
     "tailwindcss": "^3.4.1"
   }
