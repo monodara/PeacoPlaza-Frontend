@@ -8,6 +8,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 
 import { saveUserInformation } from "../../redux/slices/userSlice";
 import loginBg from "../../images/loginBg.jpg";
+import logo from "../../images/logo.png";
 
 type LoginInfo = {
   email: string;
@@ -68,7 +69,7 @@ export default function UserLogin() {
         ></div>
         <div className="w-full p-8 lg:w-1/2">
           <h2 className="text-2xl font-semibold text-gray-700 text-center">
-            Brand
+            Shop with GoBC
           </h2>
           <p className="text-xl text-gray-600 text-center">Welcome back!</p>
           <a
@@ -106,26 +107,7 @@ export default function UserLogin() {
             </a>
             <span className="border-b w-1/5 lg:w-1/4"></span>
           </div>
-          {/* <div className="mt-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Email Address
-            </label>
-            <input
-              className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
-              type="email"
-            />
-          </div>
-          <div className="mt-4">
-            <div className="flex justify-between">
-              <label className="block text-gray-700 text-sm font-bold mb-2">
-                Password
-              </label>
-            </div>
-            <input
-              className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
-              type="password"
-            />
-          </div> */}
+
           <Formik
             style={{ width: "100%" }}
             validationSchema={userInfoSchema}
@@ -163,6 +145,7 @@ export default function UserLogin() {
                     <button
                       className="bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600"
                       type="submit"
+                      style={{ backgroundColor: "#72BD41" }}
                     >
                       Login
                     </button>

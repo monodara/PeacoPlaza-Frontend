@@ -27,7 +27,7 @@ export default function ProductCard({ product }: { product: ProductType }) {
 
   return (
     <div className="relative w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
-      {user && user.role === "customer" && (
+      {user && user.role === "admin" && (
         <button
           className="absolute top-0 left-0 p-3 rounded-full text-green-500 -mt-2 ml-0 focus:outline-none"
           style={{ backgroundColor: "transparent", zIndex: "10" }}

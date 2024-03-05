@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Badge } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import DangerousOutlinedIcon from "@mui/icons-material/DangerousOutlined";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 
 import logo from "../../images/logo.png";
 import { AppState } from "../../redux/store";
@@ -27,6 +28,11 @@ function Navbar() {
   const dispatch = useDispatch();
   function openDrawer() {
     dispatch(openRightDrawer());
+  }
+  const navigate = useNavigate();
+  function logout() {
+    localStorage.clear();
+    navigate("/");
   }
   return (
     <div className="container mx-auto px-6 border-b-2 border-gray-100">
@@ -71,6 +77,12 @@ function Navbar() {
           } md:flex items-center justify-end w-full md:w-auto`}
         >
           <div className="flex flex-row-reverse mt-6">
+            {user && (
+              <LogoutOutlinedIcon
+                className="h-6 w-6 text-green-900 hover:text-green-500 cursor-pointer mx-2"
+                onClick={logout}
+              />
+            )}
             <Link to={user ? "./profile" : "./login"}>
               <AccountCircle className="h-6 w-6 text-green-900 hover:text-green-500 cursor-pointer mx-4" />
             </Link>

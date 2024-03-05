@@ -30,13 +30,18 @@ const initialState: InitialState = {
 // useEffect
 export const fetchAllProductsAsync = createAsyncThunk(
   "fetchAllProductsAsync",
-  async (url: string, { rejectWithValue }) => {
+  async (url: string) => {
     try {
-      const jsonData = await fetch(url);
-      const data: ProductType[] = await jsonData.json();
-      return data;
-    } catch (e) {
-      return rejectWithValue(e);
+      const response = await fetch(url);
+      if (!response.ok) {
+        // If response is not ok, throw an error with the appropriate status text
+        throw new Error(`HTTP Error: ${response.statusText}`);
+      }
+      // If successful, parse the JSON data and return it
+      return await response.json();
+    } catch (error) {
+      // If an error occurs during the fetch operation, handle it here
+      throw new Error(`Fetch Error: ${(error as AxiosError).message}`);
     }
   }
 );

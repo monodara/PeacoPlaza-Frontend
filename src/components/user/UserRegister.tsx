@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Box, TextField, Button } from "@mui/material";
 import { object, string } from "yup";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 
 import { UserRegisterType } from "../../misc/type";
 import { saveUserInformation } from "../../redux/slices/userSlice";
@@ -32,15 +32,33 @@ export default function UserRegisterForm() {
       .required("Required"),
     avatar: string().required("Required"),
   });
-
-  function onSubmit(values: UserRegisterType) {
+  async function checkEmail(email: string) {
+    try {
+      const response = await axios.post<{ isAvailable: boolean }>(
+        "https://api.escuelajs.co/api/v1/users/is-available",
+        { email }
+      );
+      const { isAvailable } = response.data;
+      return isAvailable;
+    } catch (error) {
+      return false;
+    }
+  }
+  async function onSubmit(
+    values: UserRegisterType,
+    { setFieldError }: FormikHelpers<UserRegisterType>
+  ) {
+    const emailAvailable = await checkEmail(values.email);
+    // If email is not available, set field error for email input
+    if (!emailAvailable) {
+      setFieldError("email", "Email is already registered");
+      return; // Exit the function early if email is not available
+    }
     //send user information to backend
     setUserInformation(values);
-    console.log(values);
     axios
       .post("https://api.escuelajs.co/api/v1/users/", values)
       .then((response) => {
-        console.log(response, "res");
         if (response.status === 201) {
           // return user data
           // save information to redux
@@ -50,13 +68,11 @@ export default function UserRegisterForm() {
         }
       })
       .catch((error) => {
-        // dispatch(saveUserInformation({ ...values, role: "customer", id: 100 }));
-        // navigate("/profile");
-        console.log(error);
+        alert(error.ErrorMessage);
       });
   }
   return (
-    <div>
+    <div className="py-6">
       <Formik
         style={{ width: "100%" }}
         initialValues={userInformation}
@@ -67,7 +83,7 @@ export default function UserRegisterForm() {
           <Form style={{ width: "100%" }}>
             <Box
               sx={{
-                width: 500,
+                width: 300,
                 maxWidth: "100%",
                 margin: "0 auto", // Horizontally center the form fields and button
               }}

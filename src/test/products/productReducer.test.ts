@@ -70,7 +70,7 @@ describe("product reducer", () => {
     });
   });
 
-  // test fetching asyncthunk with store dispatch
+  // test fetching async thunk with store dispatch
   test("should fetch all products from api", async () => {
     await store.dispatch(fetchAllProductsAsync(""));
     expect(store.getState().products.products.length).toBe(2);
