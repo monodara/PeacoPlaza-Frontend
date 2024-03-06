@@ -1,42 +1,26 @@
 import React from "react";
 import TablePagination from "@mui/material/TablePagination";
+import { Pagination } from "@mui/material";
 
 type Prop = {
   count: number;
   page: number;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
-  rowsPerPage: number;
-  setRowsPerPage: React.Dispatch<React.SetStateAction<number>>;
+  setPage: (newPage: number) => void;
 };
 
-export default function ProductPagination({
-  count,
-  page,
-  setPage,
-  rowsPerPage,
-  setRowsPerPage,
-}: Prop) {
-  const handleChangePage = (
-    event: React.MouseEvent<HTMLButtonElement> | null,
-    newPage: number
-  ) => {
-    setPage(newPage);
+export default function ProductPagination({ count, page, setPage }: Prop) {
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
   };
 
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
   return (
-    <TablePagination
-      component="div"
-      count={count}
-      page={page}
-      onPageChange={handleChangePage}
-      rowsPerPage={rowsPerPage}
-      onRowsPerPageChange={handleChangeRowsPerPage}
-    />
+    <div>
+      <Pagination
+        count={count} // Assuming 10 items per page
+        page={page}
+        onChange={handleChange}
+        variant="outlined"
+      />
+    </div>
   );
 }
