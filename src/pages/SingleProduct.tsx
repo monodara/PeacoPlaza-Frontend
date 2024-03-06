@@ -4,15 +4,11 @@ import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
-import { useFetchSingleProduct } from "../../hooks/useFetchSingleProducts";
-import { useDispatch } from "react-redux";
-import { ProductType } from "../../misc/type";
-import { addToCart } from "../../redux/slices/cartSlice";
-import { addToWishList } from "../../redux/slices/productSlice";
+import { useFetchSingleProduct } from "../hooks/useFetchSingleProducts";
 import {
   useCartButtonHandler,
   useHeartButtonHandler,
-} from "../../hooks/useButtonHandler";
+} from "../hooks/useButtonHandler";
 
 export default function SingleProduct() {
   const { id } = useParams();

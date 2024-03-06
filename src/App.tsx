@@ -1,18 +1,18 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import "./App.css";
 import Navbar from "./components/navigation/NavBar";
 import Home from "./pages/Home";
 import Footer from "./components/footer/Footer";
-import SingleProduct from "./components/product/SingleProduct";
+import SingleProduct from "./pages/SingleProduct";
 import Cart from "./pages/Cart";
 import WishList from "./pages/WishList";
 import UserRegisterForm from "./components/user/UserRegister";
 import UserLogin from "./components/user/UserLogin";
 import SearchForm from "./components/search/SearchForm";
 import Categories from "./components/category/Categories";
-import ProductsFetchData from "./components/product/Products";
+import ProductsFetchData from "./pages/Products";
 import Me from "./pages/Me";
 import Admin from "./pages/Admin";
 import ProductUpdateOrDelete from "./components/product/ProductUpdateOrDelete";

@@ -13,8 +13,8 @@ import { AppState } from "../../redux/store";
 import { CartProductType } from "../../misc/type";
 import ListIcon from "@mui/icons-material/List";
 import { openRightDrawer } from "../../redux/slices/cartSlice";
-import { CartDrawer } from "../cart/CartDrawer";
 import { saveUserInformation } from "../../redux/slices/userSlice";
+import { CartDrawer } from "../cart/CartDrawer";
 
 const linkStyle =
   "block md:inline-block text-green-900 hover:text-green-500 px-3 py-3 border-b-2 border-green-900 md:border-none";

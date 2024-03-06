@@ -7,7 +7,7 @@ import { object, string } from "yup";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 
 import { UserRegisterType } from "../../misc/type";
-import { saveUserInformation } from "../../redux/slices/userSlice";
+import { debounce } from "lodash";
 
 export default function UserRegisterForm() {
   const navigate = useNavigate();
@@ -44,11 +44,12 @@ export default function UserRegisterForm() {
       return true;
     }
   }
+  const debouncedCheckEmail = debounce(checkEmail, 500);
   async function onSubmit(
     values: UserRegisterType,
     { setFieldError }: FormikHelpers<UserRegisterType>
   ) {
-    const emailAvailable = await checkEmail(values.email);
+    const emailAvailable = await debouncedCheckEmail(values.email);
     // If email is not available, set field error for email input
     if (!emailAvailable) {
       setFieldError("email", "Email is already registered");

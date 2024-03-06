@@ -10,6 +10,7 @@ import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 import { saveUserInformation } from "../../redux/slices/userSlice";
 import loginBg from "../../images/loginBg.jpg";
 import { UserType } from "../../misc/type";
+import { debounce } from "lodash";
 
 type LoginInfo = {
   email: string;
@@ -64,7 +65,7 @@ export default function UserLogin() {
         }
       });
   }
-
+  const debouncedSubmit = debounce(onSubmit, 1000);
   const loginWithGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       const res = await fetch(
@@ -131,7 +132,7 @@ export default function UserLogin() {
             style={{ width: "100%" }}
             validationSchema={userInfoSchema}
             initialValues={loginInfo}
-            onSubmit={onSubmit}
+            onSubmit={debouncedSubmit}
           >
             {({ errors, touched }) => (
               <Form style={{ width: "100%" }}>

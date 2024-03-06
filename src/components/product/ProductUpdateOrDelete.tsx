@@ -11,6 +11,7 @@ import {
 } from "../../redux/slices/productSlice";
 import DeletePopover from "./DeletePopover";
 import { ProductType } from "../../misc/type";
+import { buttonStyle } from "../../misc/style";
 
 export default function ProductUpdateOrDelete() {
   const dispatch = useAppDispatch();
@@ -113,11 +114,7 @@ export default function ProductUpdateOrDelete() {
               <Button
                 variant="contained"
                 type="submit"
-                sx={{
-                  display: "block",
-                  margin: "20px auto",
-                  backgroundColor: "#72BD41",
-                }}
+                sx={{ ...buttonStyle, mr: 2 }}
               >
                 Update
               </Button>
@@ -126,11 +123,7 @@ export default function ProductUpdateOrDelete() {
         )}
       </Formik>
 
-      <Button
-        variant="contained"
-        sx={{ backgroundColor: "#72BD41", color: "#fff" }}
-        onClick={deleteHandler}
-      >
+      <Button variant="contained" sx={buttonStyle} onClick={deleteHandler}>
         Delete
       </Button>
       <DeletePopover

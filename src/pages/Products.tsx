@@ -1,17 +1,15 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
-import ProductCard from "./ProductCard";
-import { ProductType } from "../../misc/type";
-import { AppState, useAppDispatch } from "../../redux/store";
-import { fetchAllProductsAsync } from "../../redux/slices/productSlice";
-import ProductFilters from "./ProductFilter";
-import ProductPagination from "./ProductPagination";
-import ProductSort from "./ProductSort";
-import { sortProducts } from "../../misc/util";
+import ProductCard from "../components/product/ProductCard";
+import { ProductType } from "../misc/type";
+import { AppState, useAppDispatch } from "../redux/store";
+import { fetchAllProductsAsync } from "../redux/slices/productSlice";
+import ProductFilters from "../components/product/ProductFilter";
+import ProductSort from "../components/product/ProductSort";
+import { sortProducts } from "../misc/util";
+import ProductPagination from "../components/product/ProductPagination";
 
 export default function Products() {
   const dispatch = useAppDispatch();
@@ -26,7 +24,7 @@ export default function Products() {
 
   useEffect(() => {
     dispatch(fetchAllProductsAsync(url));
-  }, [url]);
+  }, [dispatch]);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState("");

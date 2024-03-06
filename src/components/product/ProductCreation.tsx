@@ -16,6 +16,7 @@ import { object, string, number } from "yup";
 
 import { ProductCreatedType } from "../../misc/type";
 import { createProductsAsync } from "../../redux/slices/productSlice";
+import { buttonStyle } from "../../misc/style";
 
 export default function ProductCreation() {
   const dispatch = useAppDispatch();
@@ -157,15 +158,7 @@ export default function ProductCreation() {
                     ))}
                   </RadioGroup>
                 </FormControl>
-                <Button
-                  variant="contained"
-                  type="submit"
-                  sx={{
-                    display: "block",
-                    margin: "20px auto",
-                    backgroundColor: "#72BD41",
-                  }}
-                >
+                <Button variant="contained" type="submit" sx={buttonStyle}>
                   Create
                 </Button>
               </Box>

@@ -7,9 +7,6 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { AppState } from "../../redux/store";
 
 export default function UserProfile() {
-  const [userForm, setUserForm] = useState();
-
-  // get user information
   const user = useSelector((state: AppState) => state.users.user);
 
   if (!user) {
@@ -35,11 +32,6 @@ export default function UserProfile() {
               </div>
             </div>
           </div>
-          {/* <div className="flex gap-2 px-2">
-            <button className="flex-1 rounded-full bg-blue-600 dark:bg-blue-800 text-white dark:text-white antialiased font-bold hover:bg-blue-800 dark:hover:bg-blue-900 px-4 py-2">
-              Change Username
-            </button>
-          </div> */}
         </div>
         <div className="px-4 py-4 flex flex-col justify-left items-left ml-16">
           <div className="flex gap-2 items-center text-gray-800  mb-4">

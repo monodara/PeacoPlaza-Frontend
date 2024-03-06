@@ -1,4 +1,3 @@
-// ProductSort.tsx
 import React from "react";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 

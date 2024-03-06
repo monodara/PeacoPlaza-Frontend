@@ -5,27 +5,8 @@ import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { buttonStyle, popoverStyle } from "../../misc/style";
 
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "1px solid gray",
-  borderRadius: 1,
-  boxShadow: 24,
-  p: 4,
-};
-const buttonStyle = {
-  marginRight: 2,
-  backgroundColor: "#72BD41",
-  color: "white",
-  "&:hover": {
-    backgroundColor: "rgb(114,220,65)", // Change the background color on hover
-  },
-};
 interface DeletePopoverProps {
   open: boolean;
   onClose: () => void;
@@ -52,7 +33,7 @@ export default function DeletePopover({
         }}
       >
         <Fade in={open}>
-          <Box sx={style}>
+          <Box sx={popoverStyle}>
             <Typography id="transition-modal-title" variant="h6" component="h2">
               Do you confirm to delete the item?
             </Typography>

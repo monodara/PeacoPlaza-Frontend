@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
+import { debounce } from "lodash";
 
 import { AppState, useAppDispatch } from "../../redux/store";
 import { CategoryType } from "../../misc/type";
@@ -13,18 +14,32 @@ function SearchForm() {
   useEffect(() => {
     dispatch(fetchAllCategoriesAsync());
   }, [dispatch]);
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<null | CategoryType>(
     null
   );
+  const [searchKeyword, setSearchKeyword] = useState("");
   const navigate = useNavigate();
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
 
   const categoryList = useSelector(
     (state: AppState) => state.categories.categoryList
   );
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const debouncedSearch = debounce((keyword: string) => {
+    dispatch(getSearchKeyword(keyword));
+  }, 1000);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const keyword = e.target.value;
+    setSearchKeyword(keyword);
+    debouncedSearch(keyword);
+  };
+
   function dropdownClickHandler(
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     category: CategoryType | null
@@ -36,7 +51,9 @@ function SearchForm() {
   return (
     <div className="container mx-auto px-6 mt-10">
       <form className="max-w-lg mx-auto flex flex-col sm:flex-row items-start sm:items-center">
+        {/* Dropdown */}
         <div className="relative">
+          {/* Dropdown button */}
           <button
             id="dropdown-button"
             onClick={toggleDropdown}
@@ -60,6 +77,7 @@ function SearchForm() {
               />
             </svg>
           </button>
+          {/* Dropdown content */}
           <div
             id="dropdown"
             className={`z-10 ${
@@ -70,6 +88,7 @@ function SearchForm() {
               className="py-2 text-sm text-gray-700"
               aria-labelledby="dropdown-button"
             >
+              {/* Dropdown items */}
               <li>
                 <button
                   type="button"
@@ -81,39 +100,37 @@ function SearchForm() {
                   All
                 </button>
               </li>
-              {categoryList.map((c) => {
-                return (
-                  <li key={c.id}>
-                    <button
-                      type="button"
-                      className="inline-flex w-full px-4 py-2 hover:bg-gray-100"
-                      onClick={(e) => {
-                        dropdownClickHandler(e, c);
-                      }}
-                    >
-                      {c.name}
-                    </button>
-                  </li>
-                );
-              })}
+              {categoryList.map((c) => (
+                <li key={c.id}>
+                  <button
+                    type="button"
+                    className="inline-flex w-full px-4 py-2 hover:bg-gray-100"
+                    onClick={(e) => {
+                      dropdownClickHandler(e, c);
+                    }}
+                  >
+                    {c.name}
+                  </button>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
+        {/* Search input */}
         <div className="relative flex-grow sm:ml-2 w-full sm:w-auto">
           <input
             type="search"
             id="search-dropdown"
             className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:outline-none"
             placeholder="Search..."
-            required
-            onChange={(e) => {
-              dispatch(getSearchKeyword(e.target.value));
-            }}
+            value={searchKeyword}
+            onChange={handleInputChange}
           />
+          {/* Search button */}
           <Link
             to={
               selectedCategory
-                ? `products/?categoryId=${selectedCategory?.id}`
+                ? `products/?categoryId=${selectedCategory.id}`
                 : "products"
             }
           >

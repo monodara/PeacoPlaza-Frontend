@@ -1,5 +1,4 @@
 import React from "react";
-import TablePagination from "@mui/material/TablePagination";
 import { Pagination } from "@mui/material";
 
 type Prop = {
