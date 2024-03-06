@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -16,28 +16,106 @@ import { openRightDrawer } from "../../redux/slices/cartSlice";
 import { CartDrawer } from "../cart/CartDrawer";
 import { saveUserInformation } from "../../redux/slices/userSlice";
 
+const linkStyle =
+  "block md:inline-block text-green-900 hover:text-green-500 px-3 py-3 border-b-2 border-green-900 md:border-none";
+const iconStyle =
+  "h-6 w-6 text-green-900 hover:text-green-500 cursor-pointer mx-4";
+
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
   const wishlist = useSelector((state: AppState) => state.products.wishList);
   const productsInCart = useSelector(
     (state: AppState) => state.cart.productsInCart
   );
   const user = useSelector((state: AppState) => state.users.user);
   const dispatch = useDispatch();
-  function openDrawer() {
-    dispatch(openRightDrawer());
-  }
   const navigate = useNavigate();
-  function logout() {
+
+  const openDrawer = () => {
+    dispatch(openRightDrawer());
+  };
+
+  const logout = () => {
     dispatch(saveUserInformation(null));
-    localStorage.setItem("productsInCart", JSON.stringify([]));
-    localStorage.setItem("wishlist", JSON.stringify([]));
+    localStorage.removeItem("productsInCart");
+    localStorage.removeItem("wishlist");
     localStorage.clear();
     navigate("/");
-  }
+  };
+
+  const totalCartItems = useMemo(
+    () =>
+      productsInCart.reduce(
+        (sum, item: CartProductType) => sum + item.amount,
+        0
+      ),
+    [productsInCart]
+  );
+
+  const renderMenuLinks = () => (
+    <div
+      className={`toggle ${
+        isMenuOpen ? "" : "hidden"
+      } w-full md:w-auto md:flex text-right text-bold mt-5 md:mt-0 border-t-2 border-green-900 md:border-none`}
+    >
+      <Link to="/products" className={linkStyle}>
+        All Products
+      </Link>
+      <Link to="/categories" className={linkStyle}>
+        By Category
+      </Link>
+      {user && user.role === "admin" && (
+        <Link to="/admin" className={linkStyle}>
+          Admin
+        </Link>
+      )}
+    </div>
+  );
+
+  const renderIcons = () => (
+    <div
+      className={`toggle ${
+        isMenuOpen ? "" : "hidden"
+      } md:flex items-center justify-end w-full md:w-auto`}
+    >
+      <div className="flex flex-row-reverse mt-6">
+        {user && <LogoutOutlinedIcon className={iconStyle} onClick={logout} />}
+        <Link to={user ? "./profile" : "./login"}>
+          <AccountCircle className={iconStyle} />
+        </Link>
+        <Badge
+          badgeContent={totalCartItems}
+          color="error"
+          overlap="circular"
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+        >
+          <ShoppingCartIcon className={iconStyle} onClick={openDrawer} />
+          <CartDrawer />
+        </Badge>
+        <Badge
+          badgeContent={wishlist.length}
+          color="error"
+          overlap="circular"
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+        >
+          <Link to="./wishlist">
+            <FavoriteIcon className={iconStyle} />
+          </Link>
+        </Badge>
+      </div>
+    </div>
+  );
+
   return (
     <div className="container mx-auto px-6 border-b-2 border-gray-100">
       <nav className="flex flex-wrap items-center justify-between p-3 bg-slate-50">
@@ -49,82 +127,8 @@ function Navbar() {
             {isMenuOpen ? <DangerousOutlinedIcon /> : <ListIcon />}
           </button>
         </div>
-        <div
-          className={`toggle ${
-            isMenuOpen ? "" : "hidden"
-          } w-full md:w-auto md:flex text-right text-bold mt-5 md:mt-0 border-t-2 border-green-900 md:border-none`}
-        >
-          <a
-            href="/products"
-            className="block md:inline-block text-green-900 hover:text-green-500 px-3 py-3 border-b-2 border-green-900 md:border-none"
-          >
-            All Products
-          </a>
-          <a
-            href="/categories"
-            className="block md:inline-block text-green-900 hover:text-green-500 px-3 py-3 border-b-2 border-green-900 md:border-none"
-          >
-            By Category
-          </a>
-          {user && user.role === "admin" && (
-            <a
-              href="/admin"
-              className="block md:inline-block text-green-900 hover:text-green-500 px-3 py-3 border-b-2 border-green-900 md:border-none"
-            >
-              Admin
-            </a>
-          )}
-        </div>
-        <div
-          className={`toggle ${
-            isMenuOpen ? "" : "hidden"
-          } md:flex items-center justify-end w-full md:w-auto`}
-        >
-          <div className="flex flex-row-reverse mt-6">
-            {user && (
-              <LogoutOutlinedIcon
-                className="h-6 w-6 text-green-900 hover:text-green-500 cursor-pointer mx-2"
-                onClick={logout}
-              />
-            )}
-            <Link to={user ? "./profile" : "./login"}>
-              <AccountCircle className="h-6 w-6 text-green-900 hover:text-green-500 cursor-pointer mx-4" />
-            </Link>
-            <Badge
-              badgeContent={productsInCart.reduce(
-                (sum, item: CartProductType) => {
-                  return sum + item.amount;
-                },
-                0
-              )}
-              color="error"
-              overlap="circular"
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-            >
-              <ShoppingCartIcon
-                className="h-6 w-6 text-green-900 hover:text-green-500 cursor-pointer mx-4"
-                onClick={openDrawer}
-              />
-              <CartDrawer />
-            </Badge>
-            <Badge
-              badgeContent={wishlist.length}
-              color="error"
-              overlap="circular"
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-            >
-              <Link to={"./wishlist"}>
-                <FavoriteIcon className="h-6 w-6 text-green-900 hover:text-green-500 cursor-pointer mx-4" />
-              </Link>
-            </Badge>
-          </div>
-        </div>
+        {renderMenuLinks()}
+        {renderIcons()}
       </nav>
     </div>
   );

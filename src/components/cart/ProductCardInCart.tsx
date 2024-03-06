@@ -3,57 +3,54 @@ import { useDispatch } from "react-redux";
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
 import { Link } from "react-router-dom";
 
+import DeletePopover from "../product/DeletePopover";
 import { CartProductType } from "../../misc/type";
 import {
-  closeRightDrawer,
   decrementProductAmount,
   incrementProductAmount,
   removeFromCart,
   updateProductAmount,
 } from "../../redux/slices/cartSlice";
-import DeletePopover from "../product/DeletePopover";
 
 export default function ProductCardInCart({
   product,
 }: {
   product: CartProductType;
 }) {
-  //control Modal component
-  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [openModal, setOpenModal] = useState(false);
+  const dispatch = useDispatch();
+
   const handleOpenModal = () => {
-    dispatch(closeRightDrawer()); //close the drawer
     setOpenModal(true);
   };
 
   const handleCloseModal = () => {
     setOpenModal(false);
   };
-  const dispatch = useDispatch();
-  function amountHandler(
-    e: ChangeEvent<HTMLInputElement>,
-    product: CartProductType
-  ) {
+
+  const handleAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newAmount = parseInt(e.target.value);
     if (newAmount <= 0) {
       handleOpenModal();
     } else {
       dispatch(updateProductAmount({ product, newAmount }));
     }
-  }
-  function decrementAmount(product: CartProductType) {
+  };
+
+  const decrementAmount = () => {
     if (product.amount > 1) dispatch(decrementProductAmount(product));
-    else {
-      handleOpenModal();
-    }
-  }
-  function incrementAmount(product: CartProductType) {
+    else handleOpenModal();
+  };
+
+  const incrementAmount = () => {
     dispatch(incrementProductAmount(product));
-  }
-  function deleteClickHandle() {
-    // Dispatch action to delete the product from the cart
+  };
+
+  const deleteClickHandle = () => {
     dispatch(removeFromCart(product));
-    handleCloseModal(); // Close the modal after deletion
-  }
+    handleCloseModal();
+  };
+
   return (
     <div className="flex gap-6 items-center justify-between gap-4 py-8">
       <div className="h-64 bg-gray-100 p-6 rounded">
@@ -74,7 +71,7 @@ export default function ProductCardInCart({
         <div className="mt-6 flex items-center">
           <span
             className="font-semibold cursor-pointer"
-            onClick={() => decrementAmount(product)}
+            onClick={decrementAmount}
           >
             -
           </span>
@@ -82,11 +79,11 @@ export default function ProductCardInCart({
             type="text"
             className="focus:outline-none bg-gray-100 border h-6 w-8 rounded text-sm px-2 mx-2"
             value={product.amount}
-            onChange={(e) => amountHandler(e, product)}
+            onChange={handleAmountChange}
           />
           <span
             className="font-semibold cursor-pointer"
-            onClick={() => incrementAmount(product)}
+            onClick={incrementAmount}
           >
             +
           </span>

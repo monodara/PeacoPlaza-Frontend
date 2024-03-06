@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import { CategoryType } from "../../misc/type";
 
 export default function CategoryCard({ category }: { category: CategoryType }) {

@@ -1,67 +1,54 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import RedditIcon from "@mui/icons-material/Reddit";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import { Link } from "react-router-dom";
 
 import logo from "../../images/logo.png";
 
+const quickLinks = [
+  { label: "Home", href: "/" },
+  { label: "All products", href: "/products" },
+];
+
+const categories = [
+  { label: "Clothes", categoryId: 1 },
+  { label: "Shoes", categoryId: 2 },
+  { label: "Electronics", categoryId: 3 },
+  { label: "Furniture", categoryId: 4 },
+];
+
 export default function Footer() {
-  const [email, setEmail] = useState("");
-
-  const handleSubscribe = () => {};
-
   return (
     <footer className="bg-gray-100 px-6 mt-10 border-t-2 border-gray-200">
       <div className="container px-6 py-12 mx-auto">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-y-10 lg:grid-cols-4">
           <div>
-            <p className="font-semibold text-gray-800 text-left">Quick Link</p>
-
+            <p className="font-semibold text-gray-800 text-left">Quick Links</p>
             <div className="flex flex-col items-start mt-5 space-y-2">
-              <a
-                href=""
-                className="text-gray-600 hover:underline hover:text-blue-500"
-              >
-                Home
-              </a>
-              <a
-                href="products"
-                className="text-gray-600 hover:underline hover:text-blue-500"
-              >
-                All products
-              </a>
+              {quickLinks.map(({ label, href }) => (
+                <Link
+                  key={label}
+                  to={href}
+                  className="text-gray-600 hover:underline hover:text-blue-500"
+                >
+                  {label}
+                </Link>
+              ))}
             </div>
           </div>
 
           <div>
             <p className="font-semibold text-gray-800 text-left">Categories</p>
-
             <div className="flex flex-col items-start mt-5 space-y-2">
-              <a
-                href="products/?categoryId=1"
-                className="text-gray-600 hover:underline hover:text-blue-500"
-              >
-                Clothes
-              </a>
-              <a
-                href="products/?categoryId=2"
-                className="text-gray-600 hover:underline hover:text-blue-500"
-              >
-                Shoes
-              </a>
-              <a
-                href="products/?categoryId=3"
-                className="text-gray-600 hover:underline hover:text-blue-500"
-              >
-                Electronics
-              </a>
-              <a
-                href="products/?categoryId=4"
-                className="text-gray-600 hover:underline hover:text-blue-500"
-              >
-                Furniture
-              </a>
+              {categories.map(({ label, categoryId }) => (
+                <Link
+                  key={label}
+                  to={`/products/?categoryId=${categoryId}`}
+                  className="text-gray-600 hover:underline hover:text-blue-500"
+                >
+                  {label}
+                </Link>
+              ))}
             </div>
           </div>
         </div>
@@ -69,9 +56,9 @@ export default function Footer() {
         <hr className="my-6 border-gray-200 md:my-8" />
 
         <div className="flex items-center justify-between">
-          <a href="#">
+          <Link to="/">
             <img className="w-auto h-7" src={logo} alt="logo" />
-          </a>
+          </Link>
 
           <div className="flex -mx-2">
             <a
@@ -81,7 +68,6 @@ export default function Footer() {
             >
               <RedditIcon />
             </a>
-
             <a
               href="#"
               className="mx-2 text-gray-600 hover:text-blue-500"
@@ -89,11 +75,10 @@ export default function Footer() {
             >
               <FacebookIcon />
             </a>
-
             <a
               href="#"
               className="mx-2 text-gray-600 hover:text-blue-500"
-              aria-label="Github"
+              aria-label="GitHub"
             >
               <GitHubIcon />
             </a>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { AppState } from "../../redux/store";
 
+import { AppState } from "../../redux/store";
 import ProductCardInCart from "./ProductCardInCart";
 
 export default function ProductsInCart() {
