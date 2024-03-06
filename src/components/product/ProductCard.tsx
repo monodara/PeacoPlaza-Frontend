@@ -12,8 +12,6 @@ import {
 import { ProductInfoInCard } from "./shared/ProductInfoInCard";
 import { ProductImage } from "./shared/ProductImage";
 
-// Import necessary modules/components
-
 export default function ProductCard({ product }: { product: ProductType }) {
   const navigate = useNavigate();
   const user = useSelector((state: AppState) => state.users.user);
@@ -37,8 +35,6 @@ export default function ProductCard({ product }: { product: ProductType }) {
     </div>
   );
 }
-
-// Separate components
 
 const AdminControls = ({ onClick }: { onClick: () => void }) => (
   <button

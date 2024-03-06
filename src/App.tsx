@@ -23,16 +23,9 @@ function App() {
     <div className="App">
       <Navbar />
       <SearchForm />
-      {/* <SearchBar /> */}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route
-          path="/products"
-          element={
-            // <ProductCollect url={"https://api.escuelajs.co/api/v1/products"} />
-            <ProductsFetchData />
-          }
-        />
+        <Route path="/products" element={<ProductsFetchData />} />
         <Route path="/products/:id" element={<SingleProduct />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/wishlist" element={<WishList />} />

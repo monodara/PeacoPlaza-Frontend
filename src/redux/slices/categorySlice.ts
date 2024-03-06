@@ -1,4 +1,4 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { CategoryType } from "../../misc/type";
 
@@ -16,7 +16,6 @@ const initialState: InitialState = {
 // fetch data
 const url = "https://api.escuelajs.co/api/v1/categories";
 
-// fetchAllProductsAsync() => async
 // useEffect
 export const fetchAllCategoriesAsync = createAsyncThunk(
   "fetchAllCategoriesAsync",
@@ -40,7 +39,6 @@ const categorySlice = createSlice({
     // async
     // 3 states:
     builder.addCase(fetchAllCategoriesAsync.fulfilled, (state, action) => {
-      // save data in redux
       return {
         ...state,
         categoryList: action.payload,
@@ -67,8 +65,4 @@ const categorySlice = createSlice({
 });
 
 const categoryReducer = categorySlice.reducer;
-
-// export const { addToFav, searchProductByName, getUserInput } =
-//   productSlice.actions;
-// actions: use in component:
 export default categoryReducer;

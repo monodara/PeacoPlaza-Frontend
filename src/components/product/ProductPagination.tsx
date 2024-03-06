@@ -15,7 +15,7 @@ export default function ProductPagination({ count, page, setPage }: Prop) {
   return (
     <div>
       <Pagination
-        count={count} // Assuming 10 items per page
+        count={count}
         page={page}
         onChange={handleChange}
         variant="outlined"

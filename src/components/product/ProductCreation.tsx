@@ -145,7 +145,7 @@ export default function ProductCreation() {
                     name="category"
                     value={productInfo.categoryId}
                     onChange={handleChange}
-                    sx={{ flexDirection: "row" }} // 控制RadioGroup内部Flex方向
+                    sx={{ flexDirection: "row" }}
                   >
                     {categoryList.map((category) => (
                       <FormControlLabel
