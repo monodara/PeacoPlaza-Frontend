@@ -43,8 +43,6 @@ function ProductFilters() {
     setIsFiltersOpen(false);
   };
   const { theme } = useTheme();
-  const textPrimaryColor = theme.palette.text.primary;
-  const backgroundColor = theme.palette.background.default;
   return (
     <div className="relative">
       {isFiltersOpen && (
