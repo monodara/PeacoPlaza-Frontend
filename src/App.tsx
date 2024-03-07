@@ -1,5 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import ScrollToTop from "react-scroll-to-top";
 
 import "./App.css";
 import Navbar from "./components/contextAPI/NavBar";
@@ -43,6 +44,7 @@ function App() {
         />
         <Route path="/checkout" element={<Checkout />} />
       </Routes>
+      <ScrollToTop smooth />
       <Footer />
     </div>
   );

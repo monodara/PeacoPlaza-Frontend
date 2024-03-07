@@ -100,7 +100,7 @@ function Navbar() {
     >
       <div className="flex flex-row-reverse mt-6">
         {user && <UserLogoutButton />}
-        <Link to={user ? "./profile" : "./login"}>
+        <Link to={user ? "/profile" : "/login"}>
           <AccountCircle
             className={iconStyle}
             style={{

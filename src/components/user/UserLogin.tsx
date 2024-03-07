@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Box, TextField, Button, Alert } from "@mui/material";
 import { object, string } from "yup";
@@ -201,9 +201,11 @@ export default function UserLogin() {
 
           <div className="mt-4 flex items-center justify-between">
             <span className="border-b w-1/5 md:w-1/4"></span>
-            <a href="/register" className="text-xs text-gray-500 uppercase">
-              Don't have an account? Register here.
-            </a>
+            <Link to={"/register"}>
+              <div className="text-xs text-gray-500 uppercase">
+                Don't have an account? Register here.
+              </div>
+            </Link>
             <span className="border-b w-1/5 md:w-1/4"></span>
           </div>
         </div>

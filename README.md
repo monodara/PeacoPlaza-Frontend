@@ -12,7 +12,7 @@ This project is a website of an e-commerce business using fake data from the API
 | Categories     | Classify product in different categories                                                                   |
 | Wishlist       | Users can store items to their list.                                                                       |
 | Cart           | Preview the order before checkout or update the items in cart.                                             |
-| Profile        | Register as new customer or sign in by email or Google account                                             |
+| Profile        | Register as new customer or sign in by email or Google account.                                            |
 | Admin          | Manage products, categories and users.                                                                     |
 
 ## Getting Started
@@ -20,67 +20,115 @@ This project is a website of an e-commerce business using fake data from the API
 1. Clone the repository using `git clone`;
 2. Open the terminal and navigate to project folder.
 3. Install packages and libraries. If you are using `npm`, run `npm install`. If you are using `yarn`, run `yarn install`.
-4. Run the project using `npm start` or `yarn start`. The application will automatically open a browser window at the address [http://localhost:3000/](http://localhost:3000/)
+4. Replace the apiKey in `index.tsx` with your key.
+5. Run the project using `npm start` or `yarn start`. The application will automatically open a browser window at the address [http://localhost:3000/](http://localhost:3000/)
 
-## Requirements
+## Usage
 
-### Basic requirements
+#### Scripts
 
-The Front end project must use TypeScript and Redux toolkit.
+`"start": "react-scripts start"`, runs the development server.
 
-1. Use the API endpoint `https://fakeapi.platzi.com/`.
+`"build": "react-scripts build"`,bundles the app into static files for production.
 
-2. Create at lease 4 pages (can be more if you want): Page for all products, product page, profile page (only available if user logins), and cart page (cart page could be a page or a modal)
+`"test": "react-scripts test --transformIgnorePatterns 'node_modules/(?!@codemirror)/' --coverage"`, launches the test runner in interactive watch mode. Additionally, it ensures that test coverage is calculated,
 
-3. Create Redux store for following features:
+`"eject": "react-scripts eject"`, moves the create-react-app configuration and scripts into the project, providing full control over them.
 
-   - product reducer: get all products, find a single products, filter products by categories, sort products by price. Create, update and delete a product (enable update & delete features only for admin of the webapp)
-   - user reducer: register and login
-   - cart reducer: add product to cart, remove products, update products's quantity in cart
+`"test-coverage": "jest --coverage"`, executes Jest tests and generates coverage reports.
 
-4. When adding routers to your application, set certain routes to be private. For example, route to user profile page should not be accessible if user has not logged in.
+#### Features
 
-5. Styling: must have responsive
+1.  Fetch products data from the API and display the items.
+    ![products](./src/images/screenshots/products.png)
+2.  Filter products by category and price.
+    ![filter](./src/images/screenshots/productFilter.png)
+3.  Sort data by price in ascending/descending order.
+    ![sorter](./src/images/screenshots/productSorting.png)
+4.  Search for items by keyword and/or a specific category.
+    ![search](./src/images/screenshots/search.png)
+5.  Browser detailed information of a product.
+    ![details](./src/images/screenshots/productDetail.png)
+6.  Add products to wishlist from either the product list or the product details page by clicking the heart button. Remove a product from wishlist by clicking the trash button at the left-top corner.  
+    ![delete from wishlist](./src/images/screenshots/deleteWishlistItem.png)
+7.  Add items to cart from the entire list, wishlist or product details page. The number of items in wishlist and cart will be displayed on the Badges of icons.
+    ![badge](./src/images/screenshots/badge.png)
+8.  Preview cart by a drawer popped over from right in which editing the products and their numbers are allowed.
+    ![cart drawer](./src/images/screenshots/cartDrawer.png)
+9.  In cart page, it's also welcomed to change the product's number. If the delete button is clicked or the number of product is reduced to 0, a Modal will pop out requesting for confirmation.
+    ![cart](./src/images/screenshots/cart.png)
+    ![popover](./src/images/screenshots/deletePopover.png)
+10. Checkout button will lead to login (if not yet), the user can login by email, by Google account, or register a new account.
+11. Both login and register form have to be validated, which is implemented by `Formik` and `Yup`. Besides,the email and the avatar must pass the API endpoints.
+    ![register](./src/images/screenshots/register.png)
+    ![alert](./src/images/screenshots/avatarAlert.png)
+12. When a "admin" role logs in, it's allowed to created/update/delete items.
+13. Click the button to toggle light/dark mode, which is achieved by `React's Context` and `Material UI`'s customered theme.
+    ![create](./src/images/screenshots/create.png)
+14. Responsive layout is build with `Tailwindcss`.
+15. `React-scroll-to-top` is used to enable uses to reach the page top view smoothly.
 
-6. Implement unit testing for the reducers
+## Architecture & Design
 
-7. **Deploy** the application and rewrite README file.
+#### Pages & Components
 
-### Additional features:
+```
+src/
+|-- components/
+|   |-- product/
+|   |   |-- ProductCard
+|   |   |-- ProductFilters
+|   |   |-- ProductPagination
+|   |   |-- ProductSort
+|   |   |-- ProductFilter
+|   |   |-- shared/
+|   |       |-- ProductImage
+|   |       |-- ProductInfoInCard
+|   |       |-- CartButton
+|   |       |-- HeartButton
+|   |-- user/
+|   |   |-- UserProfile
+|   |   |-- UserLogin
+|   |   |-- UserRegister
+|   |   |-- UserLogoutButton
+|   |-- admin/
+|   |   |-- ProductCreation
+|   |   |-- ProductUpdateOrDelete
+|   |-- cart/
+|   |   |-- CartDrawer
+|   |   |-- ProductCardInCart
+|   |   |-- ProductsInCart
+|   |-- category/
+|   |   |-- Categories
+|   |   |-- CategoryCard
+|   |-- search/
+|   |   |-- SearchForm
+|-- pages/
+|   |-- Home
+|   |-- Admin
+|   |-- Cart
+|   |-- Me
+|   |-- Products
+|   |-- SingleProduct
+|   |-- WishList
+```
 
-- Use Context API to switch theme
-- Use pagination when fetching/displaying all the products
-- Implement performance optimization where applicable
+I broke components into small pieces. For example, the diagram below illustrates the how Products page is structured.
+![structure](./src//images/screenshots/componentStructure.png)
+To enable the components to access states, I use `Redux` store to pool them. For example, by clicking the cart button from products page, wishlist page, a single product details page, and the trash button in cart drawer, `itemsInCart` state can be updated. Then, other components like the badge of cart button can select the state from the store.
 
-## Grading (1-5)
+In addition, I use customered hooks to fetch data of a single product and to handle repeated dispatching actions specifically `ddToCart(item)` and `addToWishList(item)`.
+Commonly used types, style and functions are exported from misc folder.
 
-1: Late submission or not complete basic requirements
+## Testing
 
-2: Basic requirement + Presentation
+#### Libraries
 
-3: Folder structure + follow convention(naming convention ,loading, error) + some additional features
+[Jest](https://jestjs.io/) is used for unit testing and [mswjs](https://mswjs.io/) for server mocking. By simply run `yarn test`, you can observe the test results dynamically.
 
-4: All additional features + reusable logic + custom hook
+For this project, I have implemented unit testing for the reducers.
+![test result](./src/images/screenshots/test.png)
 
-5: UI-UX (for example: send alert when user add same product) + styling (animation or transition, scroll to top) + advanced feature (google log in)
+## Deployment
 
-## Deadline
-
-- Presentation: **7/3** and **8/3/ 2024**
-- Submitting Front-end project **10am 8/3/2024**
-
-Usage:
-Scripts: List the available scripts in package.json like start, build, test, and what they do.
-Features: Break down the main features of your application and how to use them.
-Screenshots or GIFs: Visual aids can help users quickly understand what the project looks like in action.
-Architecture & Design:
-Folder Structure: Briefly explain the organization of important directories and files.
-Data Flow: Describe how data flows in the application, especially if you’re using tools like Redux or Context API.
-Component Structure: Explain the main components and their relationships, possibly using a diagram.
-Testing:
-Mention the testing libraries/frameworks used.
-Explain how to run tests.
-If applicable, describe the structure of your tests (unit, integration, end-to-end).
-Deployment:
-Detail the steps required for deploying the project to a server.
-Mention any specific hosting platforms, CI/CD pipelines, or other tools used.
+The project is deployed on Github Pages. [https://monodara.github.io/Ecommerce-Web-with-API/](https://monodara.github.io/Ecommerce-Web-with-API/)
