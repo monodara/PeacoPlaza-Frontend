@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { Box, TextField, Button } from "@mui/material";
 import { object, string } from "yup";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 
 import { UserRegisterType } from "../../misc/type";
 import { debounce } from "lodash";
+import { useTheme } from "../contextAPI/ThemeContext";
+import { inputFormStyles } from "../../misc/style";
 
 export default function UserRegisterForm() {
+  const { theme } = useTheme();
+  const textPrimaryColor = theme.palette.text.primary;
+  const backgroundColor = theme.palette.background.default;
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const [userInformation, setUserInformation] = useState<UserRegisterType>({
     name: "",
@@ -91,7 +94,7 @@ export default function UserRegisterForm() {
           <Form style={{ width: "100%" }}>
             <Box
               sx={{
-                width: 300,
+                width: 360,
                 maxWidth: "100%",
                 margin: "0 auto", // Horizontally center the form fields and button
               }}
@@ -99,7 +102,7 @@ export default function UserRegisterForm() {
               <Button
                 variant="text"
                 type="button"
-                sx={{ display: "block", margin: "20px auto" }}
+                sx={theme.typography.body1}
                 onClick={() => navigate("/login")}
               >
                 Already have an account?
@@ -112,6 +115,7 @@ export default function UserRegisterForm() {
                 name="name"
                 error={errors.name && touched.name}
                 helperText={<ErrorMessage name="name" />}
+                sx={inputFormStyles(textPrimaryColor)}
               />
               <Field
                 as={TextField}
@@ -121,6 +125,7 @@ export default function UserRegisterForm() {
                 name="email"
                 error={errors.email && touched.email}
                 helperText={<ErrorMessage name="email" />}
+                sx={inputFormStyles(textPrimaryColor)}
               />
               <Field
                 as={TextField}
@@ -130,6 +135,7 @@ export default function UserRegisterForm() {
                 name="password"
                 error={errors.password && touched.password}
                 helperText={<ErrorMessage name="password" />}
+                sx={inputFormStyles(textPrimaryColor)}
               />
               <Field
                 as={TextField}
@@ -139,15 +145,12 @@ export default function UserRegisterForm() {
                 name="avatar"
                 error={errors.avatar && touched.avatar}
                 helperText={<ErrorMessage name="avatar" />}
+                sx={inputFormStyles(textPrimaryColor)}
               />
               <Button
                 variant="contained"
                 type="submit"
-                sx={{
-                  display: "block",
-                  margin: "20px auto",
-                  backgroundColor: "#72BD41",
-                }}
+                sx={{ ...theme.typography.button, borderRadius: 1 }}
               >
                 Register
               </Button>

@@ -3,16 +3,30 @@ import { useSelector } from "react-redux";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 import { AppState } from "../redux/store";
-import ProductCreation from "../components/product/ProductCreation";
+import ProductCreation from "../components/admin/ProductCreation";
+import { useTheme } from "../components/contextAPI/ThemeContext";
 
 export default function Admin() {
   const user = useSelector((state: AppState) => state.users.user);
   const [activePanel, setActivePanel] = useState<string | null>("create");
-
+  const { theme } = useTheme();
+  const color = theme.palette.text.primary;
+  const backgroundColor = theme.palette.background.default;
   return (
-    <div className="md:flex flex-col md:flex-row md:min-h-screen w-full">
+    <div
+      className="md:flex flex-col md:flex-row md:min-h-screen w-full mt-10 shadow-xl"
+      style={{
+        borderTop: "2px solid gray",
+      }}
+    >
       {/* Sidebar */}
-      <div className="flex flex-col w-full md:w-64 text-gray-700 bg-white flex-shrink-0">
+      <div
+        className="flex flex-col w-full md:w-64 flex-shrink-0"
+        style={{
+          backgroundColor: backgroundColor,
+          borderRight: "2px solid gray",
+        }}
+      >
         <div className="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
           <img
             className="h-32 w-32 rounded-full border-4 border-white mx-auto my-4"
@@ -32,6 +46,7 @@ export default function Admin() {
               onClick={() =>
                 setActivePanel(activePanel === "category" ? null : "category")
               }
+              style={theme.typography.body1}
             >
               <span>Category Management</span>
               <KeyboardArrowDownIcon
@@ -65,6 +80,7 @@ export default function Admin() {
               onClick={() =>
                 setActivePanel(activePanel === "product" ? null : "product")
               }
+              style={theme.typography.body1}
             >
               <span>Product Management</span>
               <KeyboardArrowDownIcon
@@ -104,7 +120,7 @@ export default function Admin() {
       <div className="flex justify-center items-center flex-grow mt-10">
         {activePanel === "create" && <ProductCreation />}
         {activePanel === "delete" && (
-          <div>Search a product to update or delete...</div>
+          <div style={{ color }}>Search a product to update or delete...</div>
         )}
         {/* Add other panels as needed */}
       </div>

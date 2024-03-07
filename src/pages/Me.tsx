@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 
-import UserProfile from "../components/user/UseProfile";
+import UserProfile from "../components/user/UserProfile";
 import UserOrders from "../components/user/UserOrders";
 import UserAddress from "../components/user/UserAddress";
+import { useTheme } from "../components/contextAPI/ThemeContext";
 
 interface ButtonProps {
   label: string;
@@ -10,9 +11,13 @@ interface ButtonProps {
 }
 
 const Button: React.FC<ButtonProps> = ({ label, onClick }) => {
+  const { theme } = useTheme();
+  const textPrimaryColor = theme.palette.text.primary;
+  const backgroundColor = theme.palette.background.default;
   return (
     <button
-      className="px-4 py-2 mt-2 md:mt-0 md:ml-4 text-sm font-semibold text-gray-900 bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+      className="px-4 py-2 mt-2 md:mt-0 md:ml-4 text-sm font-semibold rounded-lg focus:shadow-outline"
+      style={theme.typography.body1}
       onClick={onClick}
     >
       {label}
@@ -26,6 +31,9 @@ const Me: React.FC = () => {
   const handleButtonClick = (section: string) => {
     setActiveSection(section);
   };
+  const { theme } = useTheme();
+  const color = theme.palette.text.primary;
+  const backgroundColor = theme.palette.background.default;
 
   return (
     <div className="mt-10 flex flex-col items-center w-full">

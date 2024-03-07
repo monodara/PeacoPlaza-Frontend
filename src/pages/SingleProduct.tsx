@@ -9,6 +9,7 @@ import {
   useCartButtonHandler,
   useHeartButtonHandler,
 } from "../hooks/useButtonHandler";
+import { useTheme } from "../components/contextAPI/ThemeContext";
 
 export default function SingleProduct() {
   const { id } = useParams();
@@ -26,6 +27,10 @@ export default function SingleProduct() {
   function thumbImgHandler(src: string) {
     setThumbImg(src);
   }
+  const { theme } = useTheme();
+  const color = theme.palette.text.primary;
+  const primaryColor = theme.palette.primary.main;
+  const backgroundColor = theme.palette.background.default;
 
   if (loading) {
     return (
@@ -66,24 +71,20 @@ export default function SingleProduct() {
               />
             </div>
             {/* Right section for product details */}
-            <div className="flex flex-col">
+            <div className="flex flex-col" style={{ color }}>
               <div className="text-left">
-                <h2 className="text-2xl font-extrabold text-gray-800">
-                  {product?.title}
-                </h2>
+                <h2 className="text-2xl font-extrabold">{product?.title}</h2>
                 <div className="mt-2">
-                  <p className="text-gray-800 text-xl font-bold">
-                    €{product?.price}
-                  </p>
+                  <p className="text-xl font-bold">€{product?.price}</p>
                 </div>
               </div>
               <div id="review-stars" className="flex space-x-2 mt-4">
                 {[...Array(4)].map((_, index) => (
                   <svg
                     key={index}
-                    className="w-5 fill-gray-800"
+                    className="w-5 fill-green-400"
                     viewBox="0 0 14 13"
-                    fill="none"
+                    fill={"none"}
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
@@ -99,7 +100,9 @@ export default function SingleProduct() {
                 </svg>
               </div>
               <div className="mt-8 text-left">
-                <h3 className="text-lg font-bold text-gray-800">Options</h3>
+                <h3 className="text-lg font-bold" style={{ color }}>
+                  Options
+                </h3>
                 <div className="flex space-x-4 mt-4">
                   {["S", "M", "L"].map((size) => (
                     <button
@@ -116,7 +119,7 @@ export default function SingleProduct() {
                 <button
                   type="button"
                   className="w-full px-4 py-3 border-green-500 hover:bg-green-400 focus:border-green-500 text-white font-bold rounded mr-4"
-                  style={{ backgroundColor: "#72BD41" }}
+                  style={theme.typography.button}
                   onClick={() => cartButtonHandler(product)}
                 >
                   Add to Cart
@@ -131,10 +134,10 @@ export default function SingleProduct() {
                 </button>
               </div>
               <div className="mt-8 text-left">
-                <h3 className="text-lg font-bold text-gray-800">
+                <h3 className="text-lg font-bold" style={{ color }}>
                   About the product
                 </h3>
-                <p className="mt-2 text-sm text-gray-800">
+                <p className="mt-2 text-sm" style={{ color }}>
                   {product?.description}
                 </p>
               </div>

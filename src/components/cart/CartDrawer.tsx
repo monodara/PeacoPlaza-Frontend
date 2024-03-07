@@ -1,52 +1,29 @@
 import React, { useCallback } from "react";
-import {
-  Drawer,
-  Button,
-  Typography,
-  IconButton,
-} from "@material-tailwind/react";
+import { Drawer, IconButton } from "@material-tailwind/react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import CloseIcon from "@mui/icons-material/Close";
+import { Button } from "@mui/material";
 
 import { AppState } from "../../redux/store";
 import { closeRightDrawer } from "../../redux/slices/cartSlice";
 import ProductsInCart from "./ProductsInCart";
+import { useTheme } from "../contextAPI/ThemeContext";
 
 interface CartHeaderProps {
   onClose: () => void;
+  textColor: string;
 }
 
-const CartHeader: React.FC<CartHeaderProps> = ({ onClose }) => (
-  <div className="mb-6 flex items-center justify-between">
-    <Typography
-      className="pt-6 pl-6"
-      variant="h5"
-      color="blue-gray"
-      placeholder={undefined}
+const CartHeader: React.FC<CartHeaderProps> = ({ onClose, textColor }) => (
+  <div className="flex items-center justify-between">
+    <h1
+      className="text-lg font-bold"
+      style={{ color: textColor, marginTop: 24, marginLeft: 24 }}
     >
       Subtotal in Cart
-    </Typography>
-    <IconButton
-      variant="text"
-      color="blue-gray"
-      onClick={onClose}
-      placeholder={undefined}
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth={2}
-        stroke="currentColor"
-        className="h-5 w-5"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M6 18L18 6M6 6l12 12"
-        />
-      </svg>
-    </IconButton>
+    </h1>
+    <CloseIcon onClick={onClose} sx={{ color: textColor }} />
   </div>
 );
 
@@ -61,29 +38,38 @@ export const CartDrawer = () => {
     dispatch(closeRightDrawer());
     navigate("/cart");
   }, [dispatch, navigate]);
-
+  const { theme } = useTheme();
+  const textPrimaryColor = theme.palette.text.primary;
+  const backgroundColor = theme.palette.background.default;
   return (
     <Drawer
       open={drawerOpen}
       onClose={closeDrawer}
       placeholder={undefined}
       placement="right"
-      style={{ overflowY: "auto" }}
+      style={{ overflowY: "auto", backgroundColor: backgroundColor }}
     >
-      <div style={{ overflowY: "auto", maxHeight: "calc(100vh - 64px)" }}>
-        <CartHeader onClose={closeDrawer} />
+      <div
+        style={{
+          overflowY: "auto",
+          maxHeight: "calc(100vh)",
+          backgroundColor: backgroundColor,
+        }}
+      >
+        <CartHeader onClose={closeDrawer} textColor={textPrimaryColor} />
         <div className="ml-6 text-left">
           <Button
-            size="sm"
-            variant="outlined"
-            className="color-green-500"
+            variant="contained"
+            type="button"
+            sx={theme.typography.button}
             onClick={visitCartPage}
-            placeholder={undefined}
           >
             Go to Cart
           </Button>
         </div>
-        <ProductsInCart />
+        <div className="ml-2">
+          <ProductsInCart />
+        </div>
       </div>
     </Drawer>
   );

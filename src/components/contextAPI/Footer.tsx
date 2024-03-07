@@ -4,6 +4,7 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import { Link } from "react-router-dom";
 
 import logo from "../../images/logo.png";
+import { useTheme } from "./ThemeContext";
 
 const quickLinks = [
   { label: "Home", href: "/" },
@@ -18,18 +19,31 @@ const categories = [
 ];
 
 export default function Footer() {
+  const { theme } = useTheme();
+  const textPrimaryColor = theme.palette.text.primary;
+  const backgroundColor = theme.palette.background.default;
   return (
-    <footer className="bg-gray-100 px-6 mt-10 border-t-2 border-gray-200">
+    <footer
+      className="px-6 mt-10 border-t-2 border-gray-200"
+      style={{ backgroundColor: backgroundColor, color: textPrimaryColor }}
+    >
       <div className="container px-6 py-12 mx-auto">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-y-10 lg:grid-cols-4">
           <div>
-            <p className="font-semibold text-gray-800 text-left">Quick Links</p>
+            <p
+              className="font-semibold text-left"
+              style={{
+                color: textPrimaryColor,
+              }}
+            >
+              Quick Links
+            </p>
             <div className="flex flex-col items-start mt-5 space-y-2">
               {quickLinks.map(({ label, href }) => (
                 <Link
                   key={label}
                   to={href}
-                  className="text-gray-600 hover:underline hover:text-blue-500"
+                  className=" hover:underline hover:text-blue-500"
                 >
                   {label}
                 </Link>
@@ -38,13 +52,20 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="font-semibold text-gray-800 text-left">Categories</p>
+            <p
+              className="font-semibold text-left"
+              style={{
+                color: textPrimaryColor,
+              }}
+            >
+              Categories
+            </p>
             <div className="flex flex-col items-start mt-5 space-y-2">
               {categories.map(({ label, categoryId }) => (
                 <Link
                   key={label}
                   to={`/products/?categoryId=${categoryId}`}
-                  className="text-gray-600 hover:underline hover:text-blue-500"
+                  className=" hover:underline hover:text-blue-500"
                 >
                   {label}
                 </Link>

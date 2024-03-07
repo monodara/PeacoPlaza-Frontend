@@ -3,11 +3,13 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import { debounce } from "lodash";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 import { AppState, useAppDispatch } from "../../redux/store";
 import { CategoryType } from "../../misc/type";
 import { getSearchKeyword } from "../../redux/slices/productSlice";
 import { fetchAllCategoriesAsync } from "../../redux/slices/categorySlice";
+import { useTheme } from "../contextAPI/ThemeContext";
 
 function SearchForm() {
   const dispatch = useAppDispatch();
@@ -47,7 +49,9 @@ function SearchForm() {
     setSelectedCategory(category);
     setIsDropdownOpen(false);
   }
-
+  const { theme } = useTheme();
+  const color = theme.palette.text.primary;
+  const backgroundColor = theme.palette.background.default;
   return (
     <div className="container mx-auto px-6 mt-10">
       <form className="max-w-lg mx-auto flex flex-col sm:flex-row items-start sm:items-center">
@@ -57,25 +61,12 @@ function SearchForm() {
           <button
             id="dropdown-button"
             onClick={toggleDropdown}
-            className="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:outline-none"
+            className="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center border rounded-s-lg hover:bg-gray-200 focus:outline-none"
             type="button"
+            style={theme.typography.body1}
           >
             {selectedCategory ? selectedCategory.name : "All Categories"}
-            <svg
-              className="w-2.5 h-2.5 ms-2.5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 10 6"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="m1 1 4 4 4-4"
-              />
-            </svg>
+            <KeyboardArrowDownIcon />
           </button>
           {/* Dropdown content */}
           <div
@@ -137,7 +128,7 @@ function SearchForm() {
             <button
               type="submit"
               className="absolute top-0 right-0 p-2.5 text-sm font-medium h-full text-white bg-green-500 rounded-e-lg border border-green-500"
-              style={{ backgroundColor: "#72BD41" }}
+              style={theme.typography.button}
             >
               <SearchIcon />
             </button>

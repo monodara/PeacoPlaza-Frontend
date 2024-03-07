@@ -11,14 +11,20 @@ import {
   FormLabel,
 } from "@mui/material";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { AppState, useAppDispatch } from "../../redux/store";
 import { object, string, number } from "yup";
 
+import { AppState, useAppDispatch } from "../../redux/store";
 import { ProductCreatedType } from "../../misc/type";
 import { createProductsAsync } from "../../redux/slices/productSlice";
-import { buttonStyle } from "../../misc/style";
+import { inputFormStyles } from "../../misc/style";
+import { useTheme } from "../contextAPI/ThemeContext";
 
 export default function ProductCreation() {
+  const { theme } = useTheme();
+  const textPrimaryColor = theme.palette.text.primary;
+  const primaryColor = theme.palette.background.paper;
+  const secondaryColor = theme.palette.secondary.main;
+  const inputFieldStyles = inputFormStyles(textPrimaryColor);
   const dispatch = useAppDispatch();
   const categoryList = useSelector(
     (state: AppState) => state.categories.categoryList
@@ -79,8 +85,13 @@ export default function ProductCreation() {
 
   return (
     <div>
-      <div>
-        <h3 className="text-2xl font-bold mb-4 mt-6">Create a New Product</h3>
+      <div className="px-4 mx-4">
+        <h3
+          className="text-2xl font-bold mb-4"
+          style={{ color: textPrimaryColor }}
+        >
+          Create a New Product
+        </h3>
         <Formik
           initialValues={productInfo}
           validationSchema={productInfoSchema}
@@ -90,7 +101,7 @@ export default function ProductCreation() {
             <Form>
               <Box
                 sx={{
-                  width: 500,
+                  width: 360,
                   maxWidth: "100%",
                   margin: "0 auto",
                 }}
@@ -103,7 +114,7 @@ export default function ProductCreation() {
                   name="title"
                   error={errors.title && touched.title}
                   helperText={<ErrorMessage name="title" />}
-                  sx={{ mb: 2 }}
+                  sx={inputFieldStyles}
                 />
                 <Field
                   as={TextField}
@@ -113,7 +124,7 @@ export default function ProductCreation() {
                   name="price"
                   error={errors.price && touched.price}
                   helperText={<ErrorMessage name="price" />}
-                  sx={{ mb: 2 }}
+                  sx={inputFieldStyles}
                 />
                 <Field
                   as={TextField}
@@ -123,7 +134,7 @@ export default function ProductCreation() {
                   name="description"
                   error={errors.description && touched.description}
                   helperText={<ErrorMessage name="description" />}
-                  sx={{ mb: 2 }}
+                  sx={inputFieldStyles}
                 />
                 <Field
                   as={TextField}
@@ -133,13 +144,18 @@ export default function ProductCreation() {
                   name="image"
                   error={errors.images && touched.images}
                   helperText={<ErrorMessage name="image" />}
-                  sx={{ mb: 2 }}
+                  sx={inputFieldStyles}
                 />
                 <FormControl
                   component="fieldset"
                   sx={{ display: "flex", flexDirection: "row" }}
                 >
-                  <FormLabel component="legend">Choose a Category</FormLabel>
+                  <FormLabel
+                    component="legend"
+                    style={{ color: textPrimaryColor }}
+                  >
+                    Choose a Category
+                  </FormLabel>
                   <RadioGroup
                     aria-label="category"
                     name="category"
@@ -151,14 +167,18 @@ export default function ProductCreation() {
                       <FormControlLabel
                         key={category.id}
                         value={category.id.toString()}
-                        control={<Radio />}
+                        control={<Radio style={{ color: textPrimaryColor }} />}
                         label={category.name}
-                        sx={{ mr: 2 }} // 控制FormControlLabel之间的间距
+                        sx={{ mr: 2, color: textPrimaryColor }}
                       />
                     ))}
                   </RadioGroup>
                 </FormControl>
-                <Button variant="contained" type="submit" sx={buttonStyle}>
+                <Button
+                  variant="contained"
+                  type="submit"
+                  sx={theme.typography.button}
+                >
                   Create
                 </Button>
               </Box>

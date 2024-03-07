@@ -1,5 +1,6 @@
 import React from "react";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { useTheme } from "../contextAPI/ThemeContext";
 
 interface ProductSortProps {
   sortOrder: string;
@@ -18,13 +19,16 @@ const ProductSort: React.FC<ProductSortProps> = ({
     setSortOrder(order);
     setIsDropdownOpen(false);
   };
-
+  const { theme } = useTheme();
+  const textPrimaryColor = theme.palette.text.primary;
+  const backgroundColor = theme.palette.background.default;
   return (
     <div className="relative">
       <button
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
         className="flex-shrink-0 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:outline-none"
         type="button"
+        style={theme.typography.button}
       >
         Sort By Price: {sortOrder}
         <ArrowDropDownIcon />

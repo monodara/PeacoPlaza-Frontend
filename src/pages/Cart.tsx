@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { AppState } from "../redux/store";
 import { CartProductType } from "../misc/type";
 import ProductsInCart from "../components/cart/ProductsInCart";
+import { useTheme } from "../components/contextAPI/ThemeContext";
 
 function Cart() {
   const itemsInCart = useSelector(
@@ -15,18 +16,38 @@ function Cart() {
     if (user) navigate("/checkout");
     else navigate("/login");
   }
+  const { theme } = useTheme();
+  const textPrimaryColor = theme.palette.text.primary;
+  const primaryColor = theme.palette.background.paper;
+  const secondaryColor = theme.palette.secondary.main;
+  const backgroundColor = theme.palette.background.default;
 
   return (
-    <div className="font-[sans-serif] bg-white px-6">
+    <div
+      className="font-[sans-serif] px-6"
+      style={{ backgroundColor: backgroundColor }}
+    >
       <div className="lg:max-w-7xl max-w-xl mx-auto">
-        <h2 className="text-3xl font-extrabold text-[#333] mt-10">
+        <h2
+          className="text-2xl font-extrabold mt-10"
+          style={{
+            color: textPrimaryColor,
+            borderBottom: 1,
+            borderBottomColor: textPrimaryColor,
+          }}
+        >
           Shopping Cart
         </h2>
         <div className="grid lg:grid-cols-3 gap-8 items-start mt-8">
           <ProductsInCart />
-          <div className="bg-gray-100 p-8">
-            <h3 className="text-2xl font-bold text-[#333]">Order summary</h3>
-            <ul className="text-[#333] mt-6 divide-y">
+          <div className="p-8" style={{ backgroundColor: primaryColor }}>
+            <h3
+              className="text-2xl font-bold"
+              style={{ color: textPrimaryColor }}
+            >
+              Order summary
+            </h3>
+            <ul className="mt-6 divide-y" style={{ color: textPrimaryColor }}>
               <li className="flex flex-wrap gap-4 text-md py-3">
                 Subtotal
                 <span className="ml-auto font-bold">
@@ -44,7 +65,7 @@ function Cart() {
                 Tax <span className="ml-auto font-bold">included</span>
               </li>
               <li className="flex flex-wrap gap-4 text-md py-3 font-bold">
-                Total{" "}
+                Total
                 <span className="ml-auto">
                   {`${
                     itemsInCart.length === 0
@@ -60,8 +81,8 @@ function Cart() {
             </ul>
             <button
               type="button"
-              className="mt-6 text-md px-6 py-2.5 w-full bg-green-500 hover:bg-green-600 text-white rounded"
-              style={{ backgroundColor: "#72BD41" }}
+              className="mt-6 text-xl px-6 py-2.5 w-full hover:bg-grey-200 text-white rounded"
+              style={{ border: `1px solid ${textPrimaryColor}` }}
               onClick={checkoutHandler}
             >
               Check out

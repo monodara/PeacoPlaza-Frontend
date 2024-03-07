@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 import { AppState } from "../../redux/store";
 import { CategoryType } from "../../misc/type";
+import { useTheme } from "../contextAPI/ThemeContext";
 
 function ProductFilters() {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
@@ -41,7 +42,9 @@ function ProductFilters() {
     navigate(url);
     setIsFiltersOpen(false);
   };
-
+  const { theme } = useTheme();
+  const textPrimaryColor = theme.palette.text.primary;
+  const backgroundColor = theme.palette.background.default;
   return (
     <div className="relative">
       {isFiltersOpen && (
@@ -66,8 +69,8 @@ function ProductFilters() {
             />
             {/* Apply Button */}
             <button
-              className="self-start ml-2 px-2 py-2 border-green-500 hover:bg-green-400 focus:border-green-500 text-white font-bold rounded mr-4"
-              style={{ backgroundColor: "#72BD41" }}
+              className="self-start ml-2 px-2 py-2 font-bold rounded mr-4"
+              style={theme.typography.button}
               onClick={applyFilter}
             >
               Apply
@@ -75,11 +78,12 @@ function ProductFilters() {
           </div>
         </div>
       )}
-      <div className="bg-grey col-12 mt-3 align-middle justify-content-center flex">
+      <div className="col-12 mt-3 align-middle justify-content-center flex">
         <button
-          className="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:outline-none"
+          className="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center border border-gray-300 rounded-s-lg focus:outline-none"
           type="button"
           onClick={() => setIsFiltersOpen(!isFiltersOpen)}
+          style={theme.typography.button}
         >
           Filters <FilterAltIcon fontSize="small" />
         </button>
@@ -113,12 +117,20 @@ function FilterOption({
   onMinChange,
   onMaxChange,
 }: FilterOptionProps) {
+  const clearFilter = () => {
+    if (title === "Category") {
+      onChange && onChange(-1);
+    } else {
+      onMinChange && onMinChange({ target: { value: "" } } as any);
+      onMaxChange && onMaxChange({ target: { value: "" } } as any);
+    }
+  };
   return (
     <article className="filter-group">
       <h6 className="title text-lg text-left font-bold">{title}</h6>
       <button
         className="text-left block text-green-500 underline"
-        onClick={() => onChange && onChange(-1)}
+        onClick={clearFilter}
       >
         clear
       </button>

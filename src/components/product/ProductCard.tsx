@@ -23,7 +23,7 @@ export default function ProductCard({ product }: { product: ProductType }) {
   };
 
   return (
-    <div className="relative w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
+    <div className="relative w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden bg-green-400">
       {user?.role === "admin" && <AdminControls onClick={handleUpdDelClick} />}
       <ProductImage
         product={product}
@@ -38,8 +38,7 @@ export default function ProductCard({ product }: { product: ProductType }) {
 
 const AdminControls = ({ onClick }: { onClick: () => void }) => (
   <button
-    className="absolute top-0 left-0 p-3 rounded-full text-green-500 -mt-2 ml-0 focus:outline-none"
-    style={{ backgroundColor: "transparent" }}
+    className="absolute top-0 left-0 p-3 rounded-full text-green-700 -mt-2 ml-0 focus:outline-none"
     onClick={(e) => {
       e.preventDefault();
       e.stopPropagation();

@@ -4,11 +4,13 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { createTheme } from "@mui/material/styles";
 
 import App from "./App";
 import "./index.css";
 import "./output.css";
 import store from "./redux/store";
+import ThemeProvider from "./components/contextAPI/ThemeContext";
 
 // const apiKey = process.env.REACT_APP_GOOGLE_AUTH_API_KEY;
 const apiKey =
@@ -20,12 +22,11 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
-        {/* <ThemeProvider> */}
-        <GoogleOAuthProvider clientId={apiKey}>
-          <App />
-        </GoogleOAuthProvider>
-
-        {/* </ThemeProvider> */}
+        <ThemeProvider>
+          <GoogleOAuthProvider clientId={apiKey}>
+            <App />
+          </GoogleOAuthProvider>
+        </ThemeProvider>
       </Provider>
     </BrowserRouter>
   </React.StrictMode>

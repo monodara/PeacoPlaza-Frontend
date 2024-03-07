@@ -6,6 +6,8 @@ import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { buttonStyle, popoverStyle } from "../../misc/style";
+import { useTheme } from "../contextAPI/ThemeContext";
+import { green, grey } from "@mui/material/colors";
 
 interface DeletePopoverProps {
   open: boolean;
@@ -17,6 +19,7 @@ export default function DeletePopover({
   onClose,
   onConfirmDelete,
 }: DeletePopoverProps) {
+  const { theme } = useTheme();
   return (
     <div>
       <Modal
@@ -38,13 +41,17 @@ export default function DeletePopover({
               Do you confirm to delete the item?
             </Typography>
             <Button
-              variant="contained"
-              sx={buttonStyle}
+              variant="outlined"
               onClick={onConfirmDelete}
+              sx={{ backgroundColor: "lightgrey", color: green[600] }}
             >
               Confirm
             </Button>
-            <Button variant="contained" sx={buttonStyle} onClick={onClose}>
+            <Button
+              variant="outlined"
+              onClick={onClose}
+              sx={{ backgroundColor: "lightgrey", color: green[600] }}
+            >
               Cancel
             </Button>
           </Box>

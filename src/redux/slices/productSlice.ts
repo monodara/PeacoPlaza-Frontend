@@ -31,10 +31,8 @@ const initialState: InitialState = {
 export const fetchAllProductsAsync = createAsyncThunk(
   "fetchAllProductsAsync",
   async (url: string, { rejectWithValue }) => {
-    console.log(url);
     try {
       const response = await axios.get(url);
-      console.log(response);
       return response.data;
     } catch (e) {
       return rejectWithValue(e);

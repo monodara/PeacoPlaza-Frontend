@@ -6,6 +6,7 @@ import userReducer from "./slices/userSlice";
 import productQueries from "./productQuery";
 import categoryReducer from "./slices/categorySlice";
 import cartReducer from "./slices/cartSlice";
+import themeReducer from "./slices/themeSlice";
 
 // store all states
 const store = configureStore({
@@ -19,12 +20,14 @@ const store = configureStore({
     //cart reducer
     cart: cartReducer,
     // query
-    [productQueries.reducerPath]: productQueries.reducer,
+    // [productQueries.reducerPath]: productQueries.reducer,
+    // theme
+    theme: themeReducer,
   },
 
   // middleware
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(productQueries.middleware),
+  // middleware: (getDefaultMiddleware) =>
+  //   getDefaultMiddleware().concat(productQueries.middleware),
 });
 export type AppState = ReturnType<typeof store.getState>;
 export const useAppDispatch = () => useDispatch<typeof store.dispatch>();

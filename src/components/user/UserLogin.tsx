@@ -11,6 +11,8 @@ import { saveUserInformation } from "../../redux/slices/userSlice";
 import loginBg from "../../images/loginBg.jpg";
 import { UserType } from "../../misc/type";
 import { debounce } from "lodash";
+import { useTheme } from "../contextAPI/ThemeContext";
+import { inputFormStyles } from "../../misc/style";
 
 type LoginInfo = {
   email: string;
@@ -78,22 +80,37 @@ export default function UserLogin() {
       navigate("/profile");
     },
   });
+
+  const { theme } = useTheme();
+  const textPrimaryColor = theme.palette.text.primary;
+  const backgroundColor = theme.palette.background.default;
   return (
     <div className="py-16">
-      <div className="flex bg-white rounded-lg shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-4xl">
+      <div className="flex rounded-lg shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-4xl">
         <div
           className="hidden lg:block lg:w-1/2 bg-cover"
           style={{
             backgroundImage: `url(${loginBg})`,
           }}
         ></div>
-        <div className="w-full p-8 lg:w-1/2">
-          <h2 className="text-2xl font-semibold text-gray-700 text-center">
+        <div
+          className="w-full p-8 lg:w-1/2"
+          style={{ backgroundColor: backgroundColor }}
+        >
+          <h2
+            className="text-2xl font-semibold text-center"
+            style={{ color: textPrimaryColor }}
+          >
             Shop with GoBC
           </h2>
-          <p className="text-xl text-gray-600 text-center">Welcome back!</p>
+          <p
+            className="text-xl text-center"
+            style={{ color: textPrimaryColor }}
+          >
+            Welcome back!
+          </p>
           <div
-            className="flex items-center justify-center mt-4 text-white rounded-lg shadow-md hover:bg-gray-100"
+            className="flex items-center justify-center mt-4 rounded-lg shadow-md"
             onClick={() => loginWithGoogle()}
           >
             <div className="px-4 py-3">
@@ -116,11 +133,14 @@ export default function UserLogin() {
                 />
               </svg>
             </div>
-            <h1 className="px-4 py-3 w-5/6 text-center text-gray-600 font-bold">
+            <h1
+              className="px-4 py-3 w-5/6 text-center font-bold"
+              style={theme.typography.button}
+            >
               Log in with Google
             </h1>
           </div>
-          <div className="mt-4 flex items-center justify-between">
+          <div className="mt-4 mb-4 flex items-center justify-between">
             <span className="border-b w-1/5 lg:w-1/4"></span>
             <div className="text-xs text-center text-gray-500 uppercase">
               or login with email
@@ -151,6 +171,7 @@ export default function UserLogin() {
                     name="email"
                     error={errors.email && touched.email}
                     helperText={<ErrorMessage name="email" />}
+                    sx={inputFormStyles(textPrimaryColor)}
                   />
                   <Field
                     as={TextField}
@@ -160,12 +181,13 @@ export default function UserLogin() {
                     name="password"
                     error={errors.password && touched.password}
                     helperText={<ErrorMessage name="password" />}
+                    sx={inputFormStyles(textPrimaryColor)}
                   />
                   <div className="mt-8">
                     <button
                       className="bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600"
                       type="submit"
-                      style={{ backgroundColor: "#72BD41" }}
+                      style={theme.typography.button}
                     >
                       Login
                     </button>

@@ -11,6 +11,7 @@ import {
 } from "../../hooks/useButtonHandler";
 import { ProductInfoInCard } from "./shared/ProductInfoInCard";
 import { ProductImage } from "./shared/ProductImage";
+import { useTheme } from "../contextAPI/ThemeContext";
 
 export default function ProductCardInWishList({
   product,
@@ -20,13 +21,16 @@ export default function ProductCardInWishList({
   const dispatch = useDispatch();
   const cartButtonHandler = useCartButtonHandler();
   const heartButtonHandler = useHeartButtonHandler();
+  const { theme } = useTheme();
+  const textPrimaryColor = theme.palette.text.primary;
+  const backgroundColor = theme.palette.background.default;
 
   const handleDeleteClick = () => {
     dispatch(removeFromWishList(product));
   };
 
   return (
-    <div className="relative w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
+    <div className="relative w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden bg-green-400">
       <DeleteButton onClick={handleDeleteClick} />
       <Link to={`/products/${product.id}`}>
         <ProductImage
@@ -43,7 +47,7 @@ export default function ProductCardInWishList({
 
 const DeleteButton = ({ onClick }: { onClick: () => void }) => (
   <button
-    className="absolute top-0 left-0 p-3 rounded-full text-green-500 -mt-2 ml-0 focus:outline-none"
+    className="absolute top-0 left-0 p-3 rounded-full text-green-700 -mt-2 ml-0 focus:outline-none"
     style={{ backgroundColor: "transparent", zIndex: "10" }}
     onClick={(e) => {
       e.preventDefault();

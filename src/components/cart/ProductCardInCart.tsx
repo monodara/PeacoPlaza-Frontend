@@ -11,6 +11,7 @@ import {
   removeFromCart,
   updateProductAmount,
 } from "../../redux/slices/cartSlice";
+import { useTheme } from "../contextAPI/ThemeContext";
 
 export default function ProductCardInCart({
   product,
@@ -19,6 +20,11 @@ export default function ProductCardInCart({
 }) {
   const [openModal, setOpenModal] = useState(false);
   const dispatch = useDispatch();
+  const { theme } = useTheme();
+  const textPrimaryColor = theme.palette.text.primary;
+  const primaryColor = theme.palette.background.paper;
+  const secondaryColor = theme.palette.secondary.main;
+  const backgroundColor = theme.palette.background.default;
 
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
@@ -45,8 +51,11 @@ export default function ProductCardInCart({
   };
 
   return (
-    <div className="flex gap-6 items-center justify-between gap-4 py-8">
-      <div className="w-64 h-64 bg-gray-100 p-6 rounded">
+    <div className="flex items-center justify-between gap-4 py-6">
+      <div
+        className="w-64 bg-gray-100 p-2 rounded shadow-sm"
+        style={{ borderColor: primaryColor, border: 1 }}
+      >
         <img
           src={product.images[0].replace(/[\[\]"]/g, "")}
           className="w-full h-full object-contain"
@@ -54,16 +63,18 @@ export default function ProductCardInCart({
       </div>
       <div className="flex flex-col justify-start">
         <Link to={`/products/${product.id}`}>
-          <p className="text-md font-bold text-[#333] text-left">
+          <p className="text-lg text-left" style={{ color: textPrimaryColor }}>
             {product.title}
           </p>
         </Link>
-        <h4 className="text-xl font-bold text-[#333] mt-4 text-left">{`€${
-          product.price * product.amount
-        }.00`}</h4>
+        <h4
+          className="text-md mt-4 text-left"
+          style={{ color: textPrimaryColor }}
+        >{`€${product.price * product.amount}.00`}</h4>
         <div className="mt-6 flex items-center">
           <span
             className="font-semibold cursor-pointer"
+            style={{ color: textPrimaryColor }}
             onClick={decrementAmount}
           >
             -
@@ -76,6 +87,7 @@ export default function ProductCardInCart({
           />
           <span
             className="font-semibold cursor-pointer"
+            style={{ color: textPrimaryColor }}
             onClick={incrementAmount}
           >
             +
@@ -83,7 +95,7 @@ export default function ProductCardInCart({
         </div>
       </div>
       <DeleteForeverRoundedIcon
-        className="h-6 w-6 text-green-900 hover:text-green-500 cursor-pointer mx-4"
+        className="h-6 w-6 text-green-500 hover:text-green-400 cursor-pointer mx-4"
         onClick={handleOpenModal}
       />
       <DeletePopover

@@ -9,11 +9,18 @@ import {
   deleteProductsAsync,
   updateProductsAsync,
 } from "../../redux/slices/productSlice";
-import DeletePopover from "./DeletePopover";
+import DeletePopover from "../product/DeletePopover";
 import { ProductType } from "../../misc/type";
-import { buttonStyle } from "../../misc/style";
+import { buttonStyle, inputFormStyles } from "../../misc/style";
+import { useTheme } from "../contextAPI/ThemeContext";
 
 export default function ProductUpdateOrDelete() {
+  const { theme } = useTheme();
+  const textPrimaryColor = theme.palette.text.primary;
+  const primaryColor = theme.palette.primary.main;
+  const secondaryColor = theme.palette.secondary.main;
+
+  const inputFieldStyles = inputFormStyles(textPrimaryColor);
   const dispatch = useAppDispatch();
   const location = useLocation();
   const { item } = location.state;
@@ -44,7 +51,9 @@ export default function ProductUpdateOrDelete() {
   });
   const [updateResult, setUpdateResult] = useState<string | undefined>();
   function onSubmit(values: { newTitle: string; newPrice: number }) {
+    console.log("first");
     const { newTitle, newPrice } = values;
+    console.log(values + "hi");
     const newProduct: ProductType = {
       ...item,
       title: newTitle,
@@ -65,15 +74,21 @@ export default function ProductUpdateOrDelete() {
         setUpdateResult(error.message as string);
       });
   }
-  if (updateResult) alert(updateResult);
+  if (updateResult) {
+    alert(updateResult);
+    setUpdateResult(undefined);
+  }
 
   return (
     <div>
-      <h3 className="text-2xl font-bold mb-4 mt-6">
+      <h3
+        className="text-2xl font-bold mb-4 mt-6"
+        style={{ color: textPrimaryColor }}
+      >
         Update/Delete the Product
       </h3>
 
-      <p className="text-green-500 mb-10">
+      <p className="mb-10" style={{ color: primaryColor }}>
         Product: {item.title}, ID: {item.id}
       </p>
       <Formik
@@ -98,7 +113,7 @@ export default function ProductUpdateOrDelete() {
                 name="newTitle"
                 error={errors.newTitle && touched.newTitle}
                 helperText={<ErrorMessage name="newTitle" />}
-                sx={{ mb: 2 }}
+                sx={inputFieldStyles}
               />
               <Field
                 as={TextField}
@@ -108,13 +123,13 @@ export default function ProductUpdateOrDelete() {
                 name="newPrice"
                 error={errors.newPrice && touched.newPrice}
                 helperText={<ErrorMessage name="newPrice" />}
-                sx={{ mb: 2 }}
+                sx={inputFieldStyles}
               />
 
               <Button
                 variant="contained"
                 type="submit"
-                sx={{ ...buttonStyle, mr: 2 }}
+                sx={theme.typography.button}
               >
                 Update
               </Button>
@@ -123,7 +138,11 @@ export default function ProductUpdateOrDelete() {
         )}
       </Formik>
 
-      <Button variant="contained" sx={buttonStyle} onClick={deleteHandler}>
+      <Button
+        variant="contained"
+        sx={theme.typography.button}
+        onClick={deleteHandler}
+      >
         Delete
       </Button>
       <DeletePopover
