@@ -24,7 +24,7 @@ export default function Products() {
 
   useEffect(() => {
     dispatch(fetchAllProductsAsync(url));
-  }, [dispatch]);
+  }, [dispatch, url]);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState("");
@@ -66,10 +66,11 @@ export default function Products() {
     };
 
     document.addEventListener("mousedown", handleClickOutside);
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [setIsDropdownOpen, dropdownRef]);
 
   return (
     <div className="container mx-auto px-4 mt-10">

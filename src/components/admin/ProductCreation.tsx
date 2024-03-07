@@ -177,7 +177,7 @@ export default function ProductCreation() {
                 <Button
                   variant="contained"
                   type="submit"
-                  sx={theme.typography.button}
+                  sx={{ ...theme.typography.button, marginBottom: 4 }}
                 >
                   Create
                 </Button>

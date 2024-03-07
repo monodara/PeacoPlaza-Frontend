@@ -16,7 +16,7 @@ export default function Admin() {
     <div
       className="md:flex flex-col md:flex-row md:min-h-screen w-full mt-10 shadow-xl"
       style={{
-        borderTop: "2px solid gray",
+        borderTop: "1px solid gray",
       }}
     >
       {/* Sidebar */}
@@ -24,7 +24,7 @@ export default function Admin() {
         className="flex flex-col w-full md:w-64 flex-shrink-0"
         style={{
           backgroundColor: backgroundColor,
-          borderRight: "2px solid gray",
+          borderRight: "1px solid gray",
         }}
       >
         <div className="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
@@ -109,6 +109,39 @@ export default function Admin() {
                   onClick={() => setActivePanel("delete")}
                 >
                   Delete a Product
+                </button>
+              </div>
+            )}
+          </div>
+          {/* User Management */}
+          <div>
+            <button
+              className={`flex flex-row items-center w-full px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline ${
+                activePanel === "users" ? "bg-gray-200" : ""
+              }`}
+              onClick={() =>
+                setActivePanel(activePanel === "users" ? null : "users")
+              }
+              style={theme.typography.body1}
+            >
+              <span>User Management</span>
+              <KeyboardArrowDownIcon
+                fontSize="small"
+                className={`transition-transform duration-200 transform ${
+                  activePanel === "users" ? "rotate-0" : "-rotate-90"
+                }`}
+              />
+            </button>
+            {activePanel === "users" && (
+              <div className="px-2 py-2 bg-white rounded-md shadow">
+                <button className="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+                  Create a User
+                </button>
+                <button className="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+                  Update a User
+                </button>
+                <button className="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+                  Delete a User
                 </button>
               </div>
             )}

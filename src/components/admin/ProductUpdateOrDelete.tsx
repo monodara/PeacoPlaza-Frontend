@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Box, TextField, Button } from "@mui/material";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { object, string, number } from "yup";
@@ -11,20 +11,20 @@ import {
 } from "../../redux/slices/productSlice";
 import DeletePopover from "../product/DeletePopover";
 import { ProductType } from "../../misc/type";
-import { buttonStyle, inputFormStyles } from "../../misc/style";
+import { inputFormStyles } from "../../misc/style";
 import { useTheme } from "../contextAPI/ThemeContext";
 
 export default function ProductUpdateOrDelete() {
   const { theme } = useTheme();
   const textPrimaryColor = theme.palette.text.primary;
   const primaryColor = theme.palette.primary.main;
-  const secondaryColor = theme.palette.secondary.main;
 
   const inputFieldStyles = inputFormStyles(textPrimaryColor);
   const dispatch = useAppDispatch();
   const location = useLocation();
   const { item } = location.state;
   // Delete Logic
+  const [deleteResult, setDeleteResult] = useState<string | undefined>();
   const [openDelModal, setOpenDelModal] = useState<boolean>(false);
   const handleOpenDelModal = () => {
     setOpenDelModal(true);
@@ -32,13 +32,30 @@ export default function ProductUpdateOrDelete() {
   const handleCloseDelModal = () => {
     setOpenDelModal(false);
   };
-  function deleteHandler() {
+  function handleDelete() {
     handleOpenDelModal();
   }
-  function deleteClickHandle() {
+  function handleDeleteConfirmation() {
     // Dispatch action to delete the product from the backend
-    dispatch(deleteProductsAsync(item));
     handleCloseDelModal(); // Close the modal after deletion
+    dispatch(deleteProductsAsync(item))
+      .then((response) => {
+        if (typeof response.payload === "string")
+          setDeleteResult(`Delete Failed: ${response.payload}`);
+        else {
+          const deleteRes = JSON.parse(JSON.stringify(response.payload));
+          setDeleteResult(`Successfully deleted.`);
+        }
+      })
+      .catch((error) => {
+        setDeleteResult(error.message as string);
+      });
+  }
+  const navigate = useNavigate();
+  if (deleteResult) {
+    alert(deleteResult);
+    setDeleteResult(undefined);
+    navigate("/products");
   }
 
   // Form validation schema
@@ -51,9 +68,7 @@ export default function ProductUpdateOrDelete() {
   });
   const [updateResult, setUpdateResult] = useState<string | undefined>();
   function onSubmit(values: { newTitle: string; newPrice: number }) {
-    console.log("first");
     const { newTitle, newPrice } = values;
-    console.log(values + "hi");
     const newProduct: ProductType = {
       ...item,
       title: newTitle,
@@ -141,14 +156,14 @@ export default function ProductUpdateOrDelete() {
       <Button
         variant="contained"
         sx={theme.typography.button}
-        onClick={deleteHandler}
+        onClick={handleDelete}
       >
         Delete
       </Button>
       <DeletePopover
         open={openDelModal}
         onClose={handleCloseDelModal}
-        onConfirmDelete={deleteClickHandle}
+        onConfirmDelete={handleDeleteConfirmation}
       />
     </div>
   );

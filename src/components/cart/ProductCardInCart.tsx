@@ -95,7 +95,7 @@ export default function ProductCardInCart({
         </div>
       </div>
       <DeleteForeverRoundedIcon
-        className="h-6 w-6 text-green-500 hover:text-green-400 cursor-pointer mx-4"
+        className="h-6 w-6 text-green-500 hover:text-red-400 cursor-pointer mx-4"
         onClick={handleOpenModal}
       />
       <DeletePopover

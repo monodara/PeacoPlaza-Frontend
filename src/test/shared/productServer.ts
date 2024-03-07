@@ -24,7 +24,6 @@ export let mockProducts: ProductType[] = [
 
 export const handler = [
   http.get("https://api.escuelajs.co/api/v1/products", () => {
-    console.log(HttpResponse.json(mockProducts, { status: 200 }));
     return HttpResponse.json(mockProducts, { status: 200 });
   }),
   http.post("https://api.escuelajs.co/api/v1/products", async ({ request }) => {

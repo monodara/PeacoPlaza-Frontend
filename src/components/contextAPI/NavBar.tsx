@@ -99,7 +99,6 @@ function Navbar() {
       } md:flex items-center justify-end w-full md:w-auto`}
     >
       <div className="flex flex-row-reverse mt-6">
-        <ThemeToggler />
         {user && <UserLogoutButton />}
         <Link to={user ? "./profile" : "./login"}>
           <AccountCircle
@@ -163,6 +162,7 @@ function Navbar() {
         <Link to={"/"}>
           <img src={logo} className="h-15 w-30" alt="Logo" width="120" />
         </Link>
+        <ThemeToggler />
         <div className="md:hidden">
           <button id="hamburger" onClick={toggleMenu}>
             {isMenuOpen ? (

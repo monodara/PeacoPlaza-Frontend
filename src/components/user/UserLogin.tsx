@@ -29,7 +29,9 @@ export default function UserLogin() {
   // Form validation
   const userInfoSchema = object().shape({
     email: string().email("Invalid email").required("Required"),
-    password: string().required("Required"),
+    password: string()
+      .min(6, "Too short. At least 6 charaters")
+      .required("Required"),
   });
 
   function onSubmit(values: LoginInfo) {
