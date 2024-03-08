@@ -16,7 +16,7 @@ export default function CategoryCard({ category }: { category: CategoryType }) {
       </div>
 
       <div className="pb-6">
-        <Link to={`products/?categoryId=${encodedId}`}>
+        <Link to={`/products/?categoryId=${encodedId}`}>
           <div className="inline-block cursor-pointer rounded text-gray-100 font-normal leading-normal text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700">
             Shop now
           </div>
