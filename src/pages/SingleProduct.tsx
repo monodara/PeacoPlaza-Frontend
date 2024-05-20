@@ -20,8 +20,8 @@ export default function SingleProduct() {
 
   const [thumbImg, setThumbImg] = useState("");
   useEffect(() => {
-    if (product && product.images && product.images.length > 0) {
-      setThumbImg(product.images[0].replace(/[\[\]"]/g, ""));
+    if (product && product.productImages && product.productImages.length > 0) {
+      setThumbImg(product.productImages[0].data);
     }
   }, [product]);
   function thumbImgHandler(src: string) {
@@ -52,14 +52,14 @@ export default function SingleProduct() {
             {/* Left section for images */}
             <div className="w-full lg:sticky top-0 sm:flex gap-2">
               <div className="sm:space-y-3 w-16 max-sm:flex max-sm:mb-4 max-sm:gap-4">
-                {product?.images.map((imageUrl, index) => (
+                {product?.productImages.map((image, index) => (
                   <img
                     key={index}
-                    src={imageUrl.replace(/[\[\]"]/g, "")}
+                    src={image.data}
                     alt={`image${index}`}
                     className="w-full cursor-pointer"
                     onClick={() =>
-                      thumbImgHandler(imageUrl.replace(/[\[\]"]/g, ""))
+                      thumbImgHandler(image.data)
                     }
                   />
                 ))}

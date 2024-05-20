@@ -35,7 +35,7 @@ export default function ProductCreation() {
     price: 0,
     description: "",
     categoryId: 0,
-    images: [],
+    productImages: [],
   });
 
   const [createResult, setCreateResult] = useState<string | undefined>();
@@ -66,7 +66,7 @@ export default function ProductCreation() {
       price: Number(price),
       description,
       categoryId: productInfo.categoryId,
-      images: image ? [image] : [],
+      productImages:[],
     };
     dispatch(createProductsAsync(newProduct))
       .then((response) => {
@@ -142,7 +142,7 @@ export default function ProductCreation() {
                   label="Image"
                   id="images"
                   name="image"
-                  error={errors.images && touched.images}
+                  error={errors.productImages && touched.productImages}
                   helperText={<ErrorMessage name="image" />}
                   sx={inputFieldStyles}
                 />

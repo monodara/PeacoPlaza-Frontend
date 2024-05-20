@@ -12,6 +12,7 @@ import store from "./redux/store";
 import ThemeProvider from "./components/contextAPI/ThemeContext";
 
 // const apiKey = process.env.REACT_APP_GOOGLE_AUTH_API_KEY;
+const apiKey = "694819720098-elb8eeg8le4499s7q42hv36dudd9tgau.apps.googleusercontent.com";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

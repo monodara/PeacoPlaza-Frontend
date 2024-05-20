@@ -126,18 +126,18 @@ describe("product reducer", () => {
   // create new product cases
   test("createProductsAsync action creates a new product", async () => {
     const newProduct = {
-      id: 3,
+      id: "mock-id-3",
       title: "product3",
       price: 1,
       description: "product3",
-      images: ["img1", "img2"],
+      productImages: [{id:"mock-img-id-1", data:"mock-img-data-1"},{id:"mock-img-id-2", data:"mock-img-data-2"}],
       category: { id: 1, name: "clothes", image: "catImg" },
     };
     const createdProduct: ProductCreatedType = {
       title: "product3",
       price: 1,
       description: "product3",
-      images: ["img1", "img2"],
+      productImages: [{id:"mock-img-id-1", data:"mock-img-data-1"},{id:"mock-img-id-2", data:"mock-img-data-2"}],
       categoryId: 1,
     };
 

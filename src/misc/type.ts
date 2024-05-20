@@ -1,16 +1,20 @@
 import { number } from "yup";
 
 export type ProductType = {
-  id: number;
+  id: string;
   title: string;
   price: number;
   description: string;
   category: CategoryType;
-  images: string[];
+  productImages: ProductImage[];
 };
 export type ProductCreatedType = Omit<ProductType, "id" | "category"> & {
   categoryId: number;
 };
+export type ProductImage = {
+  id: string;
+  data: string;
+}
 export type CartProductType = ProductType & {
   amount: number;
 };

@@ -8,6 +8,7 @@ import FootwareBg from "../images/footwareBG.jpg";
 
 export default function Home() {
   const navigate = useNavigate();
+  
   return (
     <div className="container mx-auto px-6 mt-10">
       <div

@@ -5,19 +5,19 @@ import { ProductCreatedType, ProductType } from "../../misc/type";
 
 export let mockProducts: ProductType[] = [
   {
-    id: 1,
+    id: "mock-id-1",
     title: "product1",
     price: 1,
     description: "product1",
-    images: ["img1", "img2"],
+    productImages: [{id:"mock-img-id-1", data:"mock-img-data-1"},{id:"mock-img-id-2", data:"mock-img-data-2"}],
     category: { id: 1, name: "clothes", image: "catImg" },
   },
   {
-    id: 2,
+    id: "mock-id-1",
     title: "product2",
     price: 2,
     description: "product2",
-    images: ["img1", "img2"],
+    productImages: [{id:"mock-img-id-1", data:"mock-img-data-1"},{id:"mock-img-id-2", data:"mock-img-data-2"}],
     category: { id: 2, name: "shoes", image: "catImg" },
   },
 ];
@@ -30,7 +30,7 @@ export const handler = [
     const product = (await request.json()) as ProductCreatedType;
     const createdProduct: ProductType = {
       ...product,
-      id: 3,
+      id: "mock-id",
       category: { id: product.categoryId, name: "clothes", image: "img" },
     };
     return HttpResponse.json(createdProduct, { status: 201 });
@@ -51,7 +51,7 @@ export const handler = [
     async ({ params }) => {
       const { id } = params;
       const index = mockProducts.findIndex(
-        (product) => product.id === Number(id)
+        product => product.id === id
       );
       const updatedProd = {
         ...mockProducts[index],

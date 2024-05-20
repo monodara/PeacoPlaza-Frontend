@@ -7,19 +7,19 @@ import cartReducer, {
 } from "../../redux/slices/cartSlice";
 
 const product1 = {
-  id: 1,
+  id: "mock-id-1",
   title: "product1",
   price: 1,
   description: "product1",
-  images: ["img1", "img2"],
+  productImages: [{id:"mock-img-id-1", data:"mock-img-data-1"},{id:"mock-img-id-2", data:"mock-img-data-2"}],
   category: { id: 1, name: "clothes", image: "catImg" },
 };
 const product2 = {
-  id: 2,
+  id: "mock-id-2",
   title: "product2",
   price: 1,
   description: "product2",
-  images: ["img1", "img2"],
+  productImages: [{id:"mock-img-id-1", data:"mock-img-data-1"},{id:"mock-img-id-2", data:"mock-img-data-2"}],
   category: { id: 2, name: "clothes", image: "catImg" },
 };
 

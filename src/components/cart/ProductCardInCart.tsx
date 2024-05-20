@@ -57,7 +57,7 @@ export default function ProductCardInCart({
         style={{ borderColor: primaryColor, border: 1 }}
       >
         <img
-          src={product.images[0].replace(/[\[\]"]/g, "")}
+          src={product.productImages[0].data}
           className="w-full h-full object-contain"
         />
       </div>

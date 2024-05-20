@@ -10,10 +10,13 @@ import ProductFilters from "../components/product/ProductFilter";
 import ProductSort from "../components/product/ProductSort";
 import { sortProducts } from "../misc/util";
 import ProductPagination from "../components/product/ProductPagination";
+import { getAllProductsUrl } from "../misc/endpoints";
 
 export default function Products() {
   const dispatch = useAppDispatch();
-  let url = "https://api.escuelajs.co/api/v1/products/?";
+
+  let url = getAllProductsUrl;
+  console.log(url);
   const [searchParams] = useSearchParams();
   const categoryId = searchParams.get("categoryId");
   if (categoryId) url += `&categoryId=${categoryId}`;

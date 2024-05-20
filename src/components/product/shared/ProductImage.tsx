@@ -21,7 +21,7 @@ export const ProductImage: React.FC<ProductImageProps> = ({
     <div
       className="flex items-end justify-end h-60 w-full bg-cover"
       style={{
-        backgroundImage: `url(${product.images[0].replace(/[\[\]"]/g, "")})`,
+        backgroundImage: `url(${product.productImages[0].data})`,
       }}
     >
       {showHeartButton && <HeartButton onClick={onHeartClick} />}

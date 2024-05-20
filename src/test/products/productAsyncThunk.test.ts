@@ -29,7 +29,7 @@ describe("product reducer", () => {
     title: "New test product 10",
     price: 200,
     description: "New test product 10",
-    images: ["product.png"],
+    productImages: [{id:"mock-img-id-1", data:"mock-img-data-1"},{id:"mock-img-id-2", data:"mock-img-data-2"}],
     categoryId: 5,
   };
   // create new product
