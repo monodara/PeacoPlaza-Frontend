@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Box, TextField, Button, Alert } from "@mui/material";
@@ -41,7 +41,7 @@ export default function UserLogin() {
     axios
       .post(loginUrl, values)
       .then((response) => {
-        if (response.status === 201) {
+        if (response.status === 200) {
           // return token
           var token = response.data;
           axios
@@ -53,24 +53,43 @@ export default function UserLogin() {
             .then((res) => {
               if (res.status === 200) {
                 dispatch(saveUserInformation(res.data));
+                console.log(res.data);
                 navigate("/products");
               }
             })
             .catch((e) => {
-              alert(e.ErrorMessage);
+              handleError(e);
             });
         }
       })
       .catch((error) => {
-        if (error.response) {
-          alert(error.response.data.message);
-        } else if (error.request) {
-          alert("No response received from server");
-        } else {
-          alert("Error: " + error.message);
-        }
+        handleError(error);
       });
   }
+function handleError(error:AxiosError) {
+    if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        const status = error.response.status;
+        const message = error.response.data;
+        if (status === 404) {
+            alert("Error: Not Found - " + message);
+        } else if (status === 401) {
+            alert("Error: Unauthorized - " + message);
+        } else if (status === 400) {
+            alert("Error: Bad Request - " + message);
+        } else {
+            alert("Error: " + status + " - " + message);
+        }
+    } else if (error.request) {
+        // The request was made but no response was received
+        alert("No response received from server");
+    } else {
+        // Something happened in setting up the request that triggered an Error
+        alert("Error: " + error.message);
+    }
+}
+
   const debouncedSubmit = debounce(onSubmit, 1000);
   const loginWithGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
@@ -79,7 +98,7 @@ export default function UserLogin() {
       );
       const userInfo = await res.json();
       const { username, email, picture } = userInfo;
-      const user: UserType = { username, email, avatar: picture, role: "customer" };
+      const user: UserType = { username, email, avatar: picture, role: "Customer" };
       dispatch(saveUserInformation(user));
       navigate("/products");
     },
