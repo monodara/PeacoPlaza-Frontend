@@ -13,6 +13,7 @@ import { UserType } from "../../misc/type";
 import { debounce } from "lodash";
 import { useTheme } from "../contextAPI/ThemeContext";
 import { inputFormStyles } from "../../misc/style";
+import { loginUrl, userProfileUrl } from "../../misc/endpoints";
 
 type LoginInfo = {
   email: string;
@@ -38,20 +39,21 @@ export default function UserLogin() {
     //send user information to backend
     setLoginInfo(values);
     axios
-      .post("https://api.escuelajs.co/api/v1/auth/login", values)
+      .post(loginUrl, values)
       .then((response) => {
         if (response.status === 201) {
-          // return access&refresh token
+          // return token
+          var token = response.data;
           axios
-            .get("https://api.escuelajs.co/api/v1/auth/profile", {
+            .get(userProfileUrl, {
               headers: {
-                Authorization: `Bearer ${response.data.access_token}`,
+                Authorization: `Bearer ${token}`,
               },
             })
             .then((res) => {
               if (res.status === 200) {
                 dispatch(saveUserInformation(res.data));
-                navigate("/profile");
+                navigate("/products");
               }
             })
             .catch((e) => {
@@ -76,10 +78,10 @@ export default function UserLogin() {
         `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenResponse.access_token}`
       );
       const userInfo = await res.json();
-      const { name, email, picture } = userInfo;
-      const user: UserType = { name, email, avatar: picture, role: "admin" };
+      const { username, email, picture } = userInfo;
+      const user: UserType = { username, email, avatar: picture, role: "customer" };
       dispatch(saveUserInformation(user));
-      navigate("/profile");
+      navigate("/products");
     },
   });
 

@@ -25,14 +25,14 @@ export default function UserProfile() {
       >
         <div className="border-b px-4 pb-6">
           <div className="text-center mx-10">
-            <img
+            {/* <img
               className="h-auto w-48 rounded-full border-4 border-white mx-auto my-4"
               src={user.avatar}
               alt="user's avatar"
-            />
+            /> */}
             <div className="py-2">
               <h3 className="font-bold text-2xl mb-1" style={{ color }}>
-                {user.name}
+                {user.username}
               </h3>
               <div className="inline-flex items-center" style={{ color }}>
                 {user.email}
