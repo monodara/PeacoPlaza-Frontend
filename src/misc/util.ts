@@ -1,10 +1,11 @@
+import { ProductReadDto } from "../features/products/productDto";
 import { ProductType } from "./type";
 
 export const sortProducts = (
-  products: ProductType[],
+  products: ProductReadDto[],
   order: string
-): ProductType[] => {
-  let newSortedProducts: ProductType[] = [...products];
+): ProductReadDto[] => {
+  let newSortedProducts: ProductReadDto[] = [...products];
   if (order === "Ascending") {
     newSortedProducts.sort((a, b) => a.price - b.price);
   } else if (order === "Descending") {

@@ -10,12 +10,13 @@ import ProductFilters from "../components/product/ProductFilter";
 import ProductSort from "../components/product/ProductSort";
 import { sortProducts } from "../misc/util";
 import ProductPagination from "../components/product/ProductPagination";
-import { getAllProductsUrl } from "../misc/endpoints";
+import { productsEndpoint } from "../misc/endpoints";
+import { ProductReadDto } from "../features/products/productDto";
 
 export default function Products() {
   const dispatch = useAppDispatch();
 
-  let url = getAllProductsUrl;
+  let url = productsEndpoint;
   console.log(url);
   const [searchParams] = useSearchParams();
   const categoryId = searchParams.get("categoryId");
@@ -32,10 +33,10 @@ export default function Products() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState("");
   const [page, setPage] = useState(1);
-  const [sortedProducts, setSortedProducts] = useState<ProductType[]>([]); // <-- Add this line
+  const [sortedProducts, setSortedProducts] = useState<ProductReadDto[]>([]); // <-- Add this line
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const productList: ProductType[] = useSelector(
+  const productList: ProductReadDto[] = useSelector(
     (state: AppState) => state.products.products
   );
   const searchKeyword: string = useSelector(

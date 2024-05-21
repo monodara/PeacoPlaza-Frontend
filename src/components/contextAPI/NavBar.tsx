@@ -76,14 +76,14 @@ function Navbar() {
       >
         By Category
       </Link>
-      {user && user.role === "admin" && (
+      {user && user.role === "Admin" && (
         <Link
-          to="/admin"
+          to="/Admin"
           className={linkStyle}
           style={{
-            color: hoveredElement === "admin" ? hoverColor : primaryColor,
+            color: hoveredElement === "Admin" ? hoverColor : primaryColor,
           }}
-          onMouseEnter={() => sethoveredElement("admin")}
+          onMouseEnter={() => sethoveredElement("Admin")}
           onMouseLeave={() => sethoveredElement(null)}
         >
           Admin

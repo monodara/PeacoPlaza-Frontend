@@ -11,20 +11,21 @@ import {
 } from "../../hooks/useButtonHandler";
 import { ProductInfoInCard } from "./shared/ProductInfoInCard";
 import { ProductImage } from "./shared/ProductImage";
+import { ProductReadDto } from "../../features/products/productDto";
 
-export default function ProductCard({ product }: { product: ProductType }) {
+export default function ProductCard({ product }: { product: ProductReadDto }) {
   const navigate = useNavigate();
   const user = useSelector((state: AppState) => state.users.user);
   const cartButtonHandler = useCartButtonHandler();
   const heartButtonHandler = useHeartButtonHandler();
 
   const handleUpdDelClick = () => {
-    navigate("/admin/update_delete", { state: { item: product } });
+    navigate("/Admin/update_delete", { state: { item: product } });
   };
 
   return (
     <div className="relative w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden bg-green-400">
-      {user?.role === "admin" && <AdminControls onClick={handleUpdDelClick} />}
+      {user?.role === "Admin" && <AdminControls onClick={handleUpdDelClick} />}
       <ProductImage
         product={product}
         onHeartClick={() => heartButtonHandler(product)}

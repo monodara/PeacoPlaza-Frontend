@@ -130,8 +130,10 @@ describe("product reducer", () => {
       title: "product3",
       price: 1,
       description: "product3",
+      inventory: 10,
+    weight: 1.2,
       productImages: [{id:"mock-img-id-1", data:"mock-img-data-1"},{id:"mock-img-id-2", data:"mock-img-data-2"}],
-      category: { id: 1, name: "clothes", image: "catImg" },
+      category: { id: "mock-cate-id", name: "clothes", image: "catImg" },
     };
     const createdProduct: ProductCreatedType = {
       title: "product3",

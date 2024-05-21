@@ -37,9 +37,9 @@ function App() {
         <Route path="/profile" element={<Me />} />
         <Route path="/login" element={<UserLogin />} />
         <Route path="/categories" element={<Categories />} />
-        <Route path="/admin" element={<Admin />} />
+        <Route path="/Admin" element={<Admin />} />
         <Route
-          path="/admin/update_delete"
+          path="/Admin/update_delete"
           element={<ProductUpdateOrDelete />}
         />
         <Route path="/checkout" element={<Checkout />} />

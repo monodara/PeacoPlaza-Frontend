@@ -30,7 +30,7 @@ export default function Admin() {
         <div className="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
           <img
             className="h-32 w-32 rounded-full border-4 border-white mx-auto my-4"
-            src={user?.avatar}
+            // src={user?.avatar}
             alt="user's avatar"
           />
         </div>

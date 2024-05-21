@@ -1,6 +1,6 @@
 # E-commerce Website
 
-This project is a website of an e-commerce business using fake data from the API [https://fakeapi.platzi.com/](https://fakeapi.platzi.com/). It allows users to search products, add items to wishlist and cart, review the cart. It also allows admin roles to manage the products (creating new items, updating or deleting items.)
+This project is a website of an e-commerce business using fake data from the API [https://fakeapi.platzi.com/](https://fakeapi.platzi.com/). It allows users to search products, add items to wishlist and cart, review the cart. It also allows Admin roles to manage the products (creating new items, updating or deleting items.)
 
 ## Contents:
 
@@ -12,7 +12,7 @@ This project is a website of an e-commerce business using fake data from the API
 | Categories     | Classify product in different categories                                                                   |
 | Wishlist       | Users can store items to their list.                                                                       |
 | Cart           | Preview the order before checkout or update the items in cart.                                             |
-| Profile        | Register as new customer or sign in by email or Google account.                                            |
+| Profile        | Register as new Customer or sign in by email or Google account.                                            |
 | Admin          | Manage products, categories and users.                                                                     |
 
 ## Getting Started
@@ -62,8 +62,8 @@ This project is a website of an e-commerce business using fake data from the API
 11. Both login and register form have to be validated, which is implemented by `Formik` and `Yup`. Besides,the email and the avatar must pass the API endpoints.
     ![register](./src/images/screenshots/register.png)
     ![alert](./src/images/screenshots/avatarAlert.png)
-12. When a "admin" role logs in, it's allowed to created/update/delete items.
-13. Click the button to toggle light/dark mode, which is achieved by `React's Context` and `Material UI`'s customered theme.
+12. When a "Admin" role logs in, it's allowed to created/update/delete items.
+13. Click the button to toggle light/dark mode, which is achieved by `React's Context` and `Material UI`'s Customered theme.
     ![create](./src/images/screenshots/create.png)
 14. Responsive layout is build with `Tailwindcss`.
 15. `React-scroll-to-top` is used to enable uses to reach the page top view smoothly.
@@ -91,7 +91,7 @@ src/
 |   |   |-- UserLogin
 |   |   |-- UserRegister
 |   |   |-- UserLogoutButton
-|   |-- admin/
+|   |-- Admin/
 |   |   |-- ProductCreation
 |   |   |-- ProductUpdateOrDelete
 |   |-- cart/
@@ -117,7 +117,7 @@ I broke components into small pieces. For example, the diagram below illustrates
 ![structure](./src//images/screenshots/componentStructure.png)
 To enable the components to access states, I use `Redux` store to pool them. For example, by clicking the cart button from products page, wishlist page, a single product details page, and the trash button in cart drawer, `itemsInCart` state can be updated. Then, other components like the badge of cart button can select the state from the store.
 
-In addition, I use customered hooks to fetch data of a single product and to handle repeated dispatching actions specifically `ddToCart(item)` and `addToWishList(item)`.
+In addition, I use Customered hooks to fetch data of a single product and to handle repeated dispatching actions specifically `ddToCart(item)` and `addToWishList(item)`.
 Commonly used types, style and functions are exported from misc folder.
 
 ## Testing

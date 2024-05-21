@@ -13,6 +13,7 @@ import DeletePopover from "../product/DeletePopover";
 import { ProductType } from "../../misc/type";
 import { inputFormStyles } from "../../misc/style";
 import { useTheme } from "../contextAPI/ThemeContext";
+import { ProductReadDto } from "../../features/products/productDto";
 
 export default function ProductUpdateOrDelete() {
   const { theme } = useTheme();
@@ -69,7 +70,7 @@ export default function ProductUpdateOrDelete() {
   const [updateResult, setUpdateResult] = useState<string | undefined>();
   function onSubmit(values: { newTitle: string; newPrice: number }) {
     const { newTitle, newPrice } = values;
-    const newProduct: ProductType = {
+    const newProduct: ProductReadDto = {
       ...item,
       title: newTitle,
       price: newPrice,

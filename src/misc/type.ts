@@ -1,4 +1,5 @@
 import { number } from "yup";
+import { ProductReadDto } from "../features/products/productDto";
 
 export type ProductType = {
   id: string;
@@ -15,7 +16,7 @@ export type ProductImage = {
   id: string;
   data: string;
 }
-export type CartProductType = ProductType & {
+export type CartProductType = ProductReadDto & {
   amount: number;
 };
 export type CategoryType = {
@@ -25,13 +26,13 @@ export type CategoryType = {
 };
 
 export type UserRegisterType = {
-  name: string;
+  username: string;
   email: string;
   password?: string;
-  avatar: string;
 };
 
 export type UserType = UserRegisterType & {
-  role: "customer" | "admin";
+  role: "Customer" | "Admin";
   id?: number;
+  avatar?: string;
 };

@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import { CartProductType, ProductType } from "../../misc/type";
+import { ProductReadDto } from "../../features/products/productDto";
 
 type InitialState = {
   productsInCart: CartProductType[];
@@ -30,7 +31,7 @@ const cartSlice = createSlice({
       state.drawerOpen = false;
     },
     //add a product to cart
-    addToCart: (state, action: PayloadAction<ProductType>) => {
+    addToCart: (state, action: PayloadAction<ProductReadDto>) => {
       const itemToAdd = action.payload;
       // Check if the item is already in the cart
       const existingItemIndex = state.productsInCart.findIndex(
@@ -80,7 +81,7 @@ const cartSlice = createSlice({
       };
     },
 
-    removeFromCart: (state, action: PayloadAction<ProductType>) => {
+    removeFromCart: (state, action: PayloadAction<ProductReadDto>) => {
       const itemToRemove = action.payload;
       // Find the index
       const existingItemIndex = state.productsInCart.findIndex(

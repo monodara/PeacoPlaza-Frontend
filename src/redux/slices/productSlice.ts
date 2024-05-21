@@ -2,15 +2,16 @@ import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
 
 import { ProductCreatedType, ProductType } from "../../misc/type";
+import { ProductCreateDto, ProductReadDto } from "../../features/products/productDto";
 
 export type InitialState = {
-  products: ProductType[];
-  wishList: ProductType[];
+  products: ProductReadDto[];
+  wishList: ProductReadDto[];
   searchKeyword: string;
   loading: boolean;
   error?: string;
 };
-let wishlistState: ProductType[];
+let wishlistState: ProductReadDto[];
 const wishlistdata = localStorage.getItem("wishlist");
 
 if (wishlistdata) {
@@ -46,7 +47,7 @@ export const createProductsAsync = createAsyncThunk(
   "createProductsAsync",
   async (newProduct: ProductCreatedType, { rejectWithValue }) => {
     try {
-      const result = await axios.post<ProductType>(url, newProduct);
+      const result = await axios.post<ProductReadDto>(url, newProduct);
       return result.data; // Return the created product
     } catch (e) {
       // Handle error if needed
@@ -56,9 +57,9 @@ export const createProductsAsync = createAsyncThunk(
 );
 export const deleteProductsAsync = createAsyncThunk(
   "deleteProductsAsync",
-  async (product: ProductType, { rejectWithValue }) => {
+  async (product: ProductReadDto, { rejectWithValue }) => {
     try {
-      const result = await axios.delete<ProductType>(url + product.id);
+      const result = await axios.delete<ProductReadDto>(url + product.id);
       return result.data;
     } catch (e) {
       const error = e as AxiosError;
@@ -68,11 +69,11 @@ export const deleteProductsAsync = createAsyncThunk(
 );
 export const updateProductsAsync = createAsyncThunk(
   "updateProductsAsync",
-  async (product: ProductType, { rejectWithValue }) => {
+  async (product: ProductReadDto, { rejectWithValue }) => {
     const { title, price } = product;
     const updatedProd = { title, price };
     try {
-      const result = await axios.put<ProductType>(
+      const result = await axios.put<ProductReadDto>(
         url + product.id,
         updatedProd
       );
@@ -89,7 +90,7 @@ const productSlice = createSlice({
   initialState,
   reducers: {
     // add to wish list
-    addToWishList: (state, action: PayloadAction<ProductType>) => {
+    addToWishList: (state, action: PayloadAction<ProductReadDto>) => {
       const itemToAdd = action.payload;
       // Check if the item is already in the list
       const existingItemIndex = state.wishList.findIndex(
@@ -100,7 +101,7 @@ const productSlice = createSlice({
         state.wishList.push(itemToAdd);
       }
     },
-    removeFromWishList: (state, action: PayloadAction<ProductType>) => {
+    removeFromWishList: (state, action: PayloadAction<ProductReadDto>) => {
       const itemToRemove = action.payload;
       // Find the index
       const existingItemIndex = state.wishList.findIndex(

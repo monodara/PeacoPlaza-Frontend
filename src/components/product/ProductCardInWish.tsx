@@ -12,11 +12,12 @@ import {
 import { ProductInfoInCard } from "./shared/ProductInfoInCard";
 import { ProductImage } from "./shared/ProductImage";
 import { useTheme } from "../contextAPI/ThemeContext";
+import { ProductReadDto } from "../../features/products/productDto";
 
 export default function ProductCardInWishList({
   product,
 }: {
-  product: ProductType;
+  product: ProductReadDto;
 }) {
   const dispatch = useDispatch();
   const cartButtonHandler = useCartButtonHandler();

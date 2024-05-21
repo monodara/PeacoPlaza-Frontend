@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import CartButton from "./CartButton";
 import HeartButton from "./HeartButton";
 import { ProductType } from "../../../misc/type";
+import { ProductReadDto } from "../../../features/products/productDto";
 
 interface ProductImageProps {
-  product: ProductType;
+  product: ProductReadDto;
   showHeartButton: boolean;
   onHeartClick: () => void;
   onCartClick: () => void;

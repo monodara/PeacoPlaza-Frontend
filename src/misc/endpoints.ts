@@ -1,8 +1,8 @@
 const localhost = "http://localhost:5074/api/v1/";
 // products
 export const productsEndpoint = `${localhost}products/`;
-export const topRatedProductUrl = `${productsEndpoint}most_purchased/`;
-export const mostPurchasedProductUrl = `${productsEndpoint}most_purchased/`;
+export const topRatedProductUrl = `${productsEndpoint}top_rated/4`;
+export const mostPurchasedProductUrl = `${productsEndpoint}most_purchased/4`;
 //auth
 export const loginUrl = `${localhost}auth/login`;
 

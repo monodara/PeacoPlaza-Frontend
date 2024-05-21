@@ -10,11 +10,11 @@ describe("userReducer", () => {
   it("should handle saveUserInformation", () => {
     const initialState = { user: null };
     const user: UserType = {
-      name: "John",
+      username: "John",
       email: "john@example.com",
       password: "XXXXXXXX",
-      avatar: "avatarImg",
-      role: "customer",
+      // avatar: "avatarImg",
+      role: "Customer",
       id: 100,
     };
     const action: PayloadAction<UserType | null> = saveUserInformation(user);

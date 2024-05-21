@@ -1,6 +1,7 @@
+import { ProductReadDto } from "../../../features/products/productDto";
 import { ProductType } from "../../../misc/type";
 
-export const ProductInfoInCard = ({ product }: { product: ProductType }) => (
+export const ProductInfoInCard = ({ product }: { product: ProductReadDto }) => (
   <div className="px-5 py-3 bg-green-400">
     <h3 className="text-gray-100 font-semibold text-sm uppercase mb-2 mt-4">
       {product.title}

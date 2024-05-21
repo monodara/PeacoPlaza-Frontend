@@ -7,21 +7,25 @@ import cartReducer, {
 } from "../../redux/slices/cartSlice";
 
 const product1 = {
-  id: "mock-id-1",
-  title: "product1",
-  price: 1,
-  description: "product1",
-  productImages: [{id:"mock-img-id-1", data:"mock-img-data-1"},{id:"mock-img-id-2", data:"mock-img-data-2"}],
-  category: { id: 1, name: "clothes", image: "catImg" },
-};
+    id: "mock-id-1",
+    title: "product1",
+    price: 1,
+    description: "product1",
+    inventory: 10,
+    weight: 1.2,
+    productImages: [{id:"mock-img-id-1", data:"mock-img-data-1"},{id:"mock-img-id-2", data:"mock-img-data-2"}],
+    category: { id: "mock-cate-id", name: "clothes", image: "catImg" },
+  };
 const product2 = {
-  id: "mock-id-2",
-  title: "product2",
-  price: 1,
-  description: "product2",
-  productImages: [{id:"mock-img-id-1", data:"mock-img-data-1"},{id:"mock-img-id-2", data:"mock-img-data-2"}],
-  category: { id: 2, name: "clothes", image: "catImg" },
-};
+    id: "mock-id-1",
+    title: "product2",
+    price: 2,
+    description: "product2",
+    inventory: 10,
+    weight: 1.2,
+    productImages: [{id:"mock-img-id-1", data:"mock-img-data-1"},{id:"mock-img-id-2", data:"mock-img-data-2"}],
+    category: { id: "mock-cate-id", name: "shoes", image: "catImg" },
+  };
 
 describe("cartReducer", () => {
   const initialState = {
