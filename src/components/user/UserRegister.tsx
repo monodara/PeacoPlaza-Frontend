@@ -9,6 +9,7 @@ import { UserRegisterType } from "../../misc/type";
 import { debounce } from "lodash";
 import { useTheme } from "../contextAPI/ThemeContext";
 import { inputFormStyles } from "../../misc/style";
+import { checkEmailUrl, userEndpoints } from "../../misc/endpoints";
 
 export default function UserRegisterForm() {
   const { theme } = useTheme();
@@ -17,42 +18,43 @@ export default function UserRegisterForm() {
   const navigate = useNavigate();
 
   const [userInformation, setUserInformation] = useState<UserRegisterType>({
-    name: "",
+    username: "",
     email: "",
     password: "",
-    avatar: "",
+    // avatar: "",
   });
   // Form validation
   const userInfoSchema = object().shape({
-    name: string()
+    username: string()
       .min(2, "Too Short!")
       .max(20, "Too Long!")
       .required("Required"),
     email: string().email("Invalid email").required("Required"),
     password: string()
       .min(8, "Too short!")
-      .max(16, "Too long!")
-      .required("Required"),
-    avatar: string().required("Required"),
+      .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+      "Password must contain at least one uppercase letter, one lowercase letter, and one number"
+    ).required("Required"),
+    // avatar: string().required("Required"),
   });
   async function checkEmail(email: string) {
     try {
-      const response = await axios.post<{ isAvailable: boolean }>(
-        "https://api.escuelajs.co/api/v1/users/is-available",
-        { email }
+      const response = await axios.post(
+        checkEmailUrl,
+        { email } 
       );
-      const { isAvailable } = response.data;
-      return true; //As the API endpoint doesn't work, I force the function to return true
+      return response.data; 
     } catch (error) {
-      return true;
+      return false;
     }
   }
-  const debouncedCheckEmail = debounce(checkEmail, 500);
+  // const debouncedCheckEmail = debounce(checkEmail, 500);
   async function onSubmit(
     values: UserRegisterType,
     { setFieldError }: FormikHelpers<UserRegisterType>
   ) {
-    const emailAvailable = await debouncedCheckEmail(values.email);
+    const emailAvailable = await checkEmail(values.email);
     // If email is not available, set field error for email input
     if (!emailAvailable) {
       setFieldError("email", "Email is already registered");
@@ -61,7 +63,7 @@ export default function UserRegisterForm() {
     //send user information to backend
     setUserInformation(values);
     axios
-      .post("https://api.escuelajs.co/api/v1/users/", values)
+      .post(userEndpoints, values)
       .then((response) => {
         if (response.status === 201) {
           // navigate user to log in
@@ -110,11 +112,11 @@ export default function UserRegisterForm() {
               <Field
                 as={TextField}
                 fullWidth
-                label="Name"
-                id="name"
-                name="name"
-                error={errors.name && touched.name}
-                helperText={<ErrorMessage name="name" />}
+                label="User Name"
+                id="username"
+                name="username"
+                error={errors.username && touched.username}
+                helperText={<ErrorMessage name="username" />}
                 sx={inputFormStyles(textPrimaryColor)}
               />
               <Field
@@ -137,7 +139,7 @@ export default function UserRegisterForm() {
                 helperText={<ErrorMessage name="password" />}
                 sx={inputFormStyles(textPrimaryColor)}
               />
-              <Field
+              {/* <Field
                 as={TextField}
                 fullWidth
                 label="Avatar"
@@ -146,7 +148,7 @@ export default function UserRegisterForm() {
                 error={errors.avatar && touched.avatar}
                 helperText={<ErrorMessage name="avatar" />}
                 sx={inputFormStyles(textPrimaryColor)}
-              />
+              /> */}
               <Button
                 variant="contained"
                 type="submit"
