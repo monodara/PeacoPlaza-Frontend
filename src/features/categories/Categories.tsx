@@ -12,6 +12,7 @@ import { CategoryType } from "../../misc/type";
 import CategoryCard from "./CategoryCard";
 import { useTheme } from "../../components/contextAPI/ThemeContext";
 import { CategoryReadDto } from "./categoryDto";
+import { setCategoryBy } from "../shared/filterSortSlice";
 
 export default function Categories() {
   const dispatch = useAppDispatch();
@@ -55,7 +56,8 @@ export default function Categories() {
             <button
               className="flex items-center mt-4 px-3 py-2 bg-green-500 text-white text-sm uppercase font-medium rounded hover:bg-green-400 focus:outline-none focus:bg-green-500"
               onClick={() => {
-                navigate("products/?categoryId=2");
+                dispatch(setCategoryBy(categoryList[2].id))
+                navigate("/products");
               }}
             >
               <span>Shop Now</span>
@@ -85,7 +87,8 @@ export default function Categories() {
               <button
                 className="flex items-center mt-4 text-white text-sm uppercase font-medium rounded hover:underline focus:outline-none"
                 onClick={() => {
-                  navigate("products/?categoryId=1");
+                  dispatch(setCategoryBy(categoryList[3].id))
+                  navigate("/products");
                 }}
               >
                 <span>Shop Now</span>
@@ -113,7 +116,8 @@ export default function Categories() {
               <button
                 className="flex items-center mt-4 text-white text-sm uppercase font-medium rounded hover:underline focus:outline-none"
                 onClick={() => {
-                  navigate("products/?categoryId=4");
+                  dispatch(setCategoryBy(categoryList[3].id))
+                  navigate("/products");
                 }}
               >
                 <span>Shop Now</span>

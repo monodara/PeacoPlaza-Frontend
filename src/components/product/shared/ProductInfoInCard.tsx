@@ -3,7 +3,7 @@ import { ProductType } from "../../../misc/type";
 import { useTheme } from "../../contextAPI/ThemeContext";
 
 export const ProductInfoInCard = ({ product }: { product: ProductReadDto }) => {
-const { theme } = useTheme();
+  const { theme } = useTheme();
   const textPrimaryColor = theme.palette.text.primary;
   const primaryColor = theme.palette.background.default;
   const secondaryColor = theme.palette.secondary.main;
