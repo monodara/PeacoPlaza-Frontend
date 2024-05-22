@@ -15,49 +15,52 @@ import { ProductReadDto } from "../features/products/productDto";
 
 export default function Products() {
   const dispatch = useAppDispatch();
-
-  let url = productsEndpoint;
-  console.log(url);
-  const [searchParams] = useSearchParams();
-  const categoryId = searchParams.get("categoryId");
-  if (categoryId) url += `&categoryId=${categoryId}`;
-  const minPrice = searchParams.get("price_min") || "";
-  if (minPrice) url += `&price_min=${minPrice}`;
-  const maxPrice = searchParams.get("price_max") || "";
-  if (maxPrice) url += `&price_max=${maxPrice}`;
-
-  useEffect(() => {
-    dispatch(fetchAllProductsAsync(url));
-  }, [dispatch, url]);
-
+  const searchKeyword: string = useSelector(
+      (state: AppState) => state.products.searchKeyword
+    );
+  let filterProductsUrlSuffix = "";
+  
+  if(searchKeyword.trim() !== ""){
+    console.log("here")
+    filterProductsUrlSuffix += `?searchKey=${searchKeyword}`;
+  }
+  const [totalPage, setTotalPage] = useState(0);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState("");
   const [page, setPage] = useState(1);
-  const [sortedProducts, setSortedProducts] = useState<ProductReadDto[]>([]); // <-- Add this line
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const pageSize = 12;
+  const [searchParams] = useSearchParams();
+  // const categoryId = searchParams.get("categoryId");
+  // if (categoryId) url += `&categoryId=${categoryId}`;
+  const minPrice = searchParams.get("price_min");
+  if (minPrice) filterProductsUrlSuffix += filterProductsUrlSuffix === "" ? `?minPrice=${minPrice}` : `&minPrice=${minPrice}`;
+  const maxPrice = searchParams.get("price_max");
+  if (maxPrice) filterProductsUrlSuffix += filterProductsUrlSuffix === "" ? `?maxPrice=${maxPrice}` : `&maxPrice=${maxPrice}`;
 
+  console.log(filterProductsUrlSuffix);
+
+  async function fetchTotalProductCount() {
+      try {
+        const response = await fetch(`${productsEndpoint}count/${filterProductsUrlSuffix}`);
+        const data = await response.json();
+        setTotalPage(Math.ceil(data/pageSize));
+      } catch (error) {
+        console.error("Error fetching total products:", error);
+      }
+    }
+  let sortPaginateProductsUrlSuffix = filterProductsUrlSuffix += filterProductsUrlSuffix === "" ? `?pageNo=${page}&pageSize=${pageSize}` :`&pageNo=${page}&pageSize=${pageSize}`;
+  useEffect(() => {
+    fetchTotalProductCount();
+    dispatch(fetchAllProductsAsync(`${productsEndpoint}${sortPaginateProductsUrlSuffix}`));
+    console.log(`${productsEndpoint}${sortPaginateProductsUrlSuffix}`);
+  }, [filterProductsUrlSuffix,page]);
+
+  
   const productList: ProductReadDto[] = useSelector(
     (state: AppState) => state.products.products
   );
-  const searchKeyword: string = useSelector(
-    (state: AppState) => state.products.searchKeyword
-  );
-  const filteredProducts = productList.filter((p) =>
-    p.title.toLowerCase().includes(searchKeyword.toLowerCase())
-  );
-
-  useEffect(() => {
-    const newSortedProducts = sortProducts(filteredProducts, sortOrder);
-    if (JSON.stringify(newSortedProducts) !== JSON.stringify(sortedProducts)) {
-      setSortedProducts(newSortedProducts);
-    }
-  }, [filteredProducts, sortOrder, sortedProducts]);
-
-  const productsPerPage = 10;
-  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
-  const startIndex = (page - 1) * productsPerPage;
-  const endIndex = startIndex + productsPerPage;
-  const paginatedProducts = sortedProducts.slice(startIndex, endIndex);
+  console.log(productList);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -87,19 +90,19 @@ export default function Products() {
           isDropdownOpen={isDropdownOpen}
         />
       </div>
-      {filteredProducts.length === 0 && (
+      {productList.length === 0 && (
         <div className="mt-10 text-center">
           No such product. Maybe try again.
         </div>
       )}
 
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
-        {paginatedProducts.map((product) => (
+        {productList.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
-      <div className="mt-4 my-auto">
-        <ProductPagination count={totalPages} page={page} setPage={setPage} />
+      <div className="mt-4 flex justify-center">
+        <ProductPagination count={totalPage} page={page} setPage={setPage} />
       </div>
     </div>
   );
