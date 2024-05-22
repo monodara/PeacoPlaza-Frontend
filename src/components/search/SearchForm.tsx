@@ -6,8 +6,6 @@ import { debounce } from "lodash";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 import { AppState, useAppDispatch } from "../../redux/store";
-import { CategoryType } from "../../misc/type";
-import { getSearchKeyword } from "../../redux/slices/productSlice";
 import { fetchAllCategoriesAsync } from "../../redux/slices/categorySlice";
 import { useTheme } from "../contextAPI/ThemeContext";
 import { CategoryReadDto } from "../../features/categories/categoryDto";

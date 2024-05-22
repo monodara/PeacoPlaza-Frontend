@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 
-import { removeFromWishList } from "../../redux/slices/productSlice";
+// import { removeFromWishList } from "../../features/products/productSlice";
 import { ProductType } from "../../misc/type";
 import {
   useCartButtonHandler,
@@ -27,7 +27,7 @@ export default function ProductCardInWishList({
   const backgroundColor = theme.palette.background.default;
 
   const handleDeleteClick = () => {
-    dispatch(removeFromWishList(product));
+    // dispatch(removeFromWishList(product));
   };
 
   return (
@@ -36,7 +36,7 @@ export default function ProductCardInWishList({
       <Link to={`/products/${product.id}`}>
         <ProductImage
           product={product}
-          onHeartClick={() => heartButtonHandler(product)}
+          // onHeartClick={() => heartButtonHandler(product)}
           onCartClick={() => cartButtonHandler(product)}
           showHeartButton={false}
         />

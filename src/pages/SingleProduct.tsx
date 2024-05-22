@@ -128,7 +128,7 @@ export default function SingleProduct() {
                   type="button"
                   className="w-12 h-12 border hover:border-gray-300 text-gray-800 font-bold rounded"
                   style={{ backgroundColor: "#fff" }}
-                  onClick={() => heartButtonHandler(product)} // add function for wishlist
+                  // onClick={() => heartButtonHandler(product)} // add function for wishlist
                 >
                   <FavoriteIcon />
                 </button>

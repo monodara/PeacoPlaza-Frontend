@@ -8,14 +8,14 @@ import { ProductReadDto } from "../../../features/products/productDto";
 interface ProductImageProps {
   product: ProductReadDto;
   showHeartButton: boolean;
-  onHeartClick: () => void;
+  // onHeartClick: () => void;
   onCartClick: () => void;
 }
 
 export const ProductImage: React.FC<ProductImageProps> = ({
   product,
   showHeartButton,
-  onHeartClick,
+  // onHeartClick,
   onCartClick,
 }) => (
   <Link to={`/products/${product.id}`}>
@@ -25,7 +25,7 @@ export const ProductImage: React.FC<ProductImageProps> = ({
         backgroundImage: `url(${product.productImages[0].data})`,
       }}
     >
-      {showHeartButton && <HeartButton onClick={onHeartClick} />}
+      {/* {showHeartButton && <HeartButton onClick={onHeartClick} />} */}
       <CartButton onClick={onCartClick} />
     </div>
   </Link>

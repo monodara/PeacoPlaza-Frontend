@@ -14,10 +14,10 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { object, string, number } from "yup";
 
 import { AppState, useAppDispatch } from "../../redux/store";
-import { ProductCreatedType } from "../../misc/type";
-import { createProductsAsync } from "../../redux/slices/productSlice";
+import { productsActions } from "../../features/products/productSlice";
 import { inputFormStyles } from "../../misc/style";
 import { useTheme } from "../contextAPI/ThemeContext";
+import { ProductCreateDto } from "../../features/products/productDto";
 
 export default function ProductCreation() {
   const { theme } = useTheme();
@@ -30,18 +30,20 @@ export default function ProductCreation() {
     (state: AppState) => state.categories.categoryList
   );
 
-  const [productInfo, setProductInfo] = useState<ProductCreatedType>({
+  const [productInfo, setProductInfo] = useState<ProductCreateDto>({
     title: "",
     price: 0,
     description: "",
-    categoryId: 0,
-    productImages: [],
+    inventory: 0,
+    weight: 0,
+    categoryId: "",
+    // productImages: [],
   });
 
   const [createResult, setCreateResult] = useState<string | undefined>();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const categoryId = Number(event.target.value);
+    const categoryId = event.target.value;
     setProductInfo((prevState) => ({
       ...prevState,
       categoryId,
@@ -59,16 +61,18 @@ export default function ProductCreation() {
     image: string().required("Required"),
   });
 
-  function onSubmit(values: ProductCreatedType & { image?: string }) {
+  function onSubmit(values: ProductCreateDto & { image?: string }) {
     const { title, price, description, image } = values;
-    const newProduct: ProductCreatedType = {
+    const newProduct: ProductCreateDto = {
       title,
       price: Number(price),
       description,
+      inventory: 1,
+      weight: 2,
       categoryId: productInfo.categoryId,
-      productImages:[],
+      // productImages:[],
     };
-    dispatch(createProductsAsync(newProduct))
+    dispatch(productsActions.createOne(newProduct))
       .then((response) => {
         if (typeof response.payload === "string")
           setCreateResult(`Creation Failed: ${response.payload}`);
@@ -136,7 +140,7 @@ export default function ProductCreation() {
                   helperText={<ErrorMessage name="description" />}
                   sx={inputFieldStyles}
                 />
-                <Field
+                {/* <Field
                   as={TextField}
                   fullWidth
                   label="Image"
@@ -145,7 +149,7 @@ export default function ProductCreation() {
                   error={errors.productImages && touched.productImages}
                   helperText={<ErrorMessage name="image" />}
                   sx={inputFieldStyles}
-                />
+                /> */}
                 <FormControl
                   component="fieldset"
                   sx={{ display: "flex", flexDirection: "row" }}

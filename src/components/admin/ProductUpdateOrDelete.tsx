@@ -6,14 +6,13 @@ import { object, string, number } from "yup";
 
 import { useAppDispatch } from "../../redux/store";
 import {
-  deleteProductsAsync,
-  updateProductsAsync,
-} from "../../redux/slices/productSlice";
+  productsActions,
+} from "../../features/products/productSlice";
 import DeletePopover from "../product/DeletePopover";
 import { ProductType } from "../../misc/type";
 import { inputFormStyles } from "../../misc/style";
 import { useTheme } from "../contextAPI/ThemeContext";
-import { ProductReadDto } from "../../features/products/productDto";
+import { ProductReadDto, ProductUpdateDto } from "../../features/products/productDto";
 
 export default function ProductUpdateOrDelete() {
   const { theme } = useTheme();
@@ -39,7 +38,7 @@ export default function ProductUpdateOrDelete() {
   function handleDeleteConfirmation() {
     // Dispatch action to delete the product from the backend
     handleCloseDelModal(); // Close the modal after deletion
-    dispatch(deleteProductsAsync(item))
+    dispatch(productsActions.deleteOne(item))
       .then((response) => {
         if (typeof response.payload === "string")
           setDeleteResult(`Delete Failed: ${response.payload}`);
@@ -70,12 +69,12 @@ export default function ProductUpdateOrDelete() {
   const [updateResult, setUpdateResult] = useState<string | undefined>();
   function onSubmit(values: { newTitle: string; newPrice: number }) {
     const { newTitle, newPrice } = values;
-    const newProduct: ProductReadDto = {
+    const newProduct: ProductUpdateDto = {
       ...item,
       title: newTitle,
       price: newPrice,
     };
-    dispatch(updateProductsAsync(newProduct))
+    dispatch(productsActions.createOne(newProduct))
       .then((response) => {
         if (typeof response.payload === "string")
           setUpdateResult(`Update Failed: ${response.payload}`);

@@ -2,7 +2,7 @@ import { HttpResponse, http } from "msw";
 import { setupServer } from "msw/node";
 
 import { ProductCreatedType, ProductType } from "../../misc/type";
-import { ProductReadDto } from "../../features/products/productDto";
+import { ProductReadDto, ProductUpdateDto } from "../../features/products/productDto";
 
 export let mockProducts: ProductReadDto[] = [
   {
@@ -26,6 +26,16 @@ export let mockProducts: ProductReadDto[] = [
     category: { id: "mock-cate-id", name: "shoes", image: "catImg" },
   },
 ];
+export let mockProductToUpdate: ProductUpdateDto = {
+    // id: "mock-id-1",
+    title: "product1",
+    price: 1,
+    description: "product1",
+    inventory: 10,
+    weight: 1.2,
+    // productImages: [{id:"mock-img-id-1", data:"mock-img-data-1"},{id:"mock-img-id-2", data:"mock-img-data-2"}],
+    categoryId: "mock-cate-id",
+  }
 
 export const handler = [
   http.get("https://api.escuelajs.co/api/v1/products", () => {

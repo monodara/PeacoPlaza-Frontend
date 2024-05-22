@@ -34,7 +34,7 @@ export default function ProductCard({ product }: { product: ProductReadDto }) {
       {user?.role === "Admin" && <AdminControls onClick={handleUpdDelClick} />}
       <ProductImage
         product={product}
-        onHeartClick={() => heartButtonHandler(product)}
+        // onHeartClick={() => heartButtonHandler(product)}
         onCartClick={() => cartButtonHandler(product)}
         showHeartButton={true}
       />

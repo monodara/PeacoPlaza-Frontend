@@ -17,7 +17,6 @@ import ThemeToggler from "./ThemeToggler";
 import { iconStyle, linkStyle } from "../../misc/style";
 import UserLogoutButton from "../user/UserLogoutButton";
 import { useTheme } from "./ThemeContext";
-import { getSearchKeyword } from "../../redux/slices/productSlice";
 import { resetFilter, setInputToSearchKey } from "../../features/shared/filterSortSlice";
 
 function Navbar() {
@@ -30,7 +29,7 @@ function Navbar() {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const wishlist = useSelector((state: AppState) => state.products.wishList);
+  // const wishlist = useSelector((state: AppState) => state.products.wishList);
   const productsInCart = useSelector(
     (state: AppState) => state.cart.productsInCart
   );
@@ -44,7 +43,7 @@ function Navbar() {
   const totalCartItems = useMemo(
     () =>
       productsInCart.reduce(
-        (sum, item: CartProductType) => sum + item.amount,
+        (sum: number, item: CartProductType) => sum + item.amount,
         0
       ),
     [productsInCart]
@@ -135,7 +134,7 @@ function Navbar() {
           <CartDrawer />
         </Badge>
         <Badge
-          badgeContent={wishlist.length}
+          // badgeContent={wishlist.length}
           color="error"
           overlap="circular"
           anchorOrigin={{

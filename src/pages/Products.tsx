@@ -1,17 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
 
 import ProductCard from "../features/products/ProductCard";
-import { ProductType } from "../misc/type";
 import { AppState, useAppDispatch } from "../redux/store";
-import { fetchAllProductsAsync, getSearchKeyword } from "../redux/slices/productSlice";
 import ProductFilters from "../features/products/ProductFilter";
 import ProductSort from "../features/products/ProductSort";
-import { sortProducts } from "../misc/util";
 import ProductPagination from "../features/products/ProductPagination";
 import { productsEndpoint } from "../misc/endpoints";
 import { ProductReadDto } from "../features/products/productDto";
+import { productsActions } from "../features/products/productSlice";
 
 export default function Products() {
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -61,17 +58,13 @@ export default function Products() {
     }
   let sortPaginateProductsUrlSuffix = filterProductsUrlSuffix += filterProductsUrlSuffix === "" ? `?pageNo=${page}&pageSize=${pageSize}` :`&pageNo=${page}&pageSize=${pageSize}`;
   if(order !== "") sortPaginateProductsUrlSuffix += sortPaginateProductsUrlSuffix === "" ? `?sortBy=byPrice&orderBy=${sortOrder}` :`&sortBy=byPrice&orderBy=${sortOrder}`;
-  console.log(order)
   useEffect(() => {
     fetchTotalProductCount();
-    console.log(`${productsEndpoint}count/${filterProductsUrlSuffix}`)
-    dispatch(fetchAllProductsAsync(`${productsEndpoint}${sortPaginateProductsUrlSuffix}`));
-    console.log(`${productsEndpoint}${sortPaginateProductsUrlSuffix}`);
-    console.log(searchKeyword)
+    dispatch(productsActions.fetchAll(`${sortPaginateProductsUrlSuffix}`));
   }, [searchKeyword, page, order,minPrice,maxPrice, selectCategory]);
   
   const productList: ProductReadDto[] = useSelector(
-    (state: AppState) => state.products.products
+    (state: AppState) => state.products.items
   );
 
   useEffect(() => {

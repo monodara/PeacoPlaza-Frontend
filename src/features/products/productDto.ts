@@ -25,7 +25,7 @@ export interface ProductUpdateDto {
     title: string;
     price: number;
     description: string;
-    images: ProductImageCreateDto[] | null;
+    // images: ProductImageCreateDto[] | null;
     inventory: number;
     weight: number;
     categoryId: string;
