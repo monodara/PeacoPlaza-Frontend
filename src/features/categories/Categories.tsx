@@ -7,23 +7,22 @@ import FurnitureBg from "../../images/furnitureBG.jpg";
 import ElecBg from "../../images/electronicsBG.jpeg";
 import FootwareBg from "../../images/footwareBG.jpg";
 import { useAppDispatch, AppState } from "../../redux/store";
-import { fetchAllCategoriesAsync } from "../../redux/slices/categorySlice";
-import { CategoryType } from "../../misc/type";
 import CategoryCard from "./CategoryCard";
 import { useTheme } from "../../components/contextAPI/ThemeContext";
 import { CategoryReadDto } from "./categoryDto";
 import { setCategoryBy } from "../shared/filterSortSlice";
+import { categoriesActions } from "./categorySlice";
 
 export default function Categories() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(fetchAllCategoriesAsync());
+    dispatch(categoriesActions.fetchAll(""));
   }, [dispatch]);
 
   const categoryList: CategoryReadDto[] = useSelector(
-    (state: AppState) => state.categories.categoryList
+    (state: AppState) => state.categories.items
   );
   const { theme } = useTheme();
   const textPrimaryColor = theme.palette.text.primary;

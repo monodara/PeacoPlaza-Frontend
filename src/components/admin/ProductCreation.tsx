@@ -27,7 +27,7 @@ export default function ProductCreation() {
   const inputFieldStyles = inputFormStyles(textPrimaryColor);
   const dispatch = useAppDispatch();
   const categoryList = useSelector(
-    (state: AppState) => state.categories.categoryList
+    (state: AppState) => state.categories.items
   );
 
   const [productInfo, setProductInfo] = useState<ProductCreateDto>({

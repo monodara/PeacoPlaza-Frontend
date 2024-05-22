@@ -1,16 +1,16 @@
 import { Action, ThunkAction, configureStore } from "@reduxjs/toolkit";
 import { productsReducer } from "../features/products/productSlice";
-import categoryReducer from "./slices/categorySlice";
 import userReducer from "./slices/userSlice";
 import cartReducer from "./slices/cartSlice";
 import filterSortReducer from "../features/shared/filterSortSlice";
 import themeReducer from "./slices/themeSlice";
 import { useDispatch } from "react-redux";
+import { categoriesReducer } from "../features/categories/categorySlice";
 
 export const store = configureStore({
   reducer: {
     products: productsReducer,
-    categories: categoryReducer,
+    categories: categoriesReducer,
     users: userReducer,
     cart: cartReducer,
     filterSort: filterSortReducer,

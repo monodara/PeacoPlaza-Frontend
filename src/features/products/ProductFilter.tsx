@@ -15,7 +15,7 @@ function ProductFilters() {
 
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const categoryList: CategoryReadDto[] = useSelector(
-    (state: AppState) => state.categories.categoryList
+    (state: AppState) => state.categories.items
   );
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>("");
   const [minPrice, setMinPrice] = useState("");

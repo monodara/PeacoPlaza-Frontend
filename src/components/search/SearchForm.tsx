@@ -6,15 +6,15 @@ import { debounce } from "lodash";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 import { AppState, useAppDispatch } from "../../redux/store";
-import { fetchAllCategoriesAsync } from "../../redux/slices/categorySlice";
 import { useTheme } from "../contextAPI/ThemeContext";
 import { CategoryReadDto } from "../../features/categories/categoryDto";
 import { setCategoryBy, setInputToSearchKey } from "../../features/shared/filterSortSlice";
+import { categoriesActions } from "../../features/categories/categorySlice";
 
 function SearchForm() {
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(fetchAllCategoriesAsync());
+    dispatch(categoriesActions.fetchAll(""));
   }, [dispatch]);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -22,7 +22,7 @@ function SearchForm() {
   const [searchKeyword, setSearchKeyword] = useState("");
   const navigate = useNavigate();
 
-  const categoryList = useSelector((state: AppState) => state.categories.categoryList);
+  const categoryList = useSelector((state: AppState) => state.categories.items);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);

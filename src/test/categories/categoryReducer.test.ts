@@ -1,6 +1,4 @@
-import categoryReducer, {
-  fetchAllCategoriesAsync,
-} from "../../redux/slices/categorySlice";
+import { categoriesActions, categoriesReducer } from "../../features/categories/categorySlice";
 import store from "../../redux/store";
 import { categoryServer, mockCategories } from "../shared/categoryServer";
 
@@ -12,7 +10,7 @@ afterAll(() => {
   categoryServer.close();
 });
 const initialState = {
-  categoryList: [],
+  items: [],
   loading: false,
 };
 
@@ -23,14 +21,14 @@ describe("category reducer", () => {
 
   // test0: initial state
   test("should return initial state", () => {
-    const state = categoryReducer(undefined, { type: "" });
+    const state = categoriesReducer(undefined, { type: "" });
     expect(state).toEqual(initialState);
   });
   // test1: fetch data fulfill
   test("should return a list of categories", () => {
-    const state = categoryReducer(
+    const state = categoriesReducer(
       initialState,
-      fetchAllCategoriesAsync.fulfilled(mockCategories, "fulfilled")
+      categoriesActions.fetchAll.fulfilled(mockCategories, "fulfilled", "")
     );
 
     expect(state).toEqual({
@@ -40,9 +38,9 @@ describe("category reducer", () => {
   });
   // test2: fetch data pending
   test("should have loading truthy when fetch is pending", () => {
-    const state = categoryReducer(
+    const state = categoriesReducer(
       initialState,
-      fetchAllCategoriesAsync.pending("pending")
+      categoriesActions.fetchAll.pending("pending","")
     );
     expect(state).toEqual({
       categoryList: [],
@@ -53,9 +51,9 @@ describe("category reducer", () => {
   // test 3: fetch data reject
   test("should have error", () => {
     const error = new Error("error");
-    const state = categoryReducer(
+    const state = categoriesReducer(
       initialState,
-      fetchAllCategoriesAsync.rejected(error, "error")
+      categoriesActions.fetchAll.rejected(error, "error", "undefined")
     );
     expect(state).toEqual({
       categoryList: [],
@@ -65,8 +63,8 @@ describe("category reducer", () => {
   });
   // test fetching asyncthunk with store dispatch
   test("should fetch all products from api", async () => {
-    await store.dispatch(fetchAllCategoriesAsync());
-    expect(store.getState().categories.categoryList.length).toBe(2);
+    await store.dispatch(categoriesActions.fetchAll(""));
+    expect(store.getState().categories.items.length).toBe(2);
     expect(store.getState().categories.error).toBeUndefined;
   });
 });
