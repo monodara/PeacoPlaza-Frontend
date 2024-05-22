@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { CategoryType } from "../../misc/type";
+import { CategoryReadDto } from "./categoryDto";
 
-export default function CategoryCard({ category }: { category: CategoryType }) {
+export default function CategoryCard({ category }: { category: CategoryReadDto }) {
   const encodedId = encodeURIComponent(category.id); //id needs to be protected???
 
   return (

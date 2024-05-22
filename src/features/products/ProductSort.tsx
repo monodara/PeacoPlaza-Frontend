@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import { useTheme } from "../contextAPI/ThemeContext";
+import { useTheme } from "../../components/contextAPI/ThemeContext";
+import { useAppDispatch } from "../../redux/store";
+import { setOrderBy } from "../shared/filterSortSlice";
 
 interface ProductSortProps {
   sortOrder: string;
@@ -15,11 +17,30 @@ const ProductSort: React.FC<ProductSortProps> = ({
   setIsDropdownOpen,
   isDropdownOpen,
 }) => {
+  const dispatch = useAppDispatch();
+
   const handleSort = (order: string) => {
     if(order == "None") order = "";
     setSortOrder(order);
+    dispatch(setOrderBy(order));
     setIsDropdownOpen(false);
   };
+const dropdownRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [setIsDropdownOpen, dropdownRef]);
+
   const { theme } = useTheme();
   const textPrimaryColor = theme.palette.text.primary;
   const backgroundColor = theme.palette.background.default;

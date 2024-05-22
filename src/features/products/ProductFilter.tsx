@@ -1,47 +1,68 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { debounce } from "lodash";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { AppState } from "../../redux/store";
+import { AppState, useAppDispatch } from "../../redux/store";
 import { CategoryType } from "../../misc/type";
-import { useTheme } from "../contextAPI/ThemeContext";
+import { useTheme } from "../../components/contextAPI/ThemeContext";
+import { CategoryReadDto } from "../categories/categoryDto";
+import { setCategoryBy, setInputToSearchKey, setPriceLowBoundary, setPriceUpBoundary } from "../shared/filterSortSlice";
 
 function ProductFilters() {
+  const dispatch = useAppDispatch();
+
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
-  const categoryList: CategoryType[] = useSelector(
+  const categoryList: CategoryReadDto[] = useSelector(
     (state: AppState) => state.categories.categoryList
   );
-  const [selectedCategoryId, setSelectedCategoryId] = useState<number>(-1);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string>("");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
-  const navigate = useNavigate();
 
-  const handleCheckboxChange = (categoryId: number) => {
+  const handleCheckboxChange = (categoryId: string) => {
     setSelectedCategoryId(categoryId);
+    dispatch(setCategoryBy(categoryId));
   };
 
   const debouncedMinPriceChange = debounce((value: string) => {
     if (!isNaN(Number(value))) {
       setMinPrice(value);
+      dispatch(setPriceLowBoundary(value));
     }
   }, 200);
 
   const debouncedMaxPriceChange = debounce((value: string) => {
     if (!isNaN(Number(value))) {
       setMaxPrice(value);
+      dispatch(setPriceUpBoundary(value));
     }
-  }, 200);
+  }, 20);
 
   const applyFilter = () => {
-    let url = "?";
-    if (selectedCategoryId !== -1) url += `categoryId=${selectedCategoryId}`;
-    if (minPrice !== "") url += `&price_min=${minPrice}`;
-    if (maxPrice !== "") url += `&price_max=${maxPrice}`;
-    navigate(url);
+    dispatch(setPriceLowBoundary(minPrice));
+    dispatch(setPriceUpBoundary(maxPrice));
+    dispatch(setCategoryBy(selectedCategoryId));
+    dispatch(setInputToSearchKey(""));
     setIsFiltersOpen(false);
   };
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsFiltersOpen(false);
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [setIsFiltersOpen, dropdownRef]);
   const { theme } = useTheme();
   return (
     <div className="relative">
@@ -92,9 +113,9 @@ function ProductFilters() {
 
 interface FilterOptionProps {
   title: string;
-  options?: CategoryType[];
-  selectedValue?: number;
-  onChange?: (value: number) => void;
+  options?: CategoryReadDto[];
+  selectedValue?: string;
+  onChange?: (value: string) => void;
   minPlaceholder?: string;
   maxPlaceholder?: string;
   minPrice?: string;
@@ -117,7 +138,7 @@ function FilterOption({
 }: FilterOptionProps) {
   const clearFilter = () => {
     if (title === "Category") {
-      onChange && onChange(-1);
+      onChange && onChange("");
     } else {
       onMinChange && onMinChange({ target: { value: "" } } as any);
       onMaxChange && onMaxChange({ target: { value: "" } } as any);

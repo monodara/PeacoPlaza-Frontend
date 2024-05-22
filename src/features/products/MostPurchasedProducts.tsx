@@ -1,7 +1,7 @@
 import React from 'react'
 import { useFetchProducts } from '../../hooks/useFetchProducts';
 import { mostPurchasedProductUrl } from '../../misc/endpoints';
-import ProductCard from '../../components/product/ProductCard';
+import ProductCard from './ProductCard';
 
 export default function MostPurchasedProducts() {
     const { products, loading, error } = useFetchProducts(mostPurchasedProductUrl);

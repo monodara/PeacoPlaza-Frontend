@@ -2,15 +2,16 @@ import { HttpResponse, http } from "msw";
 import { setupServer } from "msw/node";
 
 import { CategoryType } from "../../misc/type";
+import { CategoryReadDto } from "../../features/categories/categoryDto";
 
-export let mockCategories: CategoryType[] = [
+export let mockCategories: CategoryReadDto[] = [
   {
-    id: 1,
+    id: "mock-cate-id",
     name: "category1",
     image: "img",
   },
   {
-    id: 2,
+    id: "mock-cate-id",
     name: "category2",
     image: "img",
   },

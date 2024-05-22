@@ -10,7 +10,8 @@ import { useAppDispatch, AppState } from "../../redux/store";
 import { fetchAllCategoriesAsync } from "../../redux/slices/categorySlice";
 import { CategoryType } from "../../misc/type";
 import CategoryCard from "./CategoryCard";
-import { useTheme } from "../contextAPI/ThemeContext";
+import { useTheme } from "../../components/contextAPI/ThemeContext";
+import { CategoryReadDto } from "./categoryDto";
 
 export default function Categories() {
   const dispatch = useAppDispatch();
@@ -20,7 +21,7 @@ export default function Categories() {
     dispatch(fetchAllCategoriesAsync());
   }, [dispatch]);
 
-  const categoryList: CategoryType[] = useSelector(
+  const categoryList: CategoryReadDto[] = useSelector(
     (state: AppState) => state.categories.categoryList
   );
   const { theme } = useTheme();

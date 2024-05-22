@@ -7,6 +7,7 @@ import productQueries from "./productQuery";
 import categoryReducer from "./slices/categorySlice";
 import cartReducer from "./slices/cartSlice";
 import themeReducer from "./slices/themeSlice";
+import filterSortReducer from "../features/shared/filterSortSlice"
 
 // store all states
 const store = configureStore({
@@ -19,6 +20,8 @@ const store = configureStore({
     users: userReducer,
     //cart reducer
     cart: cartReducer,
+    //filtet&sort
+    filterSort: filterSortReducer,
     // query
     // [productQueries.reducerPath]: productQueries.reducer,
     // theme

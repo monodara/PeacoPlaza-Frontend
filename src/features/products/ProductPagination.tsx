@@ -1,6 +1,6 @@
 import React from "react";
 import { Pagination } from "@mui/material";
-import { useTheme } from "../contextAPI/ThemeContext";
+import { useTheme } from "../../components/contextAPI/ThemeContext";
 
 type Prop = {
   count: number;

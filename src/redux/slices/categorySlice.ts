@@ -1,9 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { CategoryType } from "../../misc/type";
+import { CategoryReadDto } from "../../features/categories/categoryDto";
+import { categoryEndpoint } from "../../misc/endpoints";
 
 type InitialState = {
-  categoryList: CategoryType[];
+  categoryList: CategoryReadDto[];
   loading: boolean;
   error?: string;
 };
@@ -14,7 +16,7 @@ const initialState: InitialState = {
 };
 
 // fetch data
-const url = "https://api.escuelajs.co/api/v1/categories";
+const url = categoryEndpoint;
 
 // useEffect
 export const fetchAllCategoriesAsync = createAsyncThunk(
@@ -23,7 +25,7 @@ export const fetchAllCategoriesAsync = createAsyncThunk(
     // fetch data: axios/ fetch
     try {
       const jsonData = await fetch(url);
-      const data: CategoryType[] = await jsonData.json();
+      const data: CategoryReadDto[] = await jsonData.json();
       return data;
     } catch (e) {
       return rejectWithValue(e);

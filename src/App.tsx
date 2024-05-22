@@ -12,7 +12,7 @@ import WishList from "./pages/WishList";
 import UserRegisterForm from "./components/user/UserRegister";
 import UserLogin from "./components/user/UserLogin";
 import SearchForm from "./components/search/SearchForm";
-import Categories from "./components/category/Categories";
+import Categories from "./features/categories/Categories";
 import ProductsFetchData from "./pages/Products";
 import Me from "./pages/Me";
 import Admin from "./pages/Admin";

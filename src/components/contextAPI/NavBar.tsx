@@ -18,6 +18,7 @@ import { iconStyle, linkStyle } from "../../misc/style";
 import UserLogoutButton from "../user/UserLogoutButton";
 import { useTheme } from "./ThemeContext";
 import { getSearchKeyword } from "../../redux/slices/productSlice";
+import { resetFilter, setInputToSearchKey } from "../../features/shared/filterSortSlice";
 
 function Navbar() {
   const { theme } = useTheme();
@@ -63,7 +64,7 @@ function Navbar() {
         }}
         onMouseEnter={() => sethoveredElement("products")}
         onMouseLeave={() => sethoveredElement(null)}
-        onClick={()=>dispatch(getSearchKeyword(""))}
+        onClick={()=>dispatch(resetFilter())}
       >
         All Products
       </Link>

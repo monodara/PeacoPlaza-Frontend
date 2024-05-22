@@ -2,41 +2,53 @@ import React, { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 
-import ProductCard from "../components/product/ProductCard";
+import ProductCard from "../features/products/ProductCard";
 import { ProductType } from "../misc/type";
 import { AppState, useAppDispatch } from "../redux/store";
 import { fetchAllProductsAsync, getSearchKeyword } from "../redux/slices/productSlice";
-import ProductFilters from "../components/product/ProductFilter";
-import ProductSort from "../components/product/ProductSort";
+import ProductFilters from "../features/products/ProductFilter";
+import ProductSort from "../features/products/ProductSort";
 import { sortProducts } from "../misc/util";
-import ProductPagination from "../components/product/ProductPagination";
+import ProductPagination from "../features/products/ProductPagination";
 import { productsEndpoint } from "../misc/endpoints";
 import { ProductReadDto } from "../features/products/productDto";
 
 export default function Products() {
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
-  const searchKeyword: string = useSelector(
-      (state: AppState) => state.products.searchKeyword
-    );
+
   let filterProductsUrlSuffix = "";
+  const searchKeyword: string = useSelector(
+      (state: AppState) => state.filterSort.searchKeyword
+    );
+  const minPrice: string = useSelector(
+      (state: AppState) => state.filterSort.minPrice
+    );
+  const maxPrice: string = useSelector(
+      (state: AppState) => state.filterSort.maxPrice
+    );
+  const selectCategory: string | undefined = useSelector(
+      (state: AppState) => state.filterSort.byCategory
+    );
+  const sortType: string = useSelector(
+      (state: AppState) => state.filterSort.sortBy
+    );
+  const order: string = useSelector(
+      (state: AppState) => state.filterSort.orderBy
+    );
   
   const [totalPage, setTotalPage] = useState(0);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState("");
   const [page, setPage] = useState(1);
-  const dropdownRef = useRef<HTMLDivElement>(null);
   const pageSize = 12;
-  const [searchParams] = useSearchParams();
-  // const searchKeyword = searchParams.get("searchKey");
+
   if(searchKeyword && searchKeyword.trim() !== ""){
     filterProductsUrlSuffix += `?searchKey=${searchKeyword}`;
   }
-  // const categoryId = searchParams.get("categoryId");
-  // if (categoryId) url += `&categoryId=${categoryId}`;
-  const minPrice = searchParams.get("price_min");
-  if (minPrice) filterProductsUrlSuffix += filterProductsUrlSuffix === "" ? `?minPrice=${minPrice}` : `&minPrice=${minPrice}`;
-  const maxPrice = searchParams.get("price_max");
-  if (maxPrice) filterProductsUrlSuffix += filterProductsUrlSuffix === "" ? `?maxPrice=${maxPrice}` : `&maxPrice=${maxPrice}`;
+  if (minPrice !== "") filterProductsUrlSuffix += filterProductsUrlSuffix === "" ? `?minPrice=${minPrice}` : `&minPrice=${minPrice}`;
+  if (maxPrice !== "") filterProductsUrlSuffix += filterProductsUrlSuffix === "" ? `?maxPrice=${maxPrice}` : `&maxPrice=${maxPrice}`;
+  if (selectCategory !== "") filterProductsUrlSuffix += filterProductsUrlSuffix === "" ? `?categoriseBy=${selectCategory}` : `&categoriseBy=${selectCategory}`;
 
   async function fetchTotalProductCount() {
       try {
@@ -48,15 +60,15 @@ export default function Products() {
       }
     }
   let sortPaginateProductsUrlSuffix = filterProductsUrlSuffix += filterProductsUrlSuffix === "" ? `?pageNo=${page}&pageSize=${pageSize}` :`&pageNo=${page}&pageSize=${pageSize}`;
-  if(sortOrder !== "") sortPaginateProductsUrlSuffix += sortPaginateProductsUrlSuffix === "" ? `?sortBy=byPrice&orderBy=${sortOrder}` :`&sortBy=byPrice&orderBy=${sortOrder}`;
-  console.log(sortOrder)
+  if(order !== "") sortPaginateProductsUrlSuffix += sortPaginateProductsUrlSuffix === "" ? `?sortBy=byPrice&orderBy=${sortOrder}` :`&sortBy=byPrice&orderBy=${sortOrder}`;
+  console.log(order)
   useEffect(() => {
     fetchTotalProductCount();
     console.log(`${productsEndpoint}count/${filterProductsUrlSuffix}`)
     dispatch(fetchAllProductsAsync(`${productsEndpoint}${sortPaginateProductsUrlSuffix}`));
     console.log(`${productsEndpoint}${sortPaginateProductsUrlSuffix}`);
     console.log(searchKeyword)
-  }, [searchKeyword, filterProductsUrlSuffix, page, sortOrder,searchParams]);
+  }, [searchKeyword, page, order,minPrice,maxPrice, selectCategory]);
   
   const productList: ProductReadDto[] = useSelector(
     (state: AppState) => state.products.products
@@ -71,9 +83,7 @@ export default function Products() {
         setIsDropdownOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
-
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };

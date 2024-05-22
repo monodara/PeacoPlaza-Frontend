@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
@@ -10,6 +10,8 @@ import { CategoryType } from "../../misc/type";
 import { getSearchKeyword } from "../../redux/slices/productSlice";
 import { fetchAllCategoriesAsync } from "../../redux/slices/categorySlice";
 import { useTheme } from "../contextAPI/ThemeContext";
+import { CategoryReadDto } from "../../features/categories/categoryDto";
+import { setCategoryBy, setInputToSearchKey } from "../../features/shared/filterSortSlice";
 
 function SearchForm() {
   const dispatch = useAppDispatch();
@@ -18,7 +20,7 @@ function SearchForm() {
   }, [dispatch]);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<null | CategoryType>(null);
+  const [selectedCategory, setSelectedCategory] = useState<null | CategoryReadDto>(null);
   const [searchKeyword, setSearchKeyword] = useState("");
   const navigate = useNavigate();
 
@@ -34,18 +36,35 @@ function SearchForm() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(getSearchKeyword(searchKeyword));
+    dispatch(setInputToSearchKey(searchKeyword));
+    dispatch(setCategoryBy(selectedCategory ? selectedCategory.id : ""));
     setSearchKeyword("");
+    setSelectedCategory(null);
     navigate("products");
   };
 
   function dropdownClickHandler(
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    category: CategoryType | null
+    category: CategoryReadDto | null
   ) {
     setSelectedCategory(category);
     setIsDropdownOpen(false);
   }
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [setIsDropdownOpen, dropdownRef]);
 
   const { theme } = useTheme();
   const color = theme.palette.text.primary;

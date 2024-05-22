@@ -9,10 +9,10 @@ import {
   useCartButtonHandler,
   useHeartButtonHandler,
 } from "../../hooks/useButtonHandler";
-import { ProductInfoInCard } from "./shared/ProductInfoInCard";
-import { ProductImage } from "./shared/ProductImage";
-import { ProductReadDto } from "../../features/products/productDto";
-import { useTheme } from "../contextAPI/ThemeContext";
+import { ProductInfoInCard } from "../../components/product/shared/ProductInfoInCard";
+import { ProductImage } from "../../components/product/shared/ProductImage";
+import { ProductReadDto } from "./productDto";
+import { useTheme } from "../../components/contextAPI/ThemeContext";
 
 export default function ProductCard({ product }: { product: ProductReadDto }) {
   const navigate = useNavigate();
