@@ -13,7 +13,12 @@ const { theme } = useTheme();
     <h3 className="text-gray-100 font-semibold text-sm uppercase mb-2 mt-4" style={{ color: primaryColor }}>
       {product.title}
     </h3>
-    <p className="text-sm text-gray-100 line-clamp-2 mb-4" style={{ color: primaryColor }}>
+    <p className="text-sm text-gray-100 line-clamp-2 mb-4" style={{
+          color: primaryColor,
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          whiteSpace: "nowrap",
+        }}>
       {product.description}
     </p>
     <span className="text-gray-100 font-semibold text-right" style={{ color: primaryColor }}>
