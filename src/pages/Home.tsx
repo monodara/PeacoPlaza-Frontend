@@ -4,9 +4,16 @@ import { useNavigate } from "react-router-dom";
 
 import FurnitureBg from "../images/furnitureBG.jpg";
 import TopRatedProducts from "../features/products/TopRatedProducts";
+import MostPurchasedProducts from "../features/products/MostPurchasedProducts";
+import { useTheme } from "../components/contextAPI/ThemeContext";
 
 export default function Home() {
   const navigate = useNavigate();
+
+  const { theme } = useTheme();
+  const textPrimaryColor = theme.palette.text.primary;
+  const primaryColor = theme.palette.background.paper;
+  const secondaryColor = theme.palette.secondary.main;
   
   return (
     <div className="container mx-auto px-6 mt-10">
@@ -37,7 +44,15 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <TopRatedProducts />
+      <div className="mt-10">
+        <h2 className="text-3xl font-bold text-center mb-6" style={{ color: textPrimaryColor }}>Recommended</h2>
+        <MostPurchasedProducts />
+      </div>
+
+      <div className="mt-10">
+        <h2 className="text-3xl font-bold text-center mb-6" style={{ color: textPrimaryColor }}>Most-Loved</h2>
+        <TopRatedProducts />
+      </div>
     </div>
   );
 }

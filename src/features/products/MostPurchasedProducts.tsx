@@ -1,10 +1,10 @@
 import React from 'react'
 import { useFetchProducts } from '../../hooks/useFetchProducts';
-import { topRatedProductUrl } from '../../misc/endpoints';
+import { mostPurchasedProductUrl } from '../../misc/endpoints';
 import ProductCard from '../../components/product/ProductCard';
 
-export default function TopRatedProducts() {
-    const { products, loading, error } = useFetchProducts(topRatedProductUrl);
+export default function MostPurchasedProducts() {
+    const { products, loading, error } = useFetchProducts(mostPurchasedProductUrl);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
