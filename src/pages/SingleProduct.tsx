@@ -10,16 +10,32 @@ import {
   useHeartButtonHandler,
 } from "../hooks/useButtonHandler";
 import { useTheme } from "../components/contextAPI/ThemeContext";
+import { productsActions } from "../features/products/productSlice";
+import { AppState, useAppDispatch } from "../redux/store";
+import { ProductReadDto } from "../features/products/productDto";
+import { useSelector } from "react-redux";
 
 export default function SingleProduct() {
+  const dispatch = useAppDispatch();
   const { id } = useParams();
-  const url = `https://api.escuelajs.co/api/v1/products/${id}`;
-  const { product, loading, error } = useFetchSingleProduct(url);
   const cartButtonHandler = useCartButtonHandler();
   const heartButtonHandler = useHeartButtonHandler();
 
   const [thumbImg, setThumbImg] = useState("");
   useEffect(() => {
+    dispatch(productsActions.fetchById(id??"default"));
+  }, [id]);
+  const product: ProductReadDto | undefined = useSelector(
+      (state: AppState) => state.products.selectedItem
+    );
+  const loading : boolean = useSelector(
+      (state: AppState) => state.products.loading
+    );
+    const error : string | undefined = useSelector(
+      (state: AppState) => state.products.error
+    );
+  useEffect(() => {
+    
     if (product && product.productImages && product.productImages.length > 0) {
       setThumbImg(product.productImages[0].data);
     }
