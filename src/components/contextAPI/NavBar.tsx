@@ -17,6 +17,7 @@ import ThemeToggler from "./ThemeToggler";
 import { iconStyle, linkStyle } from "../../misc/style";
 import UserLogoutButton from "../user/UserLogoutButton";
 import { useTheme } from "./ThemeContext";
+import { getSearchKeyword } from "../../redux/slices/productSlice";
 
 function Navbar() {
   const { theme } = useTheme();
@@ -62,6 +63,7 @@ function Navbar() {
         }}
         onMouseEnter={() => sethoveredElement("products")}
         onMouseLeave={() => sethoveredElement(null)}
+        onClick={()=>dispatch(getSearchKeyword(""))}
       >
         All Products
       </Link>

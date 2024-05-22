@@ -5,7 +5,7 @@ import { useSearchParams } from "react-router-dom";
 import ProductCard from "../components/product/ProductCard";
 import { ProductType } from "../misc/type";
 import { AppState, useAppDispatch } from "../redux/store";
-import { fetchAllProductsAsync } from "../redux/slices/productSlice";
+import { fetchAllProductsAsync, getSearchKeyword } from "../redux/slices/productSlice";
 import ProductFilters from "../components/product/ProductFilter";
 import ProductSort from "../components/product/ProductSort";
 import { sortProducts } from "../misc/util";
@@ -15,11 +15,10 @@ import { ProductReadDto } from "../features/products/productDto";
 
 export default function Products() {
   const dispatch = useAppDispatch();
-  // const searchKeyword: string = useSelector(
-  //     (state: AppState) => state.products.searchKeyword
-  //   );
+  const searchKeyword: string = useSelector(
+      (state: AppState) => state.products.searchKeyword
+    );
   let filterProductsUrlSuffix = "";
-  
   
   const [totalPage, setTotalPage] = useState(0);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -28,9 +27,8 @@ export default function Products() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const pageSize = 12;
   const [searchParams] = useSearchParams();
-  const searchKeyword = searchParams.get("searchKey");
+  // const searchKeyword = searchParams.get("searchKey");
   if(searchKeyword && searchKeyword.trim() !== ""){
-    console.log("here")
     filterProductsUrlSuffix += `?searchKey=${searchKeyword}`;
   }
   // const categoryId = searchParams.get("categoryId");
@@ -39,8 +37,6 @@ export default function Products() {
   if (minPrice) filterProductsUrlSuffix += filterProductsUrlSuffix === "" ? `?minPrice=${minPrice}` : `&minPrice=${minPrice}`;
   const maxPrice = searchParams.get("price_max");
   if (maxPrice) filterProductsUrlSuffix += filterProductsUrlSuffix === "" ? `?maxPrice=${maxPrice}` : `&maxPrice=${maxPrice}`;
-
-  console.log(filterProductsUrlSuffix);
 
   async function fetchTotalProductCount() {
       try {
@@ -52,17 +48,19 @@ export default function Products() {
       }
     }
   let sortPaginateProductsUrlSuffix = filterProductsUrlSuffix += filterProductsUrlSuffix === "" ? `?pageNo=${page}&pageSize=${pageSize}` :`&pageNo=${page}&pageSize=${pageSize}`;
+  if(sortOrder !== "") sortPaginateProductsUrlSuffix += sortPaginateProductsUrlSuffix === "" ? `?sortBy=byPrice&orderBy=${sortOrder}` :`&sortBy=byPrice&orderBy=${sortOrder}`;
+  console.log(sortOrder)
   useEffect(() => {
     fetchTotalProductCount();
+    console.log(`${productsEndpoint}count/${filterProductsUrlSuffix}`)
     dispatch(fetchAllProductsAsync(`${productsEndpoint}${sortPaginateProductsUrlSuffix}`));
     console.log(`${productsEndpoint}${sortPaginateProductsUrlSuffix}`);
-  }, [filterProductsUrlSuffix,page]);
-
+    console.log(searchKeyword)
+  }, [searchKeyword, filterProductsUrlSuffix, page, sortOrder,searchParams]);
   
   const productList: ProductReadDto[] = useSelector(
     (state: AppState) => state.products.products
   );
-  console.log(productList);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

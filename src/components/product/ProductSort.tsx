@@ -16,6 +16,7 @@ const ProductSort: React.FC<ProductSortProps> = ({
   isDropdownOpen,
 }) => {
   const handleSort = (order: string) => {
+    if(order == "None") order = "";
     setSortOrder(order);
     setIsDropdownOpen(false);
   };

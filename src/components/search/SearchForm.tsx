@@ -18,28 +18,25 @@ function SearchForm() {
   }, [dispatch]);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<null | CategoryType>(
-    null
-  );
+  const [selectedCategory, setSelectedCategory] = useState<null | CategoryType>(null);
   const [searchKeyword, setSearchKeyword] = useState("");
   const navigate = useNavigate();
 
-  const categoryList = useSelector(
-    (state: AppState) => state.categories.categoryList
-  );
+  const categoryList = useSelector((state: AppState) => state.categories.categoryList);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const debouncedSearch = debounce((keyword: string) => {
-    dispatch(getSearchKeyword(keyword));
-  }, 1000);
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const keyword = e.target.value;
-    setSearchKeyword(keyword);
-    debouncedSearch(keyword);
+    setSearchKeyword(e.target.value);
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    dispatch(getSearchKeyword(searchKeyword));
+    setSearchKeyword("");
+    navigate("products");
   };
 
   function dropdownClickHandler(
@@ -49,12 +46,14 @@ function SearchForm() {
     setSelectedCategory(category);
     setIsDropdownOpen(false);
   }
+
   const { theme } = useTheme();
   const color = theme.palette.text.primary;
   const backgroundColor = theme.palette.background.default;
+
   return (
     <div className="container mx-auto px-6 mt-10">
-      <form className="max-w-lg mx-auto flex flex-col sm:flex-row items-start sm:items-center">
+      <form onSubmit={handleSubmit} className="max-w-lg mx-auto flex flex-col sm:flex-row items-start sm:items-center">
         {/* Dropdown */}
         <div className="relative">
           {/* Dropdown button */}
@@ -71,14 +70,9 @@ function SearchForm() {
           {/* Dropdown content */}
           <div
             id="dropdown"
-            className={`z-10 ${
-              isDropdownOpen ? "" : "hidden"
-            } bg-white divide-y divide-gray-100 rounded-lg shadow absolute mt-1 left-0 w-48`}
+            className={`z-10 ${isDropdownOpen ? "" : "hidden"} bg-white divide-y divide-gray-100 rounded-lg shadow absolute mt-1 left-0 w-48`}
           >
-            <ul
-              className="py-2 text-sm text-gray-700"
-              aria-labelledby="dropdown-button"
-            >
+            <ul className="py-2 text-sm text-gray-700" aria-labelledby="dropdown-button">
               {/* Dropdown items */}
               <li>
                 <button
@@ -118,21 +112,13 @@ function SearchForm() {
             onChange={handleInputChange}
           />
           {/* Search button */}
-          <Link
-            to={
-              selectedCategory
-                ? `products/?categoryId=${selectedCategory.id}`
-                : `products/?searchKey=${searchKeyword}`
-            }
+          <button
+            type="submit"
+            className="absolute top-0 right-0 p-2.5 text-sm font-medium h-full text-white bg-green-500 rounded-e-lg border border-green-500"
+            style={theme.typography.button}
           >
-            <button
-              type="submit"
-              className="absolute top-0 right-0 p-2.5 text-sm font-medium h-full text-white bg-green-500 rounded-e-lg border border-green-500"
-              style={theme.typography.button}
-            >
-              <SearchIcon />
-            </button>
-          </Link>
+            <SearchIcon />
+          </button>
         </div>
       </form>
     </div>
