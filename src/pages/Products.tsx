@@ -15,15 +15,12 @@ import { ProductReadDto } from "../features/products/productDto";
 
 export default function Products() {
   const dispatch = useAppDispatch();
-  const searchKeyword: string = useSelector(
-      (state: AppState) => state.products.searchKeyword
-    );
+  // const searchKeyword: string = useSelector(
+  //     (state: AppState) => state.products.searchKeyword
+  //   );
   let filterProductsUrlSuffix = "";
   
-  if(searchKeyword.trim() !== ""){
-    console.log("here")
-    filterProductsUrlSuffix += `?searchKey=${searchKeyword}`;
-  }
+  
   const [totalPage, setTotalPage] = useState(0);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState("");
@@ -31,6 +28,11 @@ export default function Products() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const pageSize = 12;
   const [searchParams] = useSearchParams();
+  const searchKeyword = searchParams.get("searchKey");
+  if(searchKeyword && searchKeyword.trim() !== ""){
+    console.log("here")
+    filterProductsUrlSuffix += `?searchKey=${searchKeyword}`;
+  }
   // const categoryId = searchParams.get("categoryId");
   // if (categoryId) url += `&categoryId=${categoryId}`;
   const minPrice = searchParams.get("price_min");

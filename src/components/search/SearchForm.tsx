@@ -122,7 +122,7 @@ function SearchForm() {
             to={
               selectedCategory
                 ? `products/?categoryId=${selectedCategory.id}`
-                : "products"
+                : `products/?searchKey=${searchKeyword}`
             }
           >
             <button
