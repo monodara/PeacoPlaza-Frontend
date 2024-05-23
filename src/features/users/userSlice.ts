@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AxiosError } from "axios";
+import { AxiosError, AxiosRequestConfig } from "axios";
 import { UserReadDto, UserCreateDto, UserUpdateDto } from "./userDto";
 import createBaseSlice, { BaseState } from "../../app/BaseSlice";
 import appAxios from "../shared/appAxios";
@@ -39,6 +39,22 @@ const fetchUserByUsername = createAsyncThunk<UserReadDto, string>(
       const response = await appAxios.get(`/users/username/${username}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+      return response.data;
+    } catch (e) {
+      const error = e as AxiosError;
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+const uploadAvatar = createAsyncThunk<UserReadDto,
+    {
+      data: FormData;
+      headers?: AxiosRequestConfig["headers"];
+    }>(
+  "users/upload-avatar",
+  async ({ data, headers }, { rejectWithValue }) => {
+    try {
+      const response = await appAxios.post(`/users/upload-avatar`, data, {headers});
       return response.data;
     } catch (e) {
       const error = e as AxiosError;
@@ -130,6 +146,7 @@ export const usersActions = {
   ...baseActions,
   fetchUserByUsername,
   resetPassword,
+  uploadAvatar,
   setUser: userSlice.actions.setUser,
   clearUser: userSlice.actions.clearUser,
   setToken: userSlice.actions.setToken,

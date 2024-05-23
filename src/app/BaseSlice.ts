@@ -52,7 +52,7 @@ export const createBaseSlice = <T extends BaseEntity, TCreateDto, TUpdateDto>(
   );
 
   const updateOne = createAsyncThunk<
-    boolean,
+    T,
     {
       id: string;
       updateDto: TUpdateDto;

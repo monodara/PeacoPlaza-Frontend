@@ -30,19 +30,9 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({ onUploadSuccess }) => {
     setIsUploading(true);
     setError(null);
     try {
-      const response = await fetch('http://localhost:5074/api/v1/users/upload-avatar', {
-        method: 'POST',
-        body: data,
-        headers: {
-          "Authorization": `Bearer ${token}`,
-        },
-      });
-      if (!response.ok) {
-        throw new Error('Upload failed');
-      }
-      const responseData = await response.json();
-      dispatch(usersActions.setUser(responseData));
+      var response = await dispatch(usersActions.uploadAvatar({ data, headers: { "Authorization": `Bearer ${token}` } })).unwrap();
       onUploadSuccess();  // Close the modal on successful upload
+      dispatch(usersActions.setUser(response));
     } catch (error) {
       let errorMessage = 'An unknown error occurred';
       if (error instanceof Error) {
