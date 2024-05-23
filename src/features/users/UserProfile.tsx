@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddIcon from "@mui/icons-material/Add";
-import axios from "axios";
-
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
 import { AppState, useAppDispatch } from "../../redux/store";
 import { useTheme } from "../../components/contextAPI/ThemeContext";
 import UserDefaultAvatar from "./defaultAvatar.jpeg";
-import { UserReadDto } from "./userDto";
-import AvatarUpload from "./AvatarUpload"
+import AvatarUpload from "./AvatarUpload";
 import { usersActions } from "./userSlice";
 
 export default function UserProfile() {
@@ -19,18 +18,28 @@ export default function UserProfile() {
   const backgroundColor = theme.palette.background.default;
   const user = useSelector((state: AppState) => state.users.userLoggedIn);
   const [showUploadButton, setShowUploadButton] = useState(false);
+  const [open, setOpen] = useState(false);
   const dispatch = useAppDispatch();
-
 
   const handleMouseEnter = () => {
     setShowUploadButton(true);
   };
+
   const handleMouseLeave = () => {
     setShowUploadButton(false);
   };
-    useEffect(()=>{
-      dispatch(usersActions.fetchById(user?user.id:""))
-  }, [user])
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleUploadSuccess = () => {
+    handleClose();
+  };
 
   return (
     <div>
@@ -44,7 +53,7 @@ export default function UserProfile() {
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
-            <div className="h-auto w-48 rounded-full border-4 border-white mx-auto my-4 relative">
+            <div className="relative mx-auto my-4 h-48 w-48 rounded-full border-4 border-white">
               <img
                 className="h-full w-full rounded-full object-cover"
                 src={user && user.avatar ? user.avatar.data : UserDefaultAvatar}
@@ -52,19 +61,20 @@ export default function UserProfile() {
               />
               {showUploadButton && (
                 <div
-                  className="absolute bg-transparent text-green-500 rounded-full px-2 py-1"
+                  className="absolute bg-transparent text-white rounded-full px-2 py-1"
                   style={{
                     top: "50%",
                     left: "50%",
                     transform: "translate(-50%, -50%)",
+                    cursor: 'pointer',
                   }}
+                  onClick={handleOpen}
                 >
-                  <AddIcon sx={{ fontSize: 48 }} />
-                 
+                  <AddIcon sx={{ fontSize: 60 }} />
                 </div>
               )}
             </div>
-            
+
             <div className="py-2">
               <h3 className="font-bold text-2xl mb-1" style={{ color }}>
                 {user?.userName}
@@ -91,7 +101,29 @@ export default function UserProfile() {
         </div>
       </div>
 
-      <AvatarUpload />
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="upload-avatar-modal-title"
+        aria-describedby="upload-avatar-modal-description"
+      >
+        <Box
+          sx={{
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '1px solid',
+    borderColor: '#10B981',  // 使用 Tailwind green-500 颜色
+    boxShadow: 2,
+    p: 4,
+  }}
+        >
+          <AvatarUpload onUploadSuccess={handleUploadSuccess} />
+        </Box>
+      </Modal>
     </div>
   );
 }
