@@ -60,7 +60,7 @@ export default function Products() {
   if(order !== "") sortPaginateProductsUrlSuffix += sortPaginateProductsUrlSuffix === "" ? `?sortBy=byPrice&orderBy=${sortOrder}` :`&sortBy=byPrice&orderBy=${sortOrder}`;
   useEffect(() => {
     fetchTotalProductCount();
-    dispatch(productsActions.fetchAll(`${sortPaginateProductsUrlSuffix}`));
+    dispatch(productsActions.fetchAll({urlSuffix: `${sortPaginateProductsUrlSuffix}`}));
   }, [searchKeyword, page, order,minPrice,maxPrice, selectCategory]);
   
   const productList: ProductReadDto[] = useSelector(

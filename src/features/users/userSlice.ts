@@ -7,7 +7,6 @@ import appAxios from "../shared/appAxios";
 // Get user info and token from localStorage
 let userState: UserReadDto | null = null;
 const data = localStorage.getItem("userInformation");
-const token = localStorage.getItem("token");
 
 if (data) {
   userState = JSON.parse(data);
@@ -15,7 +14,6 @@ if (data) {
 
 type InitialState = BaseState<UserReadDto> & {
   userLoggedIn: UserReadDto | null;
-  token: string | null;
 };
 
 // Get BaseSlice initial state
@@ -24,21 +22,19 @@ const baseInitialState: BaseState<UserReadDto> = {
   loading: false,
 };
 
-// Extend BaseSlice's initial state, adding userLoggedIn and token properties
+// Extend BaseSlice's initial state, adding userLoggedIn and  properties
 const initialState: InitialState = {
   ...baseInitialState,
   userLoggedIn: userState,
-  token,
 };
 
 // Define additional actions
-const fetchUserByUsername = createAsyncThunk<UserReadDto, string>(
+const fetchUserByUsername = createAsyncThunk<UserReadDto, {username: string; headers?: AxiosRequestConfig["headers"];}>(
   "users/fetchUserByUsername",
-  async (username, { rejectWithValue }) => {
+  async ({username, headers}, { rejectWithValue }) => {
     try {
       const response = await appAxios.get(`/users/username/${username}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+        headers },);
       return response.data;
     } catch (e) {
       const error = e as AxiosError;
@@ -63,12 +59,12 @@ const uploadAvatar = createAsyncThunk<UserReadDto,
   }
 );
 
-const changePassword = createAsyncThunk<boolean, { id: string; newPassword: string }>(
+const changePassword = createAsyncThunk<boolean, { id: string; newPassword: string; headers?: AxiosRequestConfig["headers"]; }>(
   "users/changePassword",
-  async ({ id, newPassword }, { rejectWithValue }) => {
+  async ({ id, newPassword, headers }, { rejectWithValue }) => {
     try {
       const response = await appAxios.post(`/users/change_password/${id}`, { newPassword }, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers
       });
       return response.data;
     } catch (e) {
@@ -93,17 +89,11 @@ const userSlice = createSlice({
     },
     clearUser(state) {
       state.userLoggedIn = null;
-      state.token = null;
       state.items = [];
       localStorage.removeItem("userInformation");
       localStorage.removeItem("token");
     },
-    setToken(state, action: PayloadAction<string>) {
-      state.token = action.payload;
-      localStorage.setItem("token", action.payload);
-    },
     clearToken(state) {
-      state.token = null;
       localStorage.removeItem("token");
     },
   },
@@ -171,8 +161,6 @@ export const usersActions = {
   uploadAvatar,
   setUser: userSlice.actions.setUser,
   clearUser: userSlice.actions.clearUser,
-  setToken: userSlice.actions.setToken,
-  clearToken: userSlice.actions.clearToken,
 };
 
 

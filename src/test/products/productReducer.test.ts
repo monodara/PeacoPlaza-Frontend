@@ -63,7 +63,7 @@ describe("product reducer", () => {
   test("should return a list of products", () => {
     const state = productsReducer(
       initialState,
-      productsActions.fetchAll.fulfilled(mockProducts, "", "undefined")
+      productsActions.fetchAll.fulfilled(mockProducts, "", {urlSuffix: "undefined"})
     );
     expect(state).toEqual({
       products: mockProducts,
@@ -76,7 +76,7 @@ describe("product reducer", () => {
   test("should have loading truthy when fetch is pending", () => {
     const state = productsReducer(
       initialState,
-      productsActions.fetchAll.pending("pending", "undefined")
+      productsActions.fetchAll.pending("pending", {urlSuffix: "undefined"})
     );
     expect(state).toEqual({
       products: [],
@@ -90,7 +90,7 @@ describe("product reducer", () => {
     const error = new Error("error");
     const state = productsReducer(
       initialState,
-      productsActions.fetchAll.rejected(error, "", "undefined")
+      productsActions.fetchAll.rejected(error, "", {urlSuffix: "undefined"})
     );
     expect(state).toEqual({
       products: [],

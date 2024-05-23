@@ -55,7 +55,7 @@ describe("product reducer", () => {
   // test fetching asyncthunk with store dispatch
   test("should fetch all products from api", async () => {
     await store.dispatch(
-      productsActions.fetchAll("")
+      productsActions.fetchAll({urlSuffix: "undefined"})
     );
     expect(store.getState().products.items).toEqual(mockProducts);
     expect(store.getState().products.error).toBeUndefined();

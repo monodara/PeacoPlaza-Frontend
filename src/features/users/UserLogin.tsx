@@ -45,7 +45,7 @@ export default function UserLogin() {
         if (response.status === 200) {
           // return token
           var token = response.data;
-          dispatch(usersActions.setToken(token))
+          localStorage.setItem("token", token);
           axios
             .get(userProfileUrl, {
               headers: {
@@ -99,7 +99,7 @@ function handleError(error:AxiosError) {
       );
       const userInfo = await res.json();
       const { userName, email, picture } = userInfo;
-      const user: UserReadDto = {id: "", userName, email, role: "Customer", defaultAddressId: "" };
+      const user: UserReadDto = {id: "", userName, email, role: "Customer", defaultAddressId: "",joinedAt: "2020-02-21" };
       dispatch(usersActions.setUser(user));
       navigate("/products");
     },

@@ -17,7 +17,7 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({ onUploadSuccess }) => {
   const [error, setError] = useState<string | null>(null);
 
   const user = useSelector((state: AppState) => state.users.userLoggedIn);
-  const token = useSelector((state: AppState) => state.users.token);
+  const token = localStorage.getItem("token");
 
   const uploadFile = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];

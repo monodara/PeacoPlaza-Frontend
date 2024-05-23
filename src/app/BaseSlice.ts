@@ -25,11 +25,15 @@ export const createBaseSlice = <T extends BaseEntity, TCreateDto, TUpdateDto>(
     loading: false,
   };
 
-  const fetchAll = createAsyncThunk<T[], string>(
+  const fetchAll = createAsyncThunk<T[], {
+      urlSuffix: string;
+      headers?: AxiosRequestConfig["headers"];
+    }>(
     `${name}/fetchAll`,
-    async (urlSuffix, { rejectWithValue }) => {
+    async ({ urlSuffix, headers }, { rejectWithValue }) => {
+        console.log(`${endpoint}${urlSuffix}`)
       try {
-        const response = await appAxios.get(`${endpoint}${urlSuffix}`);
+        const response = await appAxios.get(`${endpoint}${urlSuffix}`,{headers});
         return response.data;
       } catch (e) {
         const error = e as AxiosError;
@@ -185,6 +189,27 @@ export const createBaseSlice = <T extends BaseEntity, TCreateDto, TUpdateDto>(
         state.error = action.payload as string;
       }
     );
+    // Delete one
+    builder.addCase(
+      deleteOne.fulfilled,
+      (state: Draft<BaseState<T>>, action: AnyAction) => {
+        state.loading = false;
+        state.error = undefined;
+        state.items = state.items.filter(user => user.id !== action.payload.id);
+      }
+    );
+    builder.addCase(deleteOne.pending, (state: Draft<BaseState<T>>) => {
+      state.loading = true;
+      state.error = undefined;
+    });
+    builder.addCase(
+      deleteOne.rejected,
+      (state: Draft<BaseState<T>>, action: AnyAction) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      }
+    );
+    
   };
 
   const baseSlice = createSlice({

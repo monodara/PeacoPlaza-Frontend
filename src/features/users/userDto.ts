@@ -7,6 +7,7 @@ export interface UserReadDto extends BaseEntity {
     role: string;
     defaultAddressId: string;
     avatar?: AvatarReadDto;
+    joinedAt: string;
     // avater: string | null;
 }
 

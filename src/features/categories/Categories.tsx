@@ -18,7 +18,7 @@ export default function Categories() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(categoriesActions.fetchAll(""));
+    dispatch(categoriesActions.fetchAll({urlSuffix:""}));
   }, [dispatch]);
 
   const categoryList: CategoryReadDto[] = useSelector(

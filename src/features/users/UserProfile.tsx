@@ -21,7 +21,7 @@ export default function UserProfile() {
   const color = theme.palette.text.primary;
   const backgroundColor = theme.palette.background.default;
   const user = useSelector((state: AppState) => state.users.userLoggedIn);
-  const token = useSelector((state: AppState) => state.users.token);
+  const token = localStorage.getItem("token");
   const [showUploadButton, setShowUploadButton] = useState(false);
   const [openAvatarUploadModal, setOpenAvatarUploadModal] = useState(false);
   const [openEditUsernameModal, setOpenEditUsernameModal] = useState(false);

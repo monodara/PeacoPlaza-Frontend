@@ -8,7 +8,7 @@ import { useAppDispatch } from "../../redux/store";
 import {
   productsActions,
 } from "../../features/products/productSlice";
-import DeletePopover from "../product/DeletePopover";
+import DeletePopover from "../DeletePopover";
 import { ProductType } from "../../misc/type";
 import { inputFormStyles } from "../../misc/style";
 import { useTheme } from "../contextAPI/ThemeContext";

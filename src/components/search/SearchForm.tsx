@@ -14,7 +14,7 @@ import { categoriesActions } from "../../features/categories/categorySlice";
 function SearchForm() {
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(categoriesActions.fetchAll(""));
+    dispatch(categoriesActions.fetchAll({urlSuffix:""}));
   }, [dispatch]);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);

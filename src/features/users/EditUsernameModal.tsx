@@ -23,15 +23,13 @@ const EditUsernameModal: React.FC<EditUsernameModalProps> = ({
   const dispatch = useAppDispatch();
 
   const user = useSelector((state: AppState) => state.users.userLoggedIn);
-  const token = useSelector((state: AppState) => state.users.token);
+  const token = localStorage.getItem("token");
 
   const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewUsername(event.target.value);
   };
 
   const handleUsernameUpdate = async () => {
-    console.log(token)
-    console.log(user?.id)
     var response = await dispatch(usersActions.updateOne({ id: user?user.id:"", updateDto: {username: newUsername}, headers: { Authorization: `Bearer ${token}` } }));
     dispatch(usersActions.setUser(response.payload as UserReadDto))
     onClose();

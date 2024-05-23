@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
 import { Link } from "react-router-dom";
 
-import DeletePopover from "../product/DeletePopover";
+import DeletePopover from "../DeletePopover";
 import { CartProductType } from "../../misc/type";
 import {
   decrementProductAmount,

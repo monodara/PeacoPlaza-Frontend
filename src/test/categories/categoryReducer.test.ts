@@ -28,7 +28,7 @@ describe("category reducer", () => {
   test("should return a list of categories", () => {
     const state = categoriesReducer(
       initialState,
-      categoriesActions.fetchAll.fulfilled(mockCategories, "fulfilled", "")
+      categoriesActions.fetchAll.fulfilled(mockCategories, "fulfilled", {urlSuffix: "undefined"})
     );
 
     expect(state).toEqual({
@@ -40,7 +40,7 @@ describe("category reducer", () => {
   test("should have loading truthy when fetch is pending", () => {
     const state = categoriesReducer(
       initialState,
-      categoriesActions.fetchAll.pending("pending","")
+      categoriesActions.fetchAll.pending("pending",{urlSuffix: "undefined"})
     );
     expect(state).toEqual({
       categoryList: [],
@@ -53,7 +53,7 @@ describe("category reducer", () => {
     const error = new Error("error");
     const state = categoriesReducer(
       initialState,
-      categoriesActions.fetchAll.rejected(error, "error", "undefined")
+      categoriesActions.fetchAll.rejected(error, "error", {urlSuffix: "undefined"})
     );
     expect(state).toEqual({
       categoryList: [],
@@ -63,7 +63,7 @@ describe("category reducer", () => {
   });
   // test fetching asyncthunk with store dispatch
   test("should fetch all products from api", async () => {
-    await store.dispatch(categoriesActions.fetchAll(""));
+    await store.dispatch(categoriesActions.fetchAll({urlSuffix: "undefined"}));
     expect(store.getState().categories.items.length).toBe(2);
     expect(store.getState().categories.error).toBeUndefined;
   });

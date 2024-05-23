@@ -72,12 +72,10 @@ store.subscribe(() => {
   const currentState = store.getState();
   const userInformation = currentState.users.userLoggedIn;
   const productsInCart = currentState.cart.productsInCart;
-  const token = currentState.users.token;
   // const wishlist = currentState.products.wishList;
   // store user
   localStorage.setItem("userInformation", JSON.stringify(userInformation));
   localStorage.setItem("productsInCart", JSON.stringify(productsInCart));
-  localStorage.setItem("token", JSON.stringify(token));
   // localStorage.setItem("wishlist", JSON.stringify(wishlist));
 });
 

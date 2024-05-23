@@ -17,6 +17,7 @@ describe("userReducer", () => {
       // avatar: "avatarImg",
       role: "Customer",
       id: "100",
+      joinedAt: "2020-02-21"
     };
     const action: PayloadAction<UserReadDto | null> = usersActions.setUser(user);
 

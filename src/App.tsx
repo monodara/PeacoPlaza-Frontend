@@ -15,7 +15,7 @@ import SearchForm from "./components/search/SearchForm";
 import Categories from "./features/categories/Categories";
 import ProductsFetchData from "./pages/Products";
 import Me from "./pages/Me";
-import Admin from "./pages/Admin";
+import Admin from "./features/users/admin/Admin";
 import ProductUpdateOrDelete from "./components/admin/ProductUpdateOrDelete";
 import Checkout from "./pages/Checkout";
 import { useTheme } from "./components/contextAPI/ThemeContext";
