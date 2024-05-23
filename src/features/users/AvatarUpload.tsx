@@ -75,7 +75,7 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({ onUploadSuccess }) => {
           sx={{
             backgroundColor: '#10B981',
             '&:hover': {
-              backgroundColor: 'green',
+              backgroundColor: '#33cc99',
             },
           }}
         >
