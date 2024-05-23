@@ -12,6 +12,7 @@ afterAll(() => {
 const initialState = {
   items: [],
   loading: false,
+  count:0
 };
 
 // test suit

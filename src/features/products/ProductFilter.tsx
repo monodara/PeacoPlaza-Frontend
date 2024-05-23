@@ -2,10 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { debounce } from "lodash";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
 import { AppState, useAppDispatch } from "../../redux/store";
-import { CategoryType } from "../../misc/type";
 import { useTheme } from "../../components/contextAPI/ThemeContext";
 import { CategoryReadDto } from "../categories/categoryDto";
 import { setCategoryBy, setInputToSearchKey, setPriceLowBoundary, setPriceUpBoundary } from "../shared/filterSortSlice";

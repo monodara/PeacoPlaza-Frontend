@@ -16,6 +16,7 @@ afterAll(() => {
 export const initialState = {
   items: [],
   loading: false,
+  count:0
   // wishList: [],
 };
 

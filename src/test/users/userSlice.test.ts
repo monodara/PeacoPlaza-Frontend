@@ -9,7 +9,7 @@ describe("userReducer", () => {
   });
 
   it("should handle saveUserInformation", () => {
-    const initialState = { items :[], loading: true, userLoggedIn: null,token:"" };
+    const initialState = { items :[], loading: true, userLoggedIn: null, count:0 };
     const user: UserReadDto = {
       userName: "John",
       email: "john@example.com",

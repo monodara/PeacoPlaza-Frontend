@@ -4,9 +4,10 @@ interface TableProps {
   dataList: Array<{ [key: string]: any }>;
   fields: string[];
   onDeleteClick: (itemId: string) => void; // 添加 onDeleteClick 属性
+  onEditClick: (itemId: string) => void; // 添加 onDeleteClick 属性
 }
 
-const Table: React.FC<TableProps> = ({ dataList, fields, onDeleteClick }) => {
+const Table: React.FC<TableProps> = ({ dataList, fields, onDeleteClick,onEditClick }) => {
   return (
     <div className="font-sans overflow-x-auto">
       <table className="min-w-full divide-y divide-gray-200">
@@ -31,7 +32,7 @@ const Table: React.FC<TableProps> = ({ dataList, fields, onDeleteClick }) => {
                 </td>
               ))}
               <td className="px-4 py-4 text-sm text-gray-800">
-                <button className="text-green-500 mr-4">Edit</button>
+                <button className="text-green-500 mr-4" onClick={()=>{onEditClick(data.id)}}>Edit</button>
                 <button className="text-red-500" onClick={() => onDeleteClick(data.id)}>Delete</button> {/* 调用 onDeleteClick */}
               </td>
             </tr>

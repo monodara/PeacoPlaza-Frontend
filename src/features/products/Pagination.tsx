@@ -8,7 +8,7 @@ type Prop = {
   setPage: (newPage: number) => void;
 };
 
-export default function ProductPagination({ count, page, setPage }: Prop) {
+export default function ItemPagination({ count, page, setPage }: Prop) {
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };

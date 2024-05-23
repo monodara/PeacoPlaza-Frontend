@@ -13,7 +13,7 @@ import UserRegisterForm from "./features/users/UserRegister";
 import UserLogin from "./features/users/UserLogin";
 import SearchForm from "./components/search/SearchForm";
 import Categories from "./features/categories/Categories";
-import ProductsFetchData from "./pages/Products";
+import ProductsFetchData from "./features/products/ProductsPage";
 import Me from "./pages/Me";
 import Admin from "./features/users/admin/Admin";
 import ProductUpdateOrDelete from "./components/admin/ProductUpdateOrDelete";

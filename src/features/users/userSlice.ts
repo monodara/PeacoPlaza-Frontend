@@ -20,6 +20,7 @@ type InitialState = BaseState<UserReadDto> & {
 const baseInitialState: BaseState<UserReadDto> = {
   items: [],
   loading: false,
+  count :0,
 };
 
 // Extend BaseSlice's initial state, adding userLoggedIn and  properties
