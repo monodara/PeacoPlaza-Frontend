@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import { usersActions } from "./userSlice";
 import { AppState, useAppDispatch } from "../../redux/store";
 import { useSelector } from "react-redux";
+import { UserReadDto } from "./userDto";
 
 interface EditUsernameModalProps {
   open: boolean;
@@ -28,10 +29,11 @@ const EditUsernameModal: React.FC<EditUsernameModalProps> = ({
     setNewUsername(event.target.value);
   };
 
-  const handleUsernameUpdate = () => {
+  const handleUsernameUpdate = async () => {
     console.log(token)
     console.log(user?.id)
-    dispatch(usersActions.updateOne({ id: user?user.id:"", updateDto: {username: newUsername}, headers: { Authorization: `Bearer ${token}` } }));
+    var response = await dispatch(usersActions.updateOne({ id: user?user.id:"", updateDto: {username: newUsername}, headers: { Authorization: `Bearer ${token}` } }));
+    dispatch(usersActions.setUser(response.payload as UserReadDto))
     onClose();
   };
 

@@ -1,32 +1,34 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddIcon from "@mui/icons-material/Add";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
-import DrawIcon from '@mui/icons-material/Draw';
+import DrawIcon from "@mui/icons-material/Draw";
 import { Button } from "@mui/material";
-
 import { AppState, useAppDispatch } from "../../redux/store";
 import { useTheme } from "../../components/contextAPI/ThemeContext";
 import UserDefaultAvatar from "./defaultAvatar.jpeg";
 import AvatarUpload from "./AvatarUpload";
 import { usersActions } from "./userSlice";
 import EditUsernameModal from "./EditUsernameModal";
+import DeleteAccountModal from "./DeleteAccountModal";
 
 export default function UserProfile() {
   const { theme } = useTheme();
   const color = theme.palette.text.primary;
   const backgroundColor = theme.palette.background.default;
   const user = useSelector((state: AppState) => state.users.userLoggedIn);
+  const token = useSelector((state: AppState) => state.users.token);
   const [showUploadButton, setShowUploadButton] = useState(false);
   const [openAvatarUploadModal, setOpenAvatarUploadModal] = useState(false);
   const [openEditUsernameModal, setOpenEditUsernameModal] = useState(false);
+  const [openDeleteAccountModal, setOpenDeleteAccountModal] = useState(false);
   const [newUsername, setNewUsername] = useState(user?.userName || "");
   const dispatch = useAppDispatch();
-
+  const navigate = useNavigate();
   const handleMouseEnter = () => {
     setShowUploadButton(true);
   };
@@ -49,6 +51,27 @@ export default function UserProfile() {
 
   const handleCloseEditUsernameModal = () => {
     setOpenEditUsernameModal(false);
+  };
+
+  const handleOpenDeleteAccountModal = () => {
+    setOpenDeleteAccountModal(true);
+  };
+
+  const handleCloseDeleteAccountModal = () => {
+    setOpenDeleteAccountModal(false);
+  };
+
+  const handleDeleteAccount = async () => {
+    if (!user?.id || !token) return;
+
+    await dispatch(usersActions.deleteOne({ id: user.id, headers: { Authorization: `Bearer ${token}` } }));
+    navigate("/");
+    dispatch(usersActions.clearUser());
+    localStorage.removeItem("productsInCart");
+    localStorage.removeItem("wishlist");
+    localStorage.clear();
+    navigate("/");
+    handleCloseDeleteAccountModal();
   };
 
   const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,11 +120,11 @@ export default function UserProfile() {
               <h3 className="font-bold text-2xl mb-1" style={{ color }}>
                 {user?.userName}
                 <span
-  className="ml-2 text-gray-500 cursor-pointer"
-  onClick={handleOpenEditUsernameModal}
->
-  <DrawIcon className="h-6 w-6" />
-</span>
+                  className="ml-2 text-gray-500 cursor-pointer"
+                  onClick={handleOpenEditUsernameModal}
+                >
+                  <DrawIcon className="h-6 w-6" />
+                </span>
               </h3>
               <div className="inline-flex items-center" style={{ color }}>
                 {user?.email}
@@ -111,11 +134,17 @@ export default function UserProfile() {
               <Button
                 variant="text"
                 type="button"
-                sx={theme.typography.body1}
-                // onClick={() => navigate("/login")}
+                sx={{
+                  ...theme.typography.body1,
+                  fontSize: theme.typography.pxToRem(12),
+                  padding: '4px 8px', // 调整按钮内边距
+                  minWidth: 'auto', // 去除默认的最小宽度
+                }}
+                onClick={handleOpenDeleteAccountModal}
               >
-                Change Password
-              </Button></div>
+                Delete Account
+              </Button>
+            </div>
           </div>
         </div>
         <div className="px-4 py-4 flex flex-col justify-left items-left ml-20">
@@ -162,6 +191,12 @@ export default function UserProfile() {
         open={openEditUsernameModal}
         onClose={handleCloseEditUsernameModal}
         currentUsername={user?.userName || ""}
+      />
+
+      <DeleteAccountModal
+        open={openDeleteAccountModal}
+        onClose={handleCloseDeleteAccountModal}
+        onConfirm={handleDeleteAccount}
       />
     </div>
   );

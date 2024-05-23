@@ -63,11 +63,11 @@ const uploadAvatar = createAsyncThunk<UserReadDto,
   }
 );
 
-const resetPassword = createAsyncThunk<boolean, { id: string; newPassword: string }>(
-  "users/resetPassword",
+const changePassword = createAsyncThunk<boolean, { id: string; newPassword: string }>(
+  "users/changePassword",
   async ({ id, newPassword }, { rejectWithValue }) => {
     try {
-      const response = await appAxios.post(`/users/reset-password/${id}`, { newPassword }, {
+      const response = await appAxios.post(`/users/change_password/${id}`, { newPassword }, {
         headers: { Authorization: `Bearer ${token}` },
       });
       return response.data;
@@ -94,12 +94,13 @@ const userSlice = createSlice({
     clearUser(state) {
       state.userLoggedIn = null;
       state.token = null;
+      state.items = [];
       localStorage.removeItem("userInformation");
       localStorage.removeItem("token");
     },
     setToken(state, action: PayloadAction<string>) {
       state.token = action.payload;
-      localStorage.setItem("token", JSON.stringify(action.payload));
+      localStorage.setItem("token", action.payload);
     },
     clearToken(state) {
       state.token = null;
@@ -124,16 +125,37 @@ const userSlice = createSlice({
       state.error = action.payload as string;
     });
 
-    // resetPassword action
-    builder.addCase(resetPassword.fulfilled, (state) => {
+    // changePassword action
+    builder.addCase(changePassword.fulfilled, (state) => {
       state.loading = false;
       state.error = undefined;
     });
-    builder.addCase(resetPassword.pending, (state) => {
+    builder.addCase(changePassword.pending, (state) => {
       state.loading = true;
       state.error = undefined;
     });
-    builder.addCase(resetPassword.rejected, (state, action) => {
+    builder.addCase(changePassword.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload as string;
+    });
+    // upload avatar
+    builder.addCase(uploadAvatar.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = undefined;
+        state.selectedItem = action.payload;
+        const index = state.items.findIndex(
+          (item) => item.id === action.payload.id
+        );
+        if (index !== -1) {
+          // Replace the item in the items array
+          state.items[index] = action.payload;
+        }
+      });
+    builder.addCase(uploadAvatar.pending, (state) => {
+      state.loading = true;
+      state.error = undefined;
+    });
+    builder.addCase(uploadAvatar.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload as string;
     });
@@ -145,7 +167,7 @@ export const usersReducer = userSlice.reducer;
 export const usersActions = {
   ...baseActions,
   fetchUserByUsername,
-  resetPassword,
+  changePassword,
   uploadAvatar,
   setUser: userSlice.actions.setUser,
   clearUser: userSlice.actions.clearUser,

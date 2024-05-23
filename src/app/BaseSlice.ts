@@ -68,11 +68,11 @@ export const createBaseSlice = <T extends BaseEntity, TCreateDto, TUpdateDto>(
     }
   });
 
-  const deleteOne = createAsyncThunk<boolean, { id: string }>(
+  const deleteOne = createAsyncThunk<boolean, { id: string, headers?: AxiosRequestConfig["headers"]; }>(
     `${name}/deleteOne`,
-    async (id, { rejectWithValue }) => {
+    async ({id, headers}, { rejectWithValue }) => {
       try {
-        const response = await appAxios.delete(`${endpoint}/${id}`);
+        const response = await appAxios.delete(`${endpoint}/${id}`, {headers});
         return response.data;
       } catch (e) {
         const error = e as AxiosError;
