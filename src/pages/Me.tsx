@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-import UserProfile from "../components/user/UserProfile";
-import UserOrders from "../components/user/UserOrders";
+import UserProfile from "../features/users/UserProfile";
+import UserOrders from "../features/users/UserOrders";
 import UserAddress from "../components/user/UserAddress";
 import { useTheme } from "../components/contextAPI/ThemeContext";
 

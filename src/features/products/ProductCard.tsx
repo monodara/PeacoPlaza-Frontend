@@ -16,7 +16,7 @@ import { useTheme } from "../../components/contextAPI/ThemeContext";
 
 export default function ProductCard({ product }: { product: ProductReadDto }) {
   const navigate = useNavigate();
-  const user = useSelector((state: AppState) => state.users.user);
+  const user = useSelector((state: AppState) => state.users.userLoggedIn);
   const cartButtonHandler = useCartButtonHandler();
   const heartButtonHandler = useHeartButtonHandler();
 

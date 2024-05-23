@@ -1,17 +1,17 @@
 import { Action, ThunkAction, configureStore } from "@reduxjs/toolkit";
 import { productsReducer } from "../features/products/productSlice";
-import userReducer from "./slices/userSlice";
 import cartReducer from "./slices/cartSlice";
 import filterSortReducer from "../features/shared/filterSortSlice";
 import themeReducer from "./slices/themeSlice";
 import { useDispatch } from "react-redux";
 import { categoriesReducer } from "../features/categories/categorySlice";
+import { usersReducer } from "../features/users/userSlice";
 
 export const store = configureStore({
   reducer: {
     products: productsReducer,
     categories: categoriesReducer,
-    users: userReducer,
+    users: usersReducer,
     cart: cartReducer,
     filterSort: filterSortReducer,
     theme: themeReducer,
@@ -70,12 +70,14 @@ export type AppThunk<ReturnType = void> = ThunkAction<
 
 store.subscribe(() => {
   const currentState = store.getState();
-  const userInformation = currentState.users.user;
+  const userInformation = currentState.users.userLoggedIn;
   const productsInCart = currentState.cart.productsInCart;
+  const token = currentState.users.token;
   // const wishlist = currentState.products.wishList;
   // store user
   localStorage.setItem("userInformation", JSON.stringify(userInformation));
   localStorage.setItem("productsInCart", JSON.stringify(productsInCart));
+  localStorage.setItem("token", JSON.stringify(token));
   // localStorage.setItem("wishlist", JSON.stringify(wishlist));
 });
 

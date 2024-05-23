@@ -7,15 +7,16 @@ import { object, string } from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 
-import { saveUserInformation } from "../../redux/slices/userSlice";
 import loginBg from "../../images/loginBg.jpg";
 import { UserType } from "../../misc/type";
 import { debounce } from "lodash";
-import { useTheme } from "../contextAPI/ThemeContext";
+import { useTheme } from "../../components/contextAPI/ThemeContext";
 import { inputFormStyles } from "../../misc/style";
 import { loginUrl, userProfileUrl } from "../../misc/endpoints";
+import { usersActions } from "./userSlice";
+import { UserReadDto } from "./userDto";
 
-type LoginInfo = {
+type userCredential = {
   email: string;
   password: string;
 };
@@ -23,27 +24,28 @@ export default function UserLogin() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [loginInfo, setLoginInfo] = useState<LoginInfo>({
+  const [userCredential, setuserCredential] = useState<userCredential>({
     email: "",
     password: "",
   });
   // Form validation
-  const userInfoSchema = object().shape({
+  const userRegisterSchema = object().shape({
     email: string().email("Invalid email").required("Required"),
     password: string()
       .min(6, "Too short. At least 6 charaters")
       .required("Required"),
   });
 
-  function onSubmit(values: LoginInfo) {
+  function onSubmit(values: userCredential) {
     //send user information to backend
-    setLoginInfo(values);
+    setuserCredential(values);
     axios
       .post(loginUrl, values)
       .then((response) => {
         if (response.status === 200) {
           // return token
           var token = response.data;
+          dispatch(usersActions.setToken(token))
           axios
             .get(userProfileUrl, {
               headers: {
@@ -52,8 +54,7 @@ export default function UserLogin() {
             })
             .then((res) => {
               if (res.status === 200) {
-                dispatch(saveUserInformation(res.data));
-                console.log(res.data);
+                dispatch(usersActions.setUser(res.data));
                 navigate("/products");
               }
             })
@@ -97,9 +98,9 @@ function handleError(error:AxiosError) {
         `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenResponse.access_token}`
       );
       const userInfo = await res.json();
-      const { username, email, picture } = userInfo;
-      const user: UserType = { username, email, avatar: picture, role: "Customer" };
-      dispatch(saveUserInformation(user));
+      const { userName, email, picture } = userInfo;
+      const user: UserReadDto = {id: "", userName, email, role: "Customer", defaultAddressId: "" };
+      dispatch(usersActions.setUser(user));
       navigate("/products");
     },
   });
@@ -173,8 +174,8 @@ function handleError(error:AxiosError) {
 
           <Formik
             style={{ width: "100%" }}
-            validationSchema={userInfoSchema}
-            initialValues={loginInfo}
+            validationSchema={userRegisterSchema}
+            initialValues={userCredential}
             onSubmit={debouncedSubmit}
           >
             {({ errors, touched }) => (

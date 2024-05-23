@@ -1,25 +1,26 @@
+import { UserReadDto } from "../../features/users/userDto";
+import { usersActions, usersReducer } from "../../features/users/userSlice";
 import { UserType } from "../../misc/type";
 import { PayloadAction } from "@reduxjs/toolkit";
-import userReducer, { saveUserInformation } from "../../redux/slices/userSlice";
 
 describe("userReducer", () => {
   it("should return the initial state", () => {
-    expect(userReducer(undefined, {} as PayloadAction)).toEqual({ user: null });
+    expect(usersReducer(undefined, {} as PayloadAction)).toEqual({ user: null });
   });
 
   it("should handle saveUserInformation", () => {
-    const initialState = { user: null };
-    const user: UserType = {
-      username: "John",
+    const initialState = { items :[], loading: true, userLoggedIn: null,token:"" };
+    const user: UserReadDto = {
+      userName: "John",
       email: "john@example.com",
-      password: "XXXXXXXX",
+      defaultAddressId:"",
       // avatar: "avatarImg",
       role: "Customer",
-      id: 100,
+      id: "100",
     };
-    const action: PayloadAction<UserType | null> = saveUserInformation(user);
+    const action: PayloadAction<UserReadDto | null> = usersActions.setUser(user);
 
-    const newState = userReducer(initialState, action);
+    const newState = usersReducer(initialState, action);
 
     expect(newState).toEqual({ user });
   });

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import { saveUserInformation } from "../../redux/slices/userSlice";
+import { usersActions } from "./userSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { iconStyle } from "../../misc/style";
-import { useTheme } from "../contextAPI/ThemeContext";
+import { useTheme } from "../../components/contextAPI/ThemeContext";
 
 export default function UserLogoutButton() {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ export default function UserLogoutButton() {
   const [logoutFlag, setLogoutFlag] = useState(false);
 
   const logout = () => {
-    dispatch(saveUserInformation(null));
+    dispatch(usersActions.clearUser());
     localStorage.removeItem("productsInCart");
     localStorage.removeItem("wishlist");
     localStorage.clear();

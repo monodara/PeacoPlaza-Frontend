@@ -11,7 +11,7 @@ function Cart() {
     (state: AppState) => state.cart.productsInCart
   );
   const navigate = useNavigate();
-  const user = useSelector((state: AppState) => state.users.user);
+  const user = useSelector((state: AppState) => state.users.userLoggedIn);
   function checkoutHandler() {
     if (user) navigate("/checkout");
     else navigate("/login");

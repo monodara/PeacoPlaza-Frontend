@@ -7,7 +7,7 @@ import ProductCreation from "../components/admin/ProductCreation";
 import { useTheme } from "../components/contextAPI/ThemeContext";
 
 export default function Admin() {
-  const user = useSelector((state: AppState) => state.users.user);
+  const user = useSelector((state: AppState) => state.users.userLoggedIn);
   const [activePanel, setActivePanel] = useState<string | null>("create");
   const { theme } = useTheme();
   const color = theme.palette.text.primary;

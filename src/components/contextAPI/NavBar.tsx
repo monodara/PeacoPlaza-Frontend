@@ -15,7 +15,7 @@ import { openRightDrawer } from "../../redux/slices/cartSlice";
 import { CartDrawer } from "../cart/CartDrawer";
 import ThemeToggler from "./ThemeToggler";
 import { iconStyle, linkStyle } from "../../misc/style";
-import UserLogoutButton from "../user/UserLogoutButton";
+import UserLogoutButton from "../../features/users/UserLogoutButton";
 import { useTheme } from "./ThemeContext";
 import { resetFilter, setInputToSearchKey } from "../../features/shared/filterSortSlice";
 
@@ -33,7 +33,7 @@ function Navbar() {
   const productsInCart = useSelector(
     (state: AppState) => state.cart.productsInCart
   );
-  const user = useSelector((state: AppState) => state.users.user);
+  const user = useSelector((state: AppState) => state.users.userLoggedIn);
   const dispatch = useDispatch();
 
   const openDrawer = () => {
