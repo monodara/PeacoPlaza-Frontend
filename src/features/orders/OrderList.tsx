@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import Table from "../shared/Table";
 import Pagination from "../products/Pagination";
 import { useNavigate } from "react-router-dom";
+import DeletePopover from "../shared/DeletePopover";
 
 export default function OrderList() {
   const { theme } = useTheme();
@@ -56,9 +57,39 @@ export default function OrderList() {
   const handleDeleteClick = (itemId: string) => {
     setSelectedItemId(itemId);
   };
-  const handleEditClick = (itemId: string) => {
-    // setSelectedItemId(itemId);
-    alert("Sorry, this operation is not allowed.");
+  const handleDeleteCancel = () => {
+    setSelectedItemId(null);
+  };
+  const handleDeleteConfirm = () => {
+    if (selectedItemId) {
+      dispatch(
+        ordersActions.deleteOne({
+          id: selectedItemId,
+          headers: { Authorization: `Bearer ${token}` },
+        })
+      );
+      setSelectedItemId(null);
+    }
+  };
+
+  const handleEditClick = async (itemId: string) => {
+    try {
+      var response = await dispatch(
+        ordersActions.updateOne({
+          id: itemId,
+          updateDto: {
+            status: "shipping",
+            dateOfDelivery: new Date().toDateString(),
+          },
+          headers: { Authorization: `Bearer ${token}` },
+        })
+      );
+      var order = response.payload as OrderReadDto;
+      console.log(response.payload);
+
+    } catch (error) {
+      alert(error);
+    }
   };
   const handleRowClick = async (itemId: string) => {
     setSelectedItemId(itemId);
@@ -72,7 +103,7 @@ export default function OrderList() {
       var order = response.payload as OrderReadDto;
       console.log(response.payload);
 
-      navigate("/order_detail");
+      navigate("/orders/:itemId");
     } catch (error) {
       alert(error);
     }
@@ -87,6 +118,11 @@ export default function OrderList() {
           onDeleteClick={handleDeleteClick}
           onEditClick={handleEditClick}
           onRowClick={handleRowClick}
+        />
+        <DeletePopover
+          open={!!selectedItemId}
+          onClose={handleDeleteCancel}
+          onConfirmDelete={handleDeleteConfirm}
         />
         <div className="mt-4 flex justify-center">
           <Pagination count={totalPage} page={page} setPage={setPage} />

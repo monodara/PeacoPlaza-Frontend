@@ -9,6 +9,7 @@ import AddressSelect from "../addresses/AddressList";
 import { ProductReadDto } from "../products/productDto";
 import { OrderProductCreateDto } from "../orderProducts/orderProductDto";
 import { ordersActions } from "../orders/orderSlice";
+import { emptyCart } from "./cartSlice";
 
 function Cart() {
   const itemsInCart = useSelector(
@@ -23,7 +24,10 @@ function Cart() {
   );
 
   async function checkoutHandler() {
-    if (user && address && token) {
+    if (!address) {
+      alert("Please choose an address for shipping");
+    }
+    if (user && token) {
       var orderProductCreateDtos: OrderProductCreateDto[] = []; //orderProduct list
       itemsInCart.forEach((productToBuy) => {
         var orderProductCreateDto = {
@@ -36,7 +40,6 @@ function Cart() {
         addressId: address ? address.id : "",
         orderProducts: orderProductCreateDtos,
       };
-      console.log(orderCreateDto);
       try {
         var res = await dispatch(
           ordersActions.createOne({
@@ -44,13 +47,14 @@ function Cart() {
             headers: { Authorization: `Bearer ${token}` },
           })
         );
-        console.log(res.payload);
+        if (res) {
+          alert("Now you can review your order");
+          navigate("/profile");
+          dispatch(emptyCart());
+        }
       } catch (error) {
         console.log(error);
       }
-
-      // alert("Now you can review your order")
-      // navigate("/profile");
     } else navigate("/login");
   }
   const { theme } = useTheme();

@@ -6,6 +6,7 @@ import { useTheme } from "../../theme/ThemeContext";
 import UserDefaultAvatar from "../defaultAvatar.jpeg";
 import UserManagement from "./UserManageTable";
 import ProductManagement from "./ProductManageTable";
+import OrderList from "../../orders/OrderList";
 
 export default function Admin() {
   const user = useSelector((state: AppState) => state.users.userLoggedIn);
@@ -54,7 +55,7 @@ export default function Admin() {
                 activePanel === "category" ? "bg-gray-200" : ""
               }`}
               onClick={() =>
-                setActivePanel(activePanel === "orders" ? null : "orders")
+                setActivePanel("orders")
               }
               style={theme.typography.body1}
             >
@@ -82,7 +83,7 @@ export default function Admin() {
                 activePanel === "users" ? "bg-gray-200" : ""
               }`}
               onClick={() =>
-                setActivePanel(activePanel === "users" ? null : "users")
+                setActivePanel("users")
               }
               style={theme.typography.body1}
             >
@@ -100,6 +101,7 @@ export default function Admin() {
         )} */}
         {activePanel === "products" && <ProductManagement />}
         {activePanel === "users" && <UserManagement />}
+        {activePanel === "orders" && <OrderList />}
       </div>
     </div>
   );

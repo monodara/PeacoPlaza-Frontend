@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { iconStyle } from "../../misc/style";
 import { useTheme } from "../theme/ThemeContext";
 import { emptyCart } from "../cart/cartSlice";
+import { emptyWishlist } from "../wishlists/wishlistSlice";
 
 export default function UserLogoutButton() {
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ export default function UserLogoutButton() {
     navigate("/");
     setLogoutFlag(true);
     dispatch(emptyCart());
+    dispatch(emptyWishlist());
   };
   return (
     <div>

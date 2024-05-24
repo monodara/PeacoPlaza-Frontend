@@ -43,7 +43,7 @@ const ProductManagement: React.FC = () => {
     setSelectedProduct(null);
     setIsEditing(false);
     dispatch(productsActions.resetSelectItem(null));
-    navigate("/product-edit");
+    navigate("/product_edit");
   };
 
   const handleEditClick = (itemId: string) => {
@@ -51,7 +51,7 @@ const ProductManagement: React.FC = () => {
     dispatch(productsActions.fetchById({ id: itemId }));
     setSelectedProduct(product || null);
     setIsEditing(true);
-    navigate("/product-edit");
+    navigate("/product_edit");
   };
 
   const handleDeleteClick = (itemId: string) => {

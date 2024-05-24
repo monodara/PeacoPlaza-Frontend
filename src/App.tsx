@@ -20,6 +20,7 @@ import Checkout from "./features/cart/Checkout";
 import { useTheme } from "./features/theme/ThemeContext";
 import ProductForm from "./features/users/admin/ProductForm";
 import AddressSelect from "./features/addresses/AddressList";
+import OrderDetails from "./features/orders/OrderDetails";
 
 function App() {
   const { theme } = useTheme();
@@ -41,12 +42,13 @@ function App() {
         <Route path="/Admin" element={<Admin />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/choose_address" element={<AddressSelect />} />
+        <Route path="/orders/:id" element={<OrderDetails />} />
         <Route
-          path="/product-edit"
+          path="/product_edit"
           element={<ProductForm isEditing={true} />}
         />
         <Route
-          path="/product-new"
+          path="/product_new"
           element={<ProductForm isEditing={false} />}
         />
       </Routes>

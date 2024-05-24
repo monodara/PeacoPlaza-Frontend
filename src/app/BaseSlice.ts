@@ -35,7 +35,7 @@ export const createBaseSlice = <T extends BaseEntity, TCreateDto, TUpdateDto>(
       headers?: AxiosRequestConfig["headers"];
     }
   >(`${name}/fetchAll`, async ({ urlSuffix, headers }, { rejectWithValue }) => {
-    console.log(`${endpoint}/${urlSuffix}`);
+    console.log(`${endpoint}${urlSuffix}`);
     try {
       const response = await appAxios.get(`${endpoint}/${urlSuffix}`, {
         headers,
