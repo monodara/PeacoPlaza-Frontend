@@ -1,18 +1,18 @@
-import React, { ChangeEvent, useState } from 'react';
-import { useProductList } from '../../products/useProductList';
-import Pagination from '../../products/Pagination';
-import { useTheme } from '../../../components/contextAPI/ThemeContext';
-import { AppState, useAppDispatch } from '../../../redux/store';
-import { setInputToSearchKey, setOrderBy } from '../../shared/filterSortSlice';
-import { productsActions } from '../../products/productSlice';
-import Table from '../../shared/Table';
-import DeletePopover from '../../../components/DeletePopover';
-import { useSelector } from 'react-redux';
-import { ProductReadDto } from '../../products/productDto';
-import { useNavigate } from 'react-router-dom';
+import React, { ChangeEvent, useState } from "react";
+import { useProductList } from "../../products/useProductList";
+import Pagination from "../../products/Pagination";
+import { useTheme } from "../../theme/ThemeContext";
+import { AppState, useAppDispatch } from "../../../app/store";
+import { setInputToSearchKey, setOrderBy } from "../../shared/filterSortSlice";
+import { productsActions } from "../../products/productSlice";
+import Table from "../../shared/Table";
+import DeletePopover from "../../shared/DeletePopover";
+import { useSelector } from "react-redux";
+import { ProductReadDto } from "../../products/productDto";
+import { useNavigate } from "react-router-dom";
 
 const ProductManagement: React.FC = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const { productList, totalPage, page, setPage } = useProductList();
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<ProductReadDto | null>(
@@ -42,7 +42,7 @@ const ProductManagement: React.FC = () => {
   const handleNewButtonClick = () => {
     setSelectedProduct(null);
     setIsEditing(false);
-    dispatch(productsActions.resetSelectItem(null))
+    dispatch(productsActions.resetSelectItem(null));
     navigate("/product-edit");
   };
 
@@ -72,6 +72,15 @@ const ProductManagement: React.FC = () => {
       );
       setSelectedItemId(null);
     }
+  };
+  const handleRowClick = (itemId: string) => {
+    setSelectedItemId(itemId);
+    dispatch(
+      productsActions.fetchById({
+        id: itemId,
+        headers: { Authorization: `Bearer ${token}` },
+      })
+    );
   };
 
   return (
@@ -114,6 +123,7 @@ const ProductManagement: React.FC = () => {
             fields={["title", "price", "inventory", "weight"]}
             onDeleteClick={handleDeleteClick}
             onEditClick={handleEditClick}
+            onRowClick={handleRowClick}
           />
           <DeletePopover
             open={!!selectedItemId}

@@ -1,5 +1,5 @@
 import React from "react";
-import { useTheme } from "../components/contextAPI/ThemeContext";
+import { useTheme } from "../theme/ThemeContext";
 
 export default function Checkout() {
   const { theme } = useTheme();

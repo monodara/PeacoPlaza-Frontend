@@ -1,7 +1,7 @@
 import createBaseSlice from "../../app/BaseSlice"
-import { CategoryCreateDto, CategoryReadDto, CategoryUpdateDto } from "../categories/categoryDto"
+import { OrderCreateDto, OrderReadDto, OrderUpdateDto } from "./orderDto"
 
-const { slice, actions } = createBaseSlice<CategoryReadDto, CategoryCreateDto, CategoryUpdateDto>("categories", "/categories")
+const { slice, actions } = createBaseSlice<OrderReadDto, OrderCreateDto, OrderUpdateDto>("orders", "/orders")
 
-export const categoriesReducer = slice.reducer
-export const categoriesActions = actions
+export const ordersReducer = slice.reducer
+export const ordersActions = actions

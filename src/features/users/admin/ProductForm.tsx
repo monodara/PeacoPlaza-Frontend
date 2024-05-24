@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Button } from "@mui/material";
 
-import { AppState, useAppDispatch } from "../../../redux/store";
+import { AppState, useAppDispatch } from "../../../app/store";
 import { CategoryReadDto } from "../../categories/categoryDto";
 import { ProductReadDto } from "../../products/productDto";
 import { productsActions } from "../../products/productSlice";
-import { useTheme } from "../../../components/contextAPI/ThemeContext";
+import { useTheme } from "../../theme/ThemeContext";
 
 interface ProductFormProps {
   isEditing: boolean;
@@ -86,7 +86,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ isEditing }) => {
             headers: { Authorization: `Bearer ${token}` },
           })
         );
-        console.log(responseUpdate);
+        alert("Updated successfully: " + responseUpdate.payload);
       } catch (error) {
         console.error("Error updating product:", error);
         alert("Update failed: " + error);
@@ -99,7 +99,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ isEditing }) => {
             headers: { Authorization: `Bearer ${token}` },
           })
         );
-        console.log(responseCreate);
+        alert("Created successfully: " + responseCreate.payload);
       } catch (error) {
         console.error("Error creating product:", error);
         alert("Create failed: " + error);
@@ -217,7 +217,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ isEditing }) => {
           type="submit"
           sx={{ ...theme.typography.button, borderRadius: 1 }}
         >
-          Register
+          Submit
         </Button>
       </form>
     </div>

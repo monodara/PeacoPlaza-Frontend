@@ -7,17 +7,20 @@ import { Badge } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import DangerousOutlinedIcon from "@mui/icons-material/DangerousOutlined";
 
-import logo from "../../images/logo.png";
-import { AppState } from "../../redux/store";
-import { CartProductType } from "../../misc/type";
+import logo from "../images/logo.png";
+import { AppState } from "../app/store";
+import { CartProductType } from "../misc/type";
 import ListIcon from "@mui/icons-material/List";
-import { openRightDrawer } from "../../redux/slices/cartSlice";
-import { CartDrawer } from "../cart/CartDrawer";
-import ThemeToggler from "./ThemeToggler";
-import { iconStyle, linkStyle } from "../../misc/style";
-import UserLogoutButton from "../../features/users/UserLogoutButton";
-import { useTheme } from "./ThemeContext";
-import { resetFilter, setInputToSearchKey } from "../../features/shared/filterSortSlice";
+import { openRightDrawer } from "../features/cart/cartSlice";
+import { CartDrawer } from "../features/cart/CartDrawer";
+import ThemeToggler from "../features/theme/ThemeToggler";
+import { iconStyle, linkStyle } from "../misc/style";
+import UserLogoutButton from "../features/users/UserLogoutButton";
+import { useTheme } from "../features/theme/ThemeContext";
+import {
+  resetFilter,
+  setInputToSearchKey,
+} from "../features/shared/filterSortSlice";
 
 function Navbar() {
   const { theme } = useTheme();
@@ -29,7 +32,7 @@ function Navbar() {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // const wishlist = useSelector((state: AppState) => state.products.wishList);
+  const wishlist = useSelector((state: AppState) => state.wishlist.wishList);
   const productsInCart = useSelector(
     (state: AppState) => state.cart.productsInCart
   );
@@ -63,7 +66,7 @@ function Navbar() {
         }}
         onMouseEnter={() => sethoveredElement("products")}
         onMouseLeave={() => sethoveredElement(null)}
-        onClick={()=>dispatch(resetFilter())}
+        onClick={() => dispatch(resetFilter())}
       >
         All Products
       </Link>
@@ -134,7 +137,7 @@ function Navbar() {
           <CartDrawer />
         </Badge>
         <Badge
-          // badgeContent={wishlist.length}
+          badgeContent={wishlist.length}
           color="error"
           overlap="circular"
           anchorOrigin={{

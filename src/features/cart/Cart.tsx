@@ -1,20 +1,57 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { AppState } from "../redux/store";
-import { CartProductType } from "../misc/type";
-import ProductsInCart from "../components/cart/ProductsInCart";
-import { useTheme } from "../components/contextAPI/ThemeContext";
+import { AppState, useAppDispatch } from "../../app/store";
+import { CartProductType } from "../../misc/type";
+import ProductsInCart from "./ProductsInCart";
+import { useTheme } from "../theme/ThemeContext";
+import AddressSelect from "../addresses/AddressList";
+import { ProductReadDto } from "../products/productDto";
+import { OrderProductCreateDto } from "../orderProducts/orderProductDto";
+import { ordersActions } from "../orders/orderSlice";
 
 function Cart() {
   const itemsInCart = useSelector(
     (state: AppState) => state.cart.productsInCart
   );
+  const token = localStorage.getItem("token");
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const user = useSelector((state: AppState) => state.users.userLoggedIn);
-  function checkoutHandler() {
-    if (user) navigate("/checkout");
-    else navigate("/login");
+  const address = useSelector(
+    (state: AppState) => state.addresses.selectedItem
+  );
+
+  async function checkoutHandler() {
+    if (user && address && token) {
+      var orderProductCreateDtos: OrderProductCreateDto[] = []; //orderProduct list
+      itemsInCart.forEach((productToBuy) => {
+        var orderProductCreateDto = {
+          productId: productToBuy.id,
+          quantity: productToBuy.amount,
+        };
+        orderProductCreateDtos.push(orderProductCreateDto);
+      });
+      var orderCreateDto = {
+        addressId: address ? address.id : "",
+        orderProducts: orderProductCreateDtos,
+      };
+      console.log(orderCreateDto);
+      try {
+        var res = await dispatch(
+          ordersActions.createOne({
+            createDto: orderCreateDto,
+            headers: { Authorization: `Bearer ${token}` },
+          })
+        );
+        console.log(res.payload);
+      } catch (error) {
+        console.log(error);
+      }
+
+      // alert("Now you can review your order")
+      // navigate("/profile");
+    } else navigate("/login");
   }
   const { theme } = useTheme();
   const color = theme.palette.text.primary;
@@ -92,6 +129,7 @@ function Cart() {
           </div>
         </div>
       </div>
+      <AddressSelect />
     </div>
   );
 }

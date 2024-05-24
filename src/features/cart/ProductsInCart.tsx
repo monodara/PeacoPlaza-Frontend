@@ -1,9 +1,9 @@
 import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 
-import { AppState } from "../../redux/store";
+import { AppState } from "../../app/store";
 import ProductCardInCart from "./ProductCardInCart";
-import { useTheme } from "../contextAPI/ThemeContext";
+import { useTheme } from "../theme/ThemeContext";
 
 export default function ProductsInCart() {
   const { theme } = useTheme();

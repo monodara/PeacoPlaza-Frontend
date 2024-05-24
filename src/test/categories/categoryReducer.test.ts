@@ -1,5 +1,5 @@
 import { categoriesActions, categoriesReducer } from "../../features/categories/categorySlice";
-import store from "../../redux/store";
+import store from "../../app/store";
 import { categoryServer, mockCategories } from "../shared/categoryServer";
 
 beforeAll(() => {

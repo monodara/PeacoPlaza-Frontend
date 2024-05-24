@@ -4,15 +4,14 @@ import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
-import { useFetchSingleProduct } from "../hooks/useFetchSingleProducts";
 import {
   useCartButtonHandler,
   useHeartButtonHandler,
-} from "../hooks/useButtonHandler";
-import { useTheme } from "../components/contextAPI/ThemeContext";
-import { productsActions } from "../features/products/productSlice";
-import { AppState, useAppDispatch } from "../redux/store";
-import { ProductReadDto } from "../features/products/productDto";
+} from "../../hooks/useButtonHandler";
+import { useTheme } from "../theme/ThemeContext";
+import { productsActions } from "./productSlice";
+import { AppState, useAppDispatch } from "../../app/store";
+import { ProductReadDto } from "./productDto";
 import { useSelector } from "react-redux";
 
 export default function SingleProduct() {
@@ -23,19 +22,18 @@ export default function SingleProduct() {
 
   const [thumbImg, setThumbImg] = useState("");
   useEffect(() => {
-    dispatch(productsActions.fetchById({id: id??"default"}));
+    dispatch(productsActions.fetchById({ id: id ?? "default" }));
   }, [id]);
   const product: ProductReadDto | undefined = useSelector(
-      (state: AppState) => state.products.selectedItem
-    );
-  const loading : boolean = useSelector(
-      (state: AppState) => state.products.loading
-    );
-    const error : string | undefined = useSelector(
-      (state: AppState) => state.products.error
-    );
+    (state: AppState) => state.products.selectedItem
+  );
+  const loading: boolean = useSelector(
+    (state: AppState) => state.products.loading
+  );
+  const error: string | undefined = useSelector(
+    (state: AppState) => state.products.error
+  );
   useEffect(() => {
-    
     if (product && product.productImages && product.productImages.length > 0) {
       setThumbImg(product.productImages[0].data);
     }
@@ -74,9 +72,7 @@ export default function SingleProduct() {
                     src={image.data}
                     alt={`image${index}`}
                     className="w-full cursor-pointer"
-                    onClick={() =>
-                      thumbImgHandler(image.data)
-                    }
+                    onClick={() => thumbImgHandler(image.data)}
                   />
                 ))}
               </div>
@@ -144,7 +140,7 @@ export default function SingleProduct() {
                   type="button"
                   className="w-12 h-12 border hover:border-gray-300 text-gray-800 font-bold rounded"
                   style={{ backgroundColor: "#fff" }}
-                  // onClick={() => heartButtonHandler(product)} // add function for wishlist
+                  onClick={() => heartButtonHandler(product)} // add function for wishlist
                 >
                   <FavoriteIcon />
                 </button>

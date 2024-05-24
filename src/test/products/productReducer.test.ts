@@ -1,6 +1,6 @@
 import { ProductCreateDto } from "../../features/products/productDto";
 import { productsActions, productsReducer } from "../../features/products/productSlice";
-import { createNewStore } from "../../redux/store";
+import { createNewStore } from "../../app/store";
 import { mockProducts, productServer } from "../shared/productServer";
 
 let store = createNewStore();

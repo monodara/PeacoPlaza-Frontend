@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { AppState, useAppDispatch } from "../../redux/store";
+import { AppState, useAppDispatch } from "../../app/store";
 import { productsActions } from "./productSlice";
 import { ProductReadDto } from "./productDto";
 

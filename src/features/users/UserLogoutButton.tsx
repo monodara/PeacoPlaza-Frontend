@@ -4,7 +4,8 @@ import { usersActions } from "./userSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { iconStyle } from "../../misc/style";
-import { useTheme } from "../../components/contextAPI/ThemeContext";
+import { useTheme } from "../theme/ThemeContext";
+import { emptyCart } from "../cart/cartSlice";
 
 export default function UserLogoutButton() {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ export default function UserLogoutButton() {
     localStorage.clear();
     navigate("/");
     setLogoutFlag(true);
+    dispatch(emptyCart());
   };
   return (
     <div>

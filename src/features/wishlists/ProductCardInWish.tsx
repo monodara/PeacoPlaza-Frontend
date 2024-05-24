@@ -3,16 +3,15 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 
-// import { removeFromWishList } from "../../features/products/productSlice";
-import { ProductType } from "../../misc/type";
 import {
   useCartButtonHandler,
   useHeartButtonHandler,
 } from "../../hooks/useButtonHandler";
-import { ProductInfoInCard } from "./shared/ProductInfoInCard";
-import { ProductImage } from "./shared/ProductImage";
-import { useTheme } from "../contextAPI/ThemeContext";
-import { ProductReadDto } from "../../features/products/productDto";
+import { ProductInfoInCard } from "../products/ProductInfoInCard";
+import { ProductImage } from "../products/ProductImage";
+import { useTheme } from "../theme/ThemeContext";
+import { ProductReadDto } from "../products/productDto";
+import { removeFromWishList } from "./wishlistSlice";
 
 export default function ProductCardInWishList({
   product,
@@ -27,7 +26,7 @@ export default function ProductCardInWishList({
   const backgroundColor = theme.palette.background.default;
 
   const handleDeleteClick = () => {
-    // dispatch(removeFromWishList(product));
+    dispatch(removeFromWishList(product));
   };
 
   return (
@@ -36,7 +35,7 @@ export default function ProductCardInWishList({
       <Link to={`/products/${product.id}`}>
         <ProductImage
           product={product}
-          // onHeartClick={() => heartButtonHandler(product)}
+          onHeartClick={() => heartButtonHandler(product)}
           onCartClick={() => cartButtonHandler(product)}
           showHeartButton={false}
         />

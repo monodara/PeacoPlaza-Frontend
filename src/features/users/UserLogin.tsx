@@ -10,7 +10,7 @@ import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 import loginBg from "../../images/loginBg.jpg";
 import { UserType } from "../../misc/type";
 import { debounce } from "lodash";
-import { useTheme } from "../../components/contextAPI/ThemeContext";
+import { useTheme } from "../theme/ThemeContext";
 import { inputFormStyles } from "../../misc/style";
 import { loginUrl, userProfileUrl } from "../../misc/endpoints";
 import { usersActions } from "./userSlice";
@@ -67,29 +67,29 @@ export default function UserLogin() {
         handleError(error);
       });
   }
-function handleError(error:AxiosError) {
+  function handleError(error: AxiosError) {
     if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        const status = error.response.status;
-        const message = error.response.data;
-        if (status === 404) {
-            alert("Error: Not Found - " + message);
-        } else if (status === 401) {
-            alert("Error: Unauthorized - " + message);
-        } else if (status === 400) {
-            alert("Error: Bad Request - " + message);
-        } else {
-            alert("Error: " + status + " - " + message);
-        }
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      const status = error.response.status;
+      const message = error.response.data;
+      if (status === 404) {
+        alert("Error: Not Found - " + message);
+      } else if (status === 401) {
+        alert("Error: Unauthorized - " + message);
+      } else if (status === 400) {
+        alert("Error: Bad Request - " + message);
+      } else {
+        alert("Error: " + status + " - " + message);
+      }
     } else if (error.request) {
-        // The request was made but no response was received
-        alert("No response received from server");
+      // The request was made but no response was received
+      alert("No response received from server");
     } else {
-        // Something happened in setting up the request that triggered an Error
-        alert("Error: " + error.message);
+      // Something happened in setting up the request that triggered an Error
+      alert("Error: " + error.message);
     }
-}
+  }
 
   const debouncedSubmit = debounce(onSubmit, 1000);
   const loginWithGoogle = useGoogleLogin({
@@ -99,7 +99,14 @@ function handleError(error:AxiosError) {
       );
       const userInfo = await res.json();
       const { userName, email, picture } = userInfo;
-      const user: UserReadDto = {id: "", userName, email, role: "Customer", defaultAddressId: "",joinedAt: "2020-02-21" };
+      const user: UserReadDto = {
+        id: "",
+        userName,
+        email,
+        role: "Customer",
+        defaultAddressId: "",
+        joinedAt: "2020-02-21",
+      };
       dispatch(usersActions.setUser(user));
       navigate("/products");
     },

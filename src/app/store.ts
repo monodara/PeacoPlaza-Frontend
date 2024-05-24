@@ -1,11 +1,14 @@
 import { Action, ThunkAction, configureStore } from "@reduxjs/toolkit";
 import { productsReducer } from "../features/products/productSlice";
-import cartReducer from "./slices/cartSlice";
+import cartReducer from "../features/cart/cartSlice";
 import filterSortReducer from "../features/shared/filterSortSlice";
-import themeReducer from "./slices/themeSlice";
+import themeReducer from "../features/theme/themeSlice";
 import { useDispatch } from "react-redux";
 import { categoriesReducer } from "../features/categories/categorySlice";
 import { usersReducer } from "../features/users/userSlice";
+import { addressesReducer } from "../features/addresses/addressSlice";
+import { ordersReducer } from "../features/orders/orderSlice";
+import wishlistReducer from "../features/wishlists/wishlistSlice";
 
 export const store = configureStore({
   reducer: {
@@ -13,8 +16,11 @@ export const store = configureStore({
     categories: categoriesReducer,
     users: usersReducer,
     cart: cartReducer,
+    addresses: addressesReducer,
+    orders:ordersReducer,
     filterSort: filterSortReducer,
     theme: themeReducer,
+    wishlist:wishlistReducer
   },
 });
 
@@ -72,11 +78,11 @@ store.subscribe(() => {
   const currentState = store.getState();
   const userInformation = currentState.users.userLoggedIn;
   const productsInCart = currentState.cart.productsInCart;
-  // const wishlist = currentState.products.wishList;
+  const wishlist = currentState.wishlist.wishList;
   // store user
   localStorage.setItem("userInformation", JSON.stringify(userInformation));
   localStorage.setItem("productsInCart", JSON.stringify(productsInCart));
-  // localStorage.setItem("wishlist", JSON.stringify(wishlist));
+  localStorage.setItem("wishlist", JSON.stringify(wishlist));
 });
 
 export const createNewStore = () => {

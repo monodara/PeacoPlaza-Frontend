@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { usersActions } from "./userSlice";
-import { AppState, useAppDispatch } from "../../redux/store";
+import { AppState, useAppDispatch } from "../../app/store";
 import { useSelector } from "react-redux";
 import { UserReadDto } from "./userDto";
 
@@ -30,8 +30,14 @@ const EditUsernameModal: React.FC<EditUsernameModalProps> = ({
   };
 
   const handleUsernameUpdate = async () => {
-    var response = await dispatch(usersActions.updateOne({ id: user?user.id:"", updateDto: {username: newUsername}, headers: { Authorization: `Bearer ${token}` } }));
-    dispatch(usersActions.setUser(response.payload as UserReadDto))
+    var response = await dispatch(
+      usersActions.updateOne({
+        id: user ? user.id : "",
+        updateDto: { username: newUsername },
+        headers: { Authorization: `Bearer ${token}` },
+      })
+    );
+    dispatch(usersActions.setUser(response.payload as UserReadDto));
     onClose();
   };
 
@@ -66,12 +72,16 @@ const EditUsernameModal: React.FC<EditUsernameModalProps> = ({
           onChange={handleUsernameChange}
           sx={{ mt: 2, mb: 2 }}
         />
-        <Button variant="contained" onClick={handleUsernameUpdate} sx={{
-            backgroundColor: '#10B981',
-            '&:hover': {
-              backgroundColor: '#33cc99',
+        <Button
+          variant="contained"
+          onClick={handleUsernameUpdate}
+          sx={{
+            backgroundColor: "#10B981",
+            "&:hover": {
+              backgroundColor: "#33cc99",
             },
-          }}>
+          }}
+        >
           Confirm
         </Button>
       </Box>

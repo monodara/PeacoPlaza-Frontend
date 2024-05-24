@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import FurnitureBg from "../images/furnitureBG.jpg";
 import TopRatedProducts from "../features/products/TopRatedProducts";
 import MostPurchasedProducts from "../features/products/MostPurchasedProducts";
-import { useTheme } from "../components/contextAPI/ThemeContext";
+import { useTheme } from "../features/theme/ThemeContext";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ export default function Home() {
   const textPrimaryColor = theme.palette.text.primary;
   const primaryColor = theme.palette.background.paper;
   const secondaryColor = theme.palette.secondary.main;
-  
+
   return (
     <div className="container mx-auto px-6 mt-10">
       <div
@@ -29,7 +29,8 @@ export default function Home() {
               Discover Endless Possibilities
             </h2>
             <p className="text-lg text-gray-300 mb-6">
-              Explore a diverse range of products tailored to your lifestyle. <br/>
+              Explore a diverse range of products tailored to your lifestyle.{" "}
+              <br />
               From electronics to fashion, we've got everything you need.
             </p>
             <button
@@ -45,12 +46,22 @@ export default function Home() {
         </div>
       </div>
       <div className="mt-10">
-        <h2 className="text-3xl font-bold text-center mb-6" style={{ color: textPrimaryColor }}>Recommended</h2>
+        <h2
+          className="text-3xl font-bold text-center mb-6"
+          style={{ color: textPrimaryColor }}
+        >
+          Recommended
+        </h2>
         <MostPurchasedProducts />
       </div>
 
       <div className="mt-10">
-        <h2 className="text-3xl font-bold text-center mb-6" style={{ color: textPrimaryColor }}>Most-Loved</h2>
+        <h2
+          className="text-3xl font-bold text-center mb-6"
+          style={{ color: textPrimaryColor }}
+        >
+          Most-Loved
+        </h2>
         <TopRatedProducts />
       </div>
     </div>

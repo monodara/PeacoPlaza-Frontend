@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
-import UserProfile from "../features/users/UserProfile";
-import UserOrders from "../features/users/UserOrders";
-import UserAddress from "../components/user/UserAddress";
-import { useTheme } from "../components/contextAPI/ThemeContext";
+import UserProfile from "./UserProfile";
+import { useTheme } from "../theme/ThemeContext";
+import OrderList from "../orders/OrderList";
+import AddressList from "../addresses/AddressList";
 
 interface ButtonProps {
   label: string;
@@ -47,8 +47,8 @@ const Me: React.FC = () => {
       </div>
       <div className="mt-4">
         {activeSection === "profile" && <UserProfile />}
-        {activeSection === "orders" && <UserOrders />}
-        {activeSection === "address" && <UserAddress />}
+        {activeSection === "orders" && <OrderList />}
+        {activeSection === "address" && <AddressList />}
       </div>
     </div>
   );

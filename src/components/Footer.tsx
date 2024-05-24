@@ -3,8 +3,8 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { Link } from "react-router-dom";
 
-import logo from "../../images/logo.png";
-import { useTheme } from "./ThemeContext";
+import logo from "../images/logo.png";
+import { useTheme } from "../features/theme/ThemeContext";
 
 const quickLinks = [
   { label: "Home", href: "/" },

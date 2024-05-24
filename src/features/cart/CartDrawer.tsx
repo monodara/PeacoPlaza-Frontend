@@ -5,10 +5,10 @@ import { useNavigate } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import { Button } from "@mui/material";
 
-import { AppState } from "../../redux/store";
-import { closeRightDrawer } from "../../redux/slices/cartSlice";
+import { AppState } from "../../app/store";
+import { closeRightDrawer } from "./cartSlice";
+import { useTheme } from "../theme/ThemeContext";
 import ProductsInCart from "./ProductsInCart";
-import { useTheme } from "../contextAPI/ThemeContext";
 
 interface CartHeaderProps {
   onClose: () => void;

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import { useTheme } from "../../components/contextAPI/ThemeContext";
-import { useAppDispatch } from "../../redux/store";
+import { useTheme } from "../theme/ThemeContext";
+import { useAppDispatch } from "../../app/store";
 import { setOrderBy } from "../shared/filterSortSlice";
 
 interface ProductSortProps {
@@ -20,12 +20,12 @@ const ProductSort: React.FC<ProductSortProps> = ({
   const dispatch = useAppDispatch();
 
   const handleSort = (order: string) => {
-    if(order == "None") order = "";
+    if (order == "None") order = "";
     setSortOrder(order);
     dispatch(setOrderBy(order));
     setIsDropdownOpen(false);
   };
-const dropdownRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (

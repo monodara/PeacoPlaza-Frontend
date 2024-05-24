@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { AppState } from "../../../redux/store";
-import { useTheme } from "../../../components/contextAPI/ThemeContext";
+import { AppState } from "../../../app/store";
+import { useTheme } from "../../theme/ThemeContext";
 import UserDefaultAvatar from "../defaultAvatar.jpeg";
 import UserManagement from "./UserManageTable";
 import ProductManagement from "./ProductManageTable";
@@ -68,9 +68,7 @@ export default function Admin() {
               className={`flex flex-row items-center w-full px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline ${
                 activePanel === "product" ? "bg-gray-200" : ""
               }`}
-              onClick={() =>
-                setActivePanel("products")
-              }
+              onClick={() => setActivePanel("products")}
               style={theme.typography.body1}
             >
               <span>Product Management</span>

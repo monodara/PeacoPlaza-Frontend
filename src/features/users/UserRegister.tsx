@@ -5,11 +5,11 @@ import { Box, TextField, Button } from "@mui/material";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 
 import { debounce } from "lodash";
-import { useTheme } from "../../components/contextAPI/ThemeContext";
+import { useTheme } from "../theme/ThemeContext";
 import { inputFormStyles } from "../../misc/style";
-import { checkEmailUrl, userEndpoints } from "../../misc/endpoints";
+import { checkEmailUrl } from "../../misc/endpoints";
 import { UserCreateDto } from "./userDto";
-import { useAppDispatch } from "../../redux/store";
+import { useAppDispatch } from "../../app/store";
 import { usersActions } from "./userSlice";
 import { userRegisterSchema } from "../../misc/schemas";
 
@@ -20,7 +20,6 @@ export default function UserRegisterForm() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-
   const [userInformation, setUserInformation] = useState<UserCreateDto>({
     username: "",
     email: "",
@@ -28,11 +27,11 @@ export default function UserRegisterForm() {
     // avatar: "",
   });
   // Form validation
-  
-async function checkEmail(email: string) {
+
+  async function checkEmail(email: string) {
     try {
       const response = await axios.post(checkEmailUrl, { email });
-      return response.data; 
+      return response.data;
     } catch (error) {
       return false;
     }
@@ -48,11 +47,11 @@ async function checkEmail(email: string) {
       return;
     }
 
-    dispatch(usersActions.createOne({ createDto: values}))
+    dispatch(usersActions.createOne({ createDto: values }))
       .unwrap()
       .then((response) => {
         if (response) {
-          alert("Successfully Registered. Now Log in with your email!")
+          alert("Successfully Registered. Now Log in with your email!");
           navigate("/login");
         }
       })

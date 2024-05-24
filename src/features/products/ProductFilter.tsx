@@ -3,10 +3,15 @@ import { debounce } from "lodash";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { useSelector } from "react-redux";
 
-import { AppState, useAppDispatch } from "../../redux/store";
-import { useTheme } from "../../components/contextAPI/ThemeContext";
+import { AppState, useAppDispatch } from "../../app/store";
+import { useTheme } from "../theme/ThemeContext";
 import { CategoryReadDto } from "../categories/categoryDto";
-import { setCategoryBy, setInputToSearchKey, setPriceLowBoundary, setPriceUpBoundary } from "../shared/filterSortSlice";
+import {
+  setCategoryBy,
+  setInputToSearchKey,
+  setPriceLowBoundary,
+  setPriceUpBoundary,
+} from "../shared/filterSortSlice";
 
 function ProductFilters() {
   const dispatch = useAppDispatch();

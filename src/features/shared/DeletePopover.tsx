@@ -5,9 +5,9 @@ import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { buttonStyle, popoverStyle } from "../misc/style";
-import { useTheme } from "./contextAPI/ThemeContext";
+import { buttonStyle, popoverStyle } from "../../misc/style";
 import { green, grey } from "@mui/material/colors";
+import { useTheme } from "../theme/ThemeContext";
 
 interface DeletePopoverProps {
   open: boolean;

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { AppState, useAppDispatch } from '../../redux/store';
-import { usersActions } from './userSlice';
-import Button from '@mui/material/Button';
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { AppState, useAppDispatch } from "../../app/store";
+import { usersActions } from "./userSlice";
+import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 
 interface AvatarUploadProps {
   onUploadSuccess: () => void;
@@ -24,17 +24,22 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({ onUploadSuccess }) => {
     if (!file) return;
 
     const data = new FormData();
-    data.append('AvatarImage', file);
-    data.append('UserId', user?.id ?? "");
+    data.append("AvatarImage", file);
+    data.append("UserId", user?.id ?? "");
 
     setIsUploading(true);
     setError(null);
     try {
-      var response = await dispatch(usersActions.uploadAvatar({ data, headers: { "Authorization": `Bearer ${token}` } })).unwrap();
-      onUploadSuccess();  // Close the modal on successful upload
+      var response = await dispatch(
+        usersActions.uploadAvatar({
+          data,
+          headers: { Authorization: `Bearer ${token}` },
+        })
+      ).unwrap();
+      onUploadSuccess(); // Close the modal on successful upload
       dispatch(usersActions.setUser(response));
     } catch (error) {
-      let errorMessage = 'An unknown error occurred';
+      let errorMessage = "An unknown error occurred";
       if (error instanceof Error) {
         errorMessage = error.message;
       }
@@ -46,13 +51,13 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({ onUploadSuccess }) => {
   };
 
   return (
-    <Box sx={{ textAlign: 'center', p: 2 }}>
+    <Box sx={{ textAlign: "center", p: 2 }}>
       <Typography variant="h6" gutterBottom>
         Upload Avatar
       </Typography>
       <input
         accept="image/*"
-        style={{ display: 'none' }}
+        style={{ display: "none" }}
         id="file-input"
         type="file"
         onChange={uploadFile}
@@ -63,13 +68,13 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({ onUploadSuccess }) => {
           component="span"
           disabled={isUploading}
           sx={{
-            backgroundColor: '#10B981',
-            '&:hover': {
-              backgroundColor: '#33cc99',
+            backgroundColor: "#10B981",
+            "&:hover": {
+              backgroundColor: "#33cc99",
             },
           }}
         >
-          {isUploading ? <CircularProgress size={24} /> : 'Upload'}
+          {isUploading ? <CircularProgress size={24} /> : "Upload"}
         </Button>
       </label>
       {error && (

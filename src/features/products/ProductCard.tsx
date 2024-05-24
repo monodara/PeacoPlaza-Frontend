@@ -4,15 +4,15 @@ import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined
 import UpdateIcon from "@mui/icons-material/Update";
 
 import { ProductType } from "../../misc/type";
-import { AppState } from "../../redux/store";
+import { AppState } from "../../app/store";
 import {
   useCartButtonHandler,
   useHeartButtonHandler,
 } from "../../hooks/useButtonHandler";
-import { ProductInfoInCard } from "../../components/product/shared/ProductInfoInCard";
-import { ProductImage } from "../../components/product/shared/ProductImage";
+import { ProductInfoInCard } from "./ProductInfoInCard";
+import { ProductImage } from "./ProductImage";
 import { ProductReadDto } from "./productDto";
-import { useTheme } from "../../components/contextAPI/ThemeContext";
+import { useTheme } from "../theme/ThemeContext";
 
 export default function ProductCard({ product }: { product: ProductReadDto }) {
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ export default function ProductCard({ product }: { product: ProductReadDto }) {
       {user?.role === "Admin" && <AdminControls onClick={handleUpdDelClick} />}
       <ProductImage
         product={product}
-        // onHeartClick={() => heartButtonHandler(product)}
+        onHeartClick={() => heartButtonHandler(product)}
         onCartClick={() => cartButtonHandler(product)}
         showHeartButton={true}
       />

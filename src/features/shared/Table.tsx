@@ -3,11 +3,12 @@ import React from 'react';
 interface TableProps {
   dataList: Array<{ [key: string]: any }>;
   fields: string[];
-  onDeleteClick: (itemId: string) => void; // 添加 onDeleteClick 属性
-  onEditClick: (itemId: string) => void; // 添加 onDeleteClick 属性
+  onDeleteClick: (itemId: string) => void; 
+  onEditClick: (itemId: string) => void; 
+  onRowClick: (itemId: string) => void; 
 }
 
-const Table: React.FC<TableProps> = ({ dataList, fields, onDeleteClick,onEditClick }) => {
+const Table: React.FC<TableProps> = ({ dataList, fields, onDeleteClick,onEditClick, onRowClick}) => {
   return (
     <div className="font-sans overflow-x-auto">
       <table className="min-w-full divide-y divide-gray-200">
@@ -25,7 +26,7 @@ const Table: React.FC<TableProps> = ({ dataList, fields, onDeleteClick,onEditCli
         </thead>
         <tbody className="bg-white divide-y divide-gray-200 whitespace-nowrap">
           {dataList.map((data, index) => (
-            <tr key={index}>
+            <tr key={index} onClick={()=>{onRowClick(data.id)}}>
               {fields.map((field, idx) => (
                 <td key={idx} className="px-4 py-4 text-sm text-gray-800">
                   {data[field]}

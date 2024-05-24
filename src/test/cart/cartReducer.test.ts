@@ -4,7 +4,7 @@ import cartReducer, {
   decrementProductAmount,
   removeFromCart,
   updateProductAmount,
-} from "../../redux/slices/cartSlice";
+} from "../../features/cart/cartSlice";
 
 const product1 = {
     id: "mock-id-1",

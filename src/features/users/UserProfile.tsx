@@ -8,8 +8,8 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import DrawIcon from "@mui/icons-material/Draw";
 import { Button } from "@mui/material";
-import { AppState, useAppDispatch } from "../../redux/store";
-import { useTheme } from "../../components/contextAPI/ThemeContext";
+import { AppState, useAppDispatch } from "../../app/store";
+import { useTheme } from "../theme/ThemeContext";
 import UserDefaultAvatar from "./defaultAvatar.jpeg";
 import AvatarUpload from "./AvatarUpload";
 import { usersActions } from "./userSlice";
@@ -64,7 +64,12 @@ export default function UserProfile() {
   const handleDeleteAccount = async () => {
     if (!user?.id || !token) return;
 
-    await dispatch(usersActions.deleteOne({ id: user.id, headers: { Authorization: `Bearer ${token}` } }));
+    await dispatch(
+      usersActions.deleteOne({
+        id: user.id,
+        headers: { Authorization: `Bearer ${token}` },
+      })
+    );
     navigate("/");
     dispatch(usersActions.clearUser());
     localStorage.removeItem("productsInCart");
@@ -137,8 +142,8 @@ export default function UserProfile() {
                 sx={{
                   ...theme.typography.body1,
                   fontSize: theme.typography.pxToRem(12),
-                  padding: '4px 8px', // 调整按钮内边距
-                  minWidth: 'auto', // 去除默认的最小宽度
+                  padding: "4px 8px", // 调整按钮内边距
+                  minWidth: "auto", // 去除默认的最小宽度
                 }}
                 onClick={handleOpenDeleteAccountModal}
               >

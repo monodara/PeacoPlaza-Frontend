@@ -3,15 +3,15 @@ import { useDispatch } from "react-redux";
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
 import { Link } from "react-router-dom";
 
-import DeletePopover from "../DeletePopover";
+import DeletePopover from "../shared/DeletePopover";
 import { CartProductType } from "../../misc/type";
 import {
   decrementProductAmount,
   incrementProductAmount,
   removeFromCart,
   updateProductAmount,
-} from "../../redux/slices/cartSlice";
-import { useTheme } from "../contextAPI/ThemeContext";
+} from "./cartSlice";
+import { useTheme } from "../theme/ThemeContext";
 
 export default function ProductCardInCart({
   product,

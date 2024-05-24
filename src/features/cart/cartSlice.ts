@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import { CartProductType, ProductType } from "../../misc/type";
-import { ProductReadDto } from "../../features/products/productDto";
+import { ProductReadDto } from "../products/productDto";
 
 type InitialState = {
   productsInCart: CartProductType[];
@@ -103,6 +103,13 @@ const cartSlice = createSlice({
         amount: newAmount,
       };
     },
+    emptyCart: (
+      state,
+      action: PayloadAction
+    ) => {
+      state.productsInCart = []
+    },
+    
   },
 });
 
@@ -116,5 +123,6 @@ export const {
   decrementProductAmount,
   removeFromCart,
   updateProductAmount,
+  emptyCart
 } = cartSlice.actions;
 export default cartReducer;

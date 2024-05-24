@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { AppState } from "../../redux/store";
+import { AppState } from "../../app/store";
 import ProductFilters from "./ProductFilter";
 import ProductSort from "./ProductSort";
 import Pagination from "./Pagination";
