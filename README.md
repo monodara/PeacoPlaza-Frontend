@@ -2,24 +2,42 @@
 
 This project is a website of an e-commerce business using fake data from the API [https://fakeapi.platzi.com/](https://fakeapi.platzi.com/). It allows users to search products, add items to wishlist and cart, review the cart. It also allows Admin roles to manage the products (creating new items, updating or deleting items.)
 
-## Contents:
+## Feautres
 
-| Section        | Description                                                                                                |
+| Role        | Use Case                                                                                                |
 | -------------- | ---------------------------------------------------------------------------------------------------------- |
-| Home           | A brief view of highlighted features                                                                       |
-| Products       | Fetch data from the API and display them. Items can be filtered by category and price and sorted by price. |
-| Product Detail | Display the description, photos, price, etc,. of the product.                                              |
-| Categories     | Classify product in different categories                                                                   |
-| Wishlist       | Users can store items to their list.                                                                       |
-| Cart           | Preview the order before checkout or update the items in cart.                                             |
-| Profile        | Register as new Customer or sign in by email or Google account.                                            |
-| Admin          | Manage products, categories and users.                                                                     |
+| Customer        |  Browser all products  |
+|              |  Filter products by category, search term, or price.
+|              |  Sort products by price
+|           |  Add product to / remove from wishlish / cart
+|       |  Browser a product's details
+|    |  Make order
+|  | choose a shipping address
+|   | manipulate his own addresses
+| |Review orders
+|   | Register an account
+|   |Log in/out
+| |Preview cart
+|  |change the number of products in cart
+|  | Get inspiration from top-rated & most-purchased products.
+|  | Change user name
+|  | Upload avatar
+|  |Delete his own account
+| |Log in with Google account
+|   | Manipulate dark/light mode
+| Admin | All functions for customers
+|  | Delete user accounts
+|  | create, update, delete products
+| | Update, delete orders
 
 ## Getting Started
 
+As it's deployed, visit [this link](https://github.com/Integrify-Finland/fs17-Frontend-project)
+
+In case you would like to run it locally, 
 1. Clone the repository using `git clone`;
 2. Open the terminal and navigate to project folder.
-3. Install packages and libraries. If you are using `npm`, run `npm install`. If you are using `yarn`, run `yarn install`.
+3. Install packages and libraries by running `npm install` or `yarn install`.
 4. Replace the apiKey in `index.tsx` with your key.
 5. Run the project using `npm start` or `yarn start`. The application will automatically open a browser window at the address [http://localhost:3000/](http://localhost:3000/)
 
@@ -74,43 +92,29 @@ This project is a website of an e-commerce business using fake data from the API
 
 ```
 src/
-|-- components/
-|   |-- product/
-|   |   |-- ProductCard
-|   |   |-- ProductFilters
-|   |   |-- ProductPagination
-|   |   |-- ProductSort
-|   |   |-- ProductFilter
-|   |   |-- shared/
-|   |       |-- ProductImage
-|   |       |-- ProductInfoInCard
-|   |       |-- CartButton
-|   |       |-- HeartButton
-|   |-- user/
-|   |   |-- UserProfile
-|   |   |-- UserLogin
-|   |   |-- UserRegister
-|   |   |-- UserLogoutButton
-|   |-- Admin/
+|-- app/
+|   |-- store
+|   |-- BaseSlice
+|   |-- ...
+|-  commonTypes
+|-- components
+|   |   |-- buttons
+|   |   |-- footer
+|   |   |-- search form
+|-- features
+|   |   |-- address
+|   |   |-- avatar
+|   |   |-- cart
+|   |   |-- category
+|   |   |-- order
+|   |   |-- product
+|   |   |-- theme
+|   |   |-- user
 |   |   |-- ProductCreation
 |   |   |-- ProductUpdateOrDelete
-|   |-- cart/
-|   |   |-- CartDrawer
-|   |   |-- ProductCardInCart
-|   |   |-- ProductsInCart
-|   |-- category/
-|   |   |-- Categories
-|   |   |-- CategoryCard
-|   |-- search/
-|   |   |-- SearchForm
-|-- pages/
-|   |-- Home
-|   |-- Admin
-|   |-- Cart
-|   |-- Me
-|   |-- Products
-|   |-- SingleProduct
-|   |-- WishList
+|   |   |-- cart
+|   |-- hooks
+|   |-- assets 
 ```
 
 I broke components into small pieces. For example, the diagram below illustrates the how Products page is structured.
@@ -128,7 +132,3 @@ Commonly used types, style and functions are exported from misc folder.
 
 For this project, I have implemented unit testing for the reducers.
 ![test result](./src/images/screenshots/test.png)
-
-## Deployment
-
-The project is deployed on Github Pages. [https://monodara.github.io/Ecommerce-Web-with-API/](https://monodara.github.io/Ecommerce-Web-with-API/)
