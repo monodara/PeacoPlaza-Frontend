@@ -76,7 +76,6 @@ const ProductForm: React.FC<ProductFormProps> = ({ isEditing }) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form submitted with data:", formData);
     if (isEditing && selectProduct) {
       try {
         const responseUpdate = await dispatch(

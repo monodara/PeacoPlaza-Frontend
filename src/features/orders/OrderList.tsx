@@ -36,7 +36,6 @@ export default function OrderList() {
         })
       );
       const data = response.payload as number;
-      console.log(data);
       setTotalPage(Math.ceil(data / pageSize));
     } catch (error) {
       console.error("Error fetching total products:", error);
@@ -85,7 +84,6 @@ export default function OrderList() {
         })
       );
       var order = response.payload as OrderReadDto;
-      console.log(response.payload);
 
     } catch (error) {
       alert(error);
@@ -101,7 +99,6 @@ export default function OrderList() {
         })
       );
       var order = response.payload as OrderReadDto;
-      console.log(response.payload);
 
       navigate("/orders/:itemId");
     } catch (error) {

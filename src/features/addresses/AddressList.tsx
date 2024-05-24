@@ -30,7 +30,6 @@ export default function AddressList() {
         })
       );
       const data = response.payload as number;
-      console.log(data);
       setTotalPage(Math.ceil(data / pageSize));
     } catch (error) {
       console.error("Error fetching total products:", error);
@@ -65,7 +64,6 @@ export default function AddressList() {
         })
       );
       var address = response.payload as AddressReadDto;
-      console.log(response.payload);
 
       alert(
         `Select address: ${address.addressLine} ${address.street} ${address.city}`
