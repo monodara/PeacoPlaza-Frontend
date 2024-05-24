@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/yourrepositoryname/static/css/main.e97b1695.css",
+    "main.js": "/yourrepositoryname/static/js/main.58fda791.js",
+    "static/js/592.bca5edea.chunk.js": "/yourrepositoryname/static/js/592.bca5edea.chunk.js",
+    "static/media/footwareBG.jpg": "/yourrepositoryname/static/media/footwareBG.586dce167bae2d0b4ee4.jpg",
+    "static/media/logo.png": "/yourrepositoryname/static/media/logo.1170f5b5d48393d9fd30.png",
+    "static/media/electronicsBG.jpeg": "/yourrepositoryname/static/media/electronicsBG.78803a21866077df74c9.jpeg",
+    "static/media/furnitureBG.jpg": "/yourrepositoryname/static/media/furnitureBG.aa8111b760631be352aa.jpg",
+    "static/media/loginBg.jpg": "/yourrepositoryname/static/media/loginBg.1a6abf97d723682fc6c2.jpg",
+    "index.html": "/yourrepositoryname/index.html",
+    "main.e97b1695.css.map": "/yourrepositoryname/static/css/main.e97b1695.css.map",
+    "main.58fda791.js.map": "/yourrepositoryname/static/js/main.58fda791.js.map",
+    "592.bca5edea.chunk.js.map": "/yourrepositoryname/static/js/592.bca5edea.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e97b1695.css",
+    "static/js/main.58fda791.js"
+  ]
+}
