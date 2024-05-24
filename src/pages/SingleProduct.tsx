@@ -23,7 +23,7 @@ export default function SingleProduct() {
 
   const [thumbImg, setThumbImg] = useState("");
   useEffect(() => {
-    dispatch(productsActions.fetchById(id??"default"));
+    dispatch(productsActions.fetchById({id: id??"default"}));
   }, [id]);
   const product: ProductReadDto | undefined = useSelector(
       (state: AppState) => state.products.selectedItem

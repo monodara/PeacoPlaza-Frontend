@@ -48,7 +48,8 @@ export const useProductList = () => {
     }
   }
 
-  let sortPaginateProductsUrlSuffix = filterProductsUrlSuffix += filterProductsUrlSuffix === "" ? `?pageNo=${page}&pageSize=${pageSize}` : `&pageNo=${page}&pageSize=${pageSize}`;
+  let sortPaginateProductsUrlSuffix = filterProductsUrlSuffix
+  sortPaginateProductsUrlSuffix += sortPaginateProductsUrlSuffix === "" ? `?pageNo=${page}&pageSize=${pageSize}` : `&pageNo=${page}&pageSize=${pageSize}`;
   if (order !== "") sortPaginateProductsUrlSuffix += sortPaginateProductsUrlSuffix === "" ? `?sortBy=byPrice&orderBy=${order}` : `&sortBy=byPrice&orderBy=${order}`;
 
   useEffect(() => {

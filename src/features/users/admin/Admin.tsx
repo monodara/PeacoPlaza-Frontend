@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { AppState } from "../../../redux/store";
-import ProductCreation from "../../../components/admin/ProductCreation";
 import { useTheme } from "../../../components/contextAPI/ThemeContext";
 import UserDefaultAvatar from "../defaultAvatar.jpeg";
 import UserManagement from "./UserManageTable";
+import ProductManagement from "./ProductManageTable";
 
 export default function Admin() {
   const user = useSelector((state: AppState) => state.users.userLoggedIn);
-  const [activePanel, setActivePanel] = useState<string | null>("create");
+  const [activePanel, setActivePanel] = useState<string | null>("products");
   const { theme } = useTheme();
   const color = theme.palette.text.primary;
   const backgroundColor = theme.palette.background.default;
@@ -54,31 +54,12 @@ export default function Admin() {
                 activePanel === "category" ? "bg-gray-200" : ""
               }`}
               onClick={() =>
-                setActivePanel(activePanel === "category" ? null : "category")
+                setActivePanel(activePanel === "orders" ? null : "orders")
               }
               style={theme.typography.body1}
             >
-              <span>Category Management</span>
-              <KeyboardArrowDownIcon
-                fontSize="small"
-                className={`transition-transform duration-200 transform ${
-                  activePanel === "category" ? "rotate-0" : "-rotate-90"
-                }`}
-              />
+              <span>Order Management</span>
             </button>
-            {activePanel === "category" && (
-              <div className="px-2 py-2 bg-white rounded-md shadow">
-                <button className="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
-                  Create a Category
-                </button>
-                <button className="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
-                  Update a Category
-                </button>
-                <button className="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
-                  Delete a Category
-                </button>
-              </div>
-            )}
           </div>
 
           {/* Product Management */}
@@ -88,40 +69,12 @@ export default function Admin() {
                 activePanel === "product" ? "bg-gray-200" : ""
               }`}
               onClick={() =>
-                setActivePanel(activePanel === "product" ? null : "product")
+                setActivePanel("products")
               }
               style={theme.typography.body1}
             >
               <span>Product Management</span>
-              <KeyboardArrowDownIcon
-                fontSize="small"
-                className={`transition-transform duration-200 transform ${
-                  activePanel === "product" ? "rotate-0" : "-rotate-90"
-                }`}
-              />
             </button>
-            {activePanel === "product" && (
-              <div className="px-2 py-2 bg-white rounded-md shadow">
-                <button
-                  className="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-                  onClick={() => setActivePanel("create")}
-                >
-                  Create a Product
-                </button>
-                <button
-                  className="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-                  onClick={() => setActivePanel("delete")}
-                >
-                  Update a Product
-                </button>
-                <button
-                  className="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-                  onClick={() => setActivePanel("delete")}
-                >
-                  Delete a Product
-                </button>
-              </div>
-            )}
           </div>
 
           {/* User Management */}
@@ -136,12 +89,6 @@ export default function Admin() {
               style={theme.typography.body1}
             >
               <span>User Management</span>
-              <KeyboardArrowDownIcon
-                fontSize="small"
-                className={`transition-transform duration-200 transform ${
-                  activePanel === "users" ? "rotate-0" : "-rotate-90"
-                }`}
-              />
             </button>
           </div>
         </nav>
@@ -149,10 +96,11 @@ export default function Admin() {
 
       {/* Main Content */}
       <div className="flex justify-center items-center flex-grow mt-10">
-        {activePanel === "create" && <ProductCreation />}
+        {/* {activePanel === "create" && <ProductCreation />}
         {activePanel === "delete" && (
           <div style={{ color }}>Search a product to update or delete...</div>
-        )}
+        )} */}
+        {activePanel === "products" && <ProductManagement />}
         {activePanel === "users" && <UserManagement />}
       </div>
     </div>

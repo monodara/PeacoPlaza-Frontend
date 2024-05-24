@@ -95,14 +95,14 @@ export default function UserManagement() {
             onChange={handleSearch}
             className="px-3 py-2 ml-3 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
           />
-          <span className="px-3">Order by JoinedDate</span>
+          <span className="px-3">Order by Joined Date</span>
           <select
             value={order}
             onChange={handleOrderByChange}
             className="py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
           >
             <option value="Ascending"> Ascending</option>
-            <option value="Decending"> Descending</option>
+            <option value="Descending"> Descending</option>
           </select>
         </div>
         <button

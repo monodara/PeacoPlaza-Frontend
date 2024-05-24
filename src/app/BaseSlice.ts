@@ -4,6 +4,7 @@ import {
   Draft,
   Slice,
   AnyAction,
+  PayloadAction,
 } from "@reduxjs/toolkit";
 import { AxiosError, AxiosRequestConfig } from "axios";
 import { BaseEntity } from "../commonTypes/baseEntity";
@@ -14,7 +15,7 @@ interface BaseState<T extends BaseEntity> {
   loading: boolean;
   error?: string;
   selectedItem?: T;
-  count:number;
+  count: number;
 }
 
 export const createBaseSlice = <T extends BaseEntity, TCreateDto, TUpdateDto>(
@@ -24,34 +25,41 @@ export const createBaseSlice = <T extends BaseEntity, TCreateDto, TUpdateDto>(
   const initialState: BaseState<T> = {
     items: [],
     loading: false,
-    count:0,
+    count: 0,
   };
 
-  const fetchAll = createAsyncThunk<T[], {
+  const fetchAll = createAsyncThunk<
+    T[],
+    {
       urlSuffix: string;
       headers?: AxiosRequestConfig["headers"];
-    }>(
-    `${name}/fetchAll`,
-    async ({ urlSuffix, headers }, { rejectWithValue }) => {
-        console.log(`${endpoint}${urlSuffix}`)
-      try {
-        const response = await appAxios.get(`${endpoint}${urlSuffix}`,{headers});
-        return response.data;
-      } catch (e) {
-        const error = e as AxiosError;
-        return rejectWithValue(error.response?.data);
-      }
     }
-  );
-  const fetchTotalCount = createAsyncThunk<number, {
+  >(`${name}/fetchAll`, async ({ urlSuffix, headers }, { rejectWithValue }) => {
+    console.log(`${endpoint}${urlSuffix}`);
+    try {
+      const response = await appAxios.get(`${endpoint}/${urlSuffix}`, {
+        headers,
+      });
+      return response.data;
+    } catch (e) {
+      const error = e as AxiosError;
+      return rejectWithValue(error.response?.data);
+    }
+  });
+  const fetchTotalCount = createAsyncThunk<
+    number,
+    {
       urlSuffix: string;
       headers?: AxiosRequestConfig["headers"];
-    }>(
+    }
+  >(
     `${name}/fetchTotalCount`,
     async ({ urlSuffix, headers }, { rejectWithValue }) => {
-        console.log(`${endpoint}count/${urlSuffix}`)
+      console.log(`${endpoint}/count/${urlSuffix}`);
       try {
-        const response = await appAxios.get(`${endpoint}/count/${urlSuffix}`,{headers});
+        const response = await appAxios.get(`${endpoint}/count/${urlSuffix}`, {
+          headers,
+        });
         return response.data;
       } catch (e) {
         const error = e as AxiosError;
@@ -60,11 +68,14 @@ export const createBaseSlice = <T extends BaseEntity, TCreateDto, TUpdateDto>(
     }
   );
 
-  const createOne = createAsyncThunk<T, TCreateDto>(
+  const createOne = createAsyncThunk<
+    T,
+    { createDto: TCreateDto; headers?: AxiosRequestConfig["headers"] }
+  >(
     `${name}/createOne`,
-    async (createDto, { rejectWithValue }) => {
+    async ({ createDto, headers }, { rejectWithValue }) => {
       try {
-        const response = await appAxios.post(endpoint, createDto);
+        const response = await appAxios.post(endpoint, createDto, { headers });
         return response.data;
       } catch (e) {
         const error = e as AxiosError;
@@ -80,9 +91,27 @@ export const createBaseSlice = <T extends BaseEntity, TCreateDto, TUpdateDto>(
       updateDto: TUpdateDto;
       headers?: AxiosRequestConfig["headers"];
     }
-  >(`${name}/updateOne`, async ({ id, updateDto, headers }, { rejectWithValue }) => {
+  >(
+    `${name}/updateOne`,
+    async ({ id, updateDto, headers }, { rejectWithValue }) => {
+      try {
+        const response = await appAxios.patch(`${endpoint}/${id}`, updateDto, {
+          headers,
+        });
+        return response.data;
+      } catch (e) {
+        const error = e as AxiosError;
+        return rejectWithValue(error.response?.data);
+      }
+    }
+  );
+
+  const deleteOne = createAsyncThunk<
+    boolean,
+    { id: string; headers?: AxiosRequestConfig["headers"] }
+  >(`${name}/deleteOne`, async ({ id, headers }, { rejectWithValue }) => {
     try {
-      const response = await appAxios.patch(`${endpoint}/${id}`, updateDto,{ headers });
+      const response = await appAxios.delete(`${endpoint}/${id}`, { headers });
       return response.data;
     } catch (e) {
       const error = e as AxiosError;
@@ -90,31 +119,18 @@ export const createBaseSlice = <T extends BaseEntity, TCreateDto, TUpdateDto>(
     }
   });
 
-  const deleteOne = createAsyncThunk<boolean, { id: string, headers?: AxiosRequestConfig["headers"]; }>(
-    `${name}/deleteOne`,
-    async ({id, headers}, { rejectWithValue }) => {
-      try {
-        const response = await appAxios.delete(`${endpoint}/${id}`, {headers});
-        return response.data;
-      } catch (e) {
-        const error = e as AxiosError;
-        return rejectWithValue(error.response?.data);
-      }
+  const fetchById = createAsyncThunk<
+    T,
+    { id: string; headers?: AxiosRequestConfig["headers"] }
+  >(`${name}/fetchById`, async ({ id, headers }, { rejectWithValue }) => {
+    try {
+      const response = await appAxios.get(`${endpoint}/${id}`, { headers });
+      return response.data;
+    } catch (e) {
+      const error = e as AxiosError;
+      return rejectWithValue(error.response?.data);
     }
-  );
-
-  const fetchById = createAsyncThunk<T, string>(
-    `${name}/fetchById`,
-    async (id, { rejectWithValue }) => {
-      try {
-        const response = await appAxios.get(`${endpoint}/${id}`);
-        return response.data;
-      } catch (e) {
-        const error = e as AxiosError;
-        return rejectWithValue(error.response?.data);
-      }
-    }
-  );
+  });
 
   const extraReducers = (builder: any) => {
     // Fetch all
@@ -213,7 +229,9 @@ export const createBaseSlice = <T extends BaseEntity, TCreateDto, TUpdateDto>(
       (state: Draft<BaseState<T>>, action: AnyAction) => {
         state.loading = false;
         state.error = undefined;
-        state.items = state.items.filter(user => user.id !== action.payload.id);
+        state.items = state.items.filter(
+          (user) => user.id !== action.payload.id
+        );
       }
     );
     builder.addCase(deleteOne.pending, (state: Draft<BaseState<T>>) => {
@@ -228,9 +246,12 @@ export const createBaseSlice = <T extends BaseEntity, TCreateDto, TUpdateDto>(
       }
     );
     // fetch total count
-    builder.addCase(fetchTotalCount.fulfilled, (state:Draft<BaseState<T>>, action:AnyAction) => {
-      state.count = action.payload; 
-    });
+    builder.addCase(
+      fetchTotalCount.fulfilled,
+      (state: Draft<BaseState<T>>, action: AnyAction) => {
+        state.count = action.payload;
+      }
+    );
     builder.addCase(fetchTotalCount.pending, (state: Draft<BaseState<T>>) => {
       state.loading = true;
       state.error = undefined;
@@ -242,19 +263,31 @@ export const createBaseSlice = <T extends BaseEntity, TCreateDto, TUpdateDto>(
         state.error = action.payload as string;
       }
     );
-    
   };
 
   const baseSlice = createSlice({
     name,
     initialState,
-    reducers: {},
+    reducers: {
+      resetSelectItem: (state, action: PayloadAction<T | null>) => {
+        state.selectedItem = undefined;
+      },
+    },
     extraReducers,
   });
-
+const { actions } = baseSlice;
+  const { resetSelectItem } = actions;
   return {
     slice: baseSlice,
-    actions: { fetchAll, fetchById, createOne, updateOne, deleteOne,fetchTotalCount },
+    actions: {
+      fetchAll,
+      fetchById,
+      createOne,
+      updateOne,
+      deleteOne,
+      fetchTotalCount,
+      resetSelectItem
+    },
     extraReducers,
   };
 };

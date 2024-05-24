@@ -48,7 +48,7 @@ async function checkEmail(email: string) {
       return;
     }
 
-    dispatch(usersActions.createOne(values))
+    dispatch(usersActions.createOne({ createDto: values}))
       .unwrap()
       .then((response) => {
         if (response) {

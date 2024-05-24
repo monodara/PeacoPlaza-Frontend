@@ -1,4 +1,4 @@
-import { object, string } from "yup";
+import { number, object, string } from "yup";
 export const userRegisterSchema = object().shape({
     username: string()
       .min(2, "Too Short!")
@@ -13,3 +13,17 @@ export const userRegisterSchema = object().shape({
     ).required("Required"),
     // avatar: string().required("Required"),
   });
+
+  export const productSchema= object().shape({
+      title: string().required("Title is required"),
+      description: string().required("Description is required"),
+      price: number()
+        .required("Price is required")
+        .positive("Price must be positive"),
+      inventory: number()
+        .required("Inventory is required")
+        .min(0, "Inventory cannot be negative"),
+      weight: number()
+        .required("Weight is required")
+        .positive("Weight must be positive"),
+    });

@@ -16,9 +16,9 @@ import Categories from "./features/categories/Categories";
 import ProductsFetchData from "./features/products/ProductsPage";
 import Me from "./pages/Me";
 import Admin from "./features/users/admin/Admin";
-import ProductUpdateOrDelete from "./components/admin/ProductUpdateOrDelete";
 import Checkout from "./pages/Checkout";
 import { useTheme } from "./components/contextAPI/ThemeContext";
+import ProductForm from "./features/users/admin/ProductForm";
 
 function App() {
   const { theme } = useTheme();
@@ -38,11 +38,15 @@ function App() {
         <Route path="/login" element={<UserLogin />} />
         <Route path="/categories" element={<Categories />} />
         <Route path="/Admin" element={<Admin />} />
-        <Route
-          path="/Admin/update_delete"
-          element={<ProductUpdateOrDelete />}
-        />
         <Route path="/checkout" element={<Checkout />} />
+        <Route
+          path="/product-edit"
+          element={<ProductForm isEditing={true} />}
+        />
+        <Route
+          path="/product-new"
+          element={<ProductForm isEditing={false} />}
+        />
       </Routes>
       <ScrollToTop smooth />
       <Footer />

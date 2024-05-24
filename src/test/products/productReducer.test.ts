@@ -133,7 +133,9 @@ describe("product reducer", () => {
     const action = productsActions.createOne.fulfilled(
       newProduct,
       "fulfilled",
-      createdProduct
+      { createDto: createdProduct, headers: {
+  Authorization: `Bearer someToken`,
+} }
     );
     const resultState = productsReducer(initialState, action);
 

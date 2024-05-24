@@ -30,7 +30,9 @@ describe("product reducer", () => {
   };
   // create new product
   test("should create new product", async () => {
-    await store.dispatch(productsActions.createOne(createdProduct));
+    await store.dispatch(productsActions.createOne({ createDto: createdProduct, headers: {
+  Authorization: `Bearer someToken`,
+} }));
     expect(store.getState().products.items.length).toBe(1);
   });
 
