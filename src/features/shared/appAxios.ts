@@ -1,6 +1,6 @@
 import axios from "axios";
 
 const appAxios = axios.create({
-    baseURL : "http://localhost:5074/api/v1/"
+    baseURL : "https://peacoplaza.azurewebsites.net/"
 });
 export default appAxios;
