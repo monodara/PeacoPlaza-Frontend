@@ -1,6 +1,6 @@
 # E-commerce Website
 
-This project is a website of an e-commerce business using fake data from the API [https://fakeapi.platzi.com/](https://fakeapi.platzi.com/). It allows users to search products, add items to wishlist and cart, review the cart. It also allows Admin roles to manage the products (creating new items, updating or deleting items.)
+This project is the frontend part of the fullstack [e-commerce website - PeacoPlaza development](https://github.com/monodara/Ecommerce_FullStack). It allows users to search products, add items to wishlist and cart, review the cart. It also allows Admin roles to manage the products (creating new items, updating or deleting items.) The project is deployed at [https://monodara.github.io/PeacoPlaza-Frontend/].
 
 ## Feautres
 
@@ -32,9 +32,16 @@ This project is a website of an e-commerce business using fake data from the API
 
 ## Getting Started
 
-As it's deployed, visit [this link](https://github.com/Integrify-Finland/fs17-Frontend-project)
+As it's deployed, visit [this link](https://github.com/Integrify-Finland/fs17-Frontend-project) to run the project.
+1. Register an account by inputting user name, email and password.
+2. To use admin functionalities, please use this account 
+    ```
+    email: demo.admin@mail.com  
+    password: SuperAdmin1234
+    ```
+    as the system doesn't allow to create another admin account.
 
-In case you would like to run it locally, 
+In case you would like to run it locally, please follow:
 1. Clone the repository using `git clone`;
 2. Open the terminal and navigate to project folder.
 3. Install packages and libraries by running `npm install` or `yarn install`.
