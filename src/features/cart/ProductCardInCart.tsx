@@ -56,10 +56,16 @@ export default function ProductCardInCart({
         className="w-64 bg-gray-100 p-2 rounded shadow-sm"
         style={{ borderColor: primaryColor, border: 1 }}
       >
-        <img
-          src={product.productImages[0].data}
-          className="w-full h-full object-contain"
-        />
+        {product.productImages && product.productImages.length > 0 ? (
+          <img
+            src={product.productImages[0].data}
+            className="w-full h-full object-contain"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-gray-500">
+            No Image Available
+          </div>
+        )}
       </div>
       <div className="flex flex-col justify-start">
         <Link to={`/products/${product.id}`}>

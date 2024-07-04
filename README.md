@@ -1,47 +1,58 @@
 # E-commerce Website
 
-This project is the frontend part of the fullstack [e-commerce website - PeacoPlaza development](https://github.com/monodara/Ecommerce_FullStack). It allows users to search products, add items to wishlist and cart, review the cart. It also allows Admin roles to manage the products (creating new items, updating or deleting items.) The project is deployed at [https://monodara.github.io/PeacoPlaza-Frontend/].
+![TypeScript](https://img.shields.io/badge/TypeScript-v.4-green)
+![SASS](https://img.shields.io/badge/SASS-v.4-hotpink)
+![React](https://img.shields.io/badge/React-v.18-blue)
+![Docker Automated build](https://img.shields.io/docker/automated/monodara/peacoplaza-fe)
 
-## Feautres
+This project is the frontend part of a fullstack e-commerce website - PeacoPlaza. [Here to view its backend part](https://github.com/monodara/PeacoPlaza-Backend). The application allows users to search products, add items to wishlist and cart, review the cart. It also allows Admin roles to manage the products (creating new items, updating or deleting items.) The project is deployed at [https://monodara.github.io/PeacoPlaza-Frontend/].
 
-| Role        | Use Case                                                                                                |
-| -------------- | ---------------------------------------------------------------------------------------------------------- |
-| Customer        |  Browser all products  |
-|              |  Filter products by category, search term, or price.
-|              |  Sort products by price
-|           |  Add product to / remove from wishlish / cart
-|       |  Browser a product's details
-|    |  Make order
-|  | choose a shipping address
-|   | manipulate his own addresses
-| |Review orders
-|   | Register an account
-|   |Log in/out
-| |Preview cart
-|  |change the number of products in cart
-|  | Get inspiration from top-rated & most-purchased products.
-|  | Change user name
-|  | Upload avatar
-|  |Delete his own account
-| |Log in with Google account
-|   | Manipulate dark/light mode
-| Admin | All functions for customers
-|  | Delete user accounts
-|  | create, update, delete products
-| | Update, delete orders
+## Features
+
+| Role     | Use Case                                                  |
+| -------- | --------------------------------------------------------- |
+| Customer | Browser all products                                      |
+|          | Filter products by category, search term, or price.       |
+|          | Sort products by price                                    |
+|          | Add product to / remove from wishlish / cart              |
+|          | Browser a product's details                               |
+|          | Make order                                                |
+|          | choose a shipping address                                 |
+|          | manipulate his own addresses                              |
+|          | Review orders                                             |
+|          | Register an account                                       |
+|          | Log in/out                                                |
+|          | Preview cart                                              |
+|          | change the number of products in cart                     |
+|          | Get inspiration from top-rated & most-purchased products. |
+|          | Change user name                                          |
+|          | Upload avatar                                             |
+|          | Delete his own account                                    |
+|          | Log in with Google account                                |
+|          | Manipulate dark/light mode                                |
+| Admin    | All functions for customers                               |
+|          | Delete user accounts                                      |
+|          | create, update, delete products                           |
+|          | Update, delete orders                                     |
 
 ## Getting Started
 
 As it's deployed, visit [this link](https://github.com/Integrify-Finland/fs17-Frontend-project) to run the project.
+
 1. Register an account by inputting user name, email and password.
-2. To use admin functionalities, please use this account 
-    ```
-    email: demo.admin@mail.com  
-    password: SuperAdmin1234
-    ```
-    as the system doesn't allow to create another admin account.
+2. To use admin functionalities, please use this account
+   ```
+   email: demo.admin@mail.com
+   password: SuperAdmin1234
+   ```
+   as the system doesn't allow to create another admin account.
+
+### User Docker image
+
+The image is published to Docker Hub. In case you have Docker installed, run `docker pull monodara/peacoplaza-fe:latest`, then run `docker run -d -p 3000:3000 monodara/peacoplaza-fe:latest`, you can use the application at [http://localhost:3000/](http://localhost:3000/)
 
 In case you would like to run it locally, please follow:
+
 1. Clone the repository using `git clone`;
 2. Open the terminal and navigate to project folder.
 3. Install packages and libraries by running `npm install` or `yarn install`.
@@ -121,7 +132,7 @@ src/
 |   |   |-- ProductUpdateOrDelete
 |   |   |-- cart
 |   |-- hooks
-|   |-- assets 
+|   |-- assets
 ```
 
 I broke components into small pieces. For example, the diagram below illustrates the how Products page is structured.
