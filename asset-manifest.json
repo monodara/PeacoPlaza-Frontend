@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/PeacoPlaza-Frontend/static/css/main.e97b1695.css",
-    "main.js": "/PeacoPlaza-Frontend/static/js/main.b88b7060.js",
+    "main.js": "/PeacoPlaza-Frontend/static/js/main.72a51acf.js",
     "static/js/592.bca5edea.chunk.js": "/PeacoPlaza-Frontend/static/js/592.bca5edea.chunk.js",
     "static/media/footwareBG.jpg": "/PeacoPlaza-Frontend/static/media/footwareBG.586dce167bae2d0b4ee4.jpg",
     "static/media/logo.png": "/PeacoPlaza-Frontend/static/media/logo.1170f5b5d48393d9fd30.png",
@@ -10,11 +10,11 @@
     "static/media/loginBg.jpg": "/PeacoPlaza-Frontend/static/media/loginBg.1a6abf97d723682fc6c2.jpg",
     "index.html": "/PeacoPlaza-Frontend/index.html",
     "main.e97b1695.css.map": "/PeacoPlaza-Frontend/static/css/main.e97b1695.css.map",
-    "main.b88b7060.js.map": "/PeacoPlaza-Frontend/static/js/main.b88b7060.js.map",
+    "main.72a51acf.js.map": "/PeacoPlaza-Frontend/static/js/main.72a51acf.js.map",
     "592.bca5edea.chunk.js.map": "/PeacoPlaza-Frontend/static/js/592.bca5edea.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e97b1695.css",
-    "static/js/main.b88b7060.js"
+    "static/js/main.72a51acf.js"
   ]
 }
