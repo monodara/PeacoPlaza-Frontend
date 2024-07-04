@@ -1,4 +1,4 @@
-const localhost = "https://peacoplaza.azurewebsites.net/";
+const localhost = "https://peacoplaza.azurewebsites.net/api/v1/";
 // products
 export const productsEndpoint = `${localhost}products/`;
 export const topRatedProductUrl = `${productsEndpoint}top_rated/4`;
