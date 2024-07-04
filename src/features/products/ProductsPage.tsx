@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import Box from "@mui/material/Box";
+import LinearProgress from "@mui/material/LinearProgress";
+
 import { AppState } from "../../app/store";
 import ProductFilters from "./ProductFilter";
 import ProductSort from "./ProductSort";
@@ -13,6 +16,8 @@ export default function Products() {
   const [sortOrder, setSortOrder] = useState("");
 
   const { productList, totalPage, page, setPage } = useProductList();
+  const isLoading = useSelector((state: AppState) => state.products.loading);
+  const hasError = useSelector((state: AppState) => state.products.error);
 
   const sortOrderFromStore: string = useSelector(
     (state: AppState) => state.filterSort.orderBy
@@ -21,6 +26,18 @@ export default function Products() {
   useEffect(() => {
     setSortOrder(sortOrderFromStore);
   }, [sortOrderFromStore]);
+
+  if (isLoading) {
+    return (
+      <Box sx={{ width: "100%" }}>
+        <LinearProgress />
+      </Box>
+    );
+  }
+
+  if (hasError) {
+    return <p>{hasError}</p>;
+  }
 
   return (
     <div className="container mx-auto px-4 mt-10">
@@ -33,7 +50,8 @@ export default function Products() {
           isDropdownOpen={isDropdownOpen}
         />
       </div>
-      {productList.length === 0 && (
+      
+      {!isLoading && productList.length === 0 && (
         <div className="mt-10 text-center">
           No such product. Maybe try again.
         </div>
