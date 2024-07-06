@@ -6,7 +6,7 @@
 ![Redux toolkit](https://img.shields.io/badge/Redux-v.1.9-brown)
 ![Docker Automated build](https://img.shields.io/docker/automated/monodara/peacoplaza-fe)
 
-This project is the frontend part of a fullstack e-commerce website - PeacoPlaza. [Here to view its backend part](https://github.com/monodara/PeacoPlaza-Backend). The application allows users to search products, add items to wishlist and cart, review the cart. It also allows Admin roles to manage the products (creating new items, updating or deleting items.) The project is deployed at [https://monodara.github.io/PeacoPlaza-Frontend/].
+This project is the frontend part of a fullstack e-commerce website - PeacoPlaza. [Here to view its backend part](https://github.com/monodara/PeacoPlaza-Backend). The application allows users to search products, add items to wishlist and cart, review the cart. It also allows Admin roles to manage the products (creating new items, updating or deleting items.) The project is deployed at [https://monodara.github.io/PeacoPlaza-Frontend/](https://monodara.github.io/PeacoPlaza-Frontend/), and `Github Actions` is utilized to achieve Continuous Deploy. 
 
 ## Features
 
