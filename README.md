@@ -38,7 +38,7 @@ This project is the frontend part of a fullstack e-commerce website - PeacoPlaza
 
 ## Getting Started
 
-As it's deployed, visit [this link](https://github.com/Integrify-Finland/fs17-Frontend-project) to run the project.
+As it's deployed, visit [this link](https://monodara.github.io/PeacoPlaza-Frontend/) to run the project.
 
 1. Register an account by inputting user name, email and password.
 2. To use admin functionalities, please use this account
